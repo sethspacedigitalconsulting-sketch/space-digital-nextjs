@@ -1,16 +1,25 @@
 ﻿'use client';
 
+import React from 'react';
+import Image from 'next/image';
+
 function LogoMark() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-      <svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="18" fill="#FF6B2B" />
-        <circle cx="20" cy="20" r="14" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
-        <ellipse cx="20" cy="20" rx="18" ry="5" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="1.2" />
-      </svg>
+      {/* Real brand asset pull from your workflows directory */}
+      <div style={{ position: 'relative', width: '36px', height: '36px' }}>
+        <Image
+          src="/workflows/logo.png"
+          alt="Space Digital Logo"
+          fill
+          sizes="36px"
+          priority
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
       <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
         <span style={{ fontFamily: 'var(--font-pacifico, cursive)', fontSize: '1.05rem', color: 'var(--text)', letterSpacing: '0.01em' }}>space</span>
-        <span style={{ fontFamily: 'var(--sans)', fontSize: '0.42rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--text-dim)', marginTop: 2 }}>â€” go digital â€”</span>
+        <span style={{ fontFamily: 'var(--sans)', fontSize: '0.42rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--text-dim)', marginTop: 2 }}>— go digital —</span>
       </div>
     </div>
   );
@@ -32,7 +41,7 @@ export function SiteFooter() {
           { label: 'Ecosystem', href: '#ecosystem' },
           { label: 'Work', href: '#work' },
           { label: 'About', href: '#about' },
-          { label: 'Initiate', href: 'mailto:seth.spacedigitalconsulting@gmail.com' },
+          { label: 'Initiate', href: '#contact' },
         ].map(({ label, href }) => (
           <a key={label} href={href} style={{ fontSize: '0.78rem', color: 'var(--text-muted)', textDecoration: 'none', fontFamily: 'var(--sans)', cursor: 'none' }}
             onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
@@ -54,10 +63,10 @@ export function SiteFooter() {
 
       <div style={{ gridColumn: '1 / -1', borderTop: '1px solid var(--border)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontSize: '0.65rem', color: 'var(--text-dim)', fontFamily: 'var(--sans)' }}>
-          Â© {new Date().getFullYear()} Space Digital &amp; AI Consulting. All rights reserved.
+          © {new Date().getFullYear()} Space Digital &amp; AI Consulting. All rights reserved.
         </span>
         <span style={{ fontSize: '0.65rem', color: 'var(--text-dim)', fontFamily: 'var(--sans)', letterSpacing: '0.08em' }}>
-          Nairobi Â· Remote-first
+          Nairobi · Remote-first
         </span>
       </div>
     </footer>

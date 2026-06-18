@@ -10,6 +10,7 @@ const STEPS = [
     desc: 'We start with a deep audit of your current digital footprint — paid media performance, organic visibility, CRM data, and conversion flow. No assumptions, no templates.',
     deliverables: ['Brand Audit', 'Competitor Mapping', 'Traffic Analysis', 'Conversion Audit'],
     color: '#FF6B2B',
+    videoUrl: '/workflows/DDad.mp4',
   },
   {
     num: '02', total: '04',
@@ -18,6 +19,7 @@ const STEPS = [
     desc: 'Every channel, system, and workflow is mapped against your growth target. We design the infrastructure before writing a single ad or building a single automation.',
     deliverables: ['Channel Strategy', 'System Blueprint', 'Automation Map', 'KPI Framework'],
     color: '#FF6B2B',
+    videoUrl: '/workflows/SA.mp4',
   },
   {
     num: '03', total: '04',
@@ -26,6 +28,7 @@ const STEPS = [
     desc: 'Campaigns launch, AI workflows go live, and systems integrate. Everything is calibrated for the first 30 days — iteration velocity is built into the deployment.',
     deliverables: ['Campaign Launch', 'Workflow Deployment', 'CRM Integration', '30-Day Calibration'],
     color: '#FF6B2B',
+    videoUrl: '/workflows/DA.mp4',
   },
   {
     num: '04', total: '04',
@@ -34,6 +37,7 @@ const STEPS = [
     desc: 'Monthly performance reviews, continuous optimisation loops, and expansion into new channels or automation layers as results compound.',
     deliverables: ['Monthly Reporting', 'Ongoing Optimisation', 'Channel Expansion', 'System Evolution'],
     color: '#FF6B2B',
+    videoUrl: '/workflows/CS.mp4',
   },
 ];
 
@@ -68,7 +72,7 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
           scale,
         }}
       >
-        {/* Body */}
+        {/* LEFT SIDE: Text Content Panel */}
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2.75rem 3rem' }}>
           <span style={{ fontFamily: 'var(--mono)', fontSize: '0.74rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--signal)', display: 'inline-block', marginBottom: '1.25rem' }}>
             {step.num}
@@ -78,7 +82,7 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
 
           <h3 style={{ fontFamily: 'var(--sans)', fontSize: 'clamp(1.75rem, 3.5vw, 3rem)', fontWeight: 600, lineHeight: 0.95, letterSpacing: '-0.04em', color: 'var(--text)', margin: '0 0 1.25rem', maxWidth: '18ch' }}>
             {title}
-            <em style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontWeight: 400, letterSpacing: '-0.025em', color: 'var(--signal)', padding: '0 0.04em' }}>{step.em}</em>
+            <span style={{ color: 'var(--signal)', fontStyle: 'normal' }}>{step.em}</span>
           </h3>
 
           <p style={{ color: 'var(--text-soft)', fontSize: '1rem', lineHeight: 1.55, maxWidth: '50ch', margin: '0 0 1.75rem' }}>
@@ -95,14 +99,37 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
           </ul>
         </div>
 
-        {/* Media panel */}
+        {/* RIGHT SIDE: Video Media Panel Viewport */}
         <div style={{ background: 'var(--bg-elev)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{
-            fontFamily: 'var(--sans)', fontSize: '8rem', fontWeight: 800,
-            color: 'transparent', WebkitTextStroke: '1px rgba(255,255,255,0.06)',
-            letterSpacing: '-0.06em', lineHeight: 1, userSelect: 'none',
-          }}>{step.num}</div>
-          {/* Signal dot accent */}
+          <video
+            key={step.videoUrl}
+            src={step.videoUrl}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: 0.85,
+            }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          />
+
+          {/* Left-edge smooth gradient blend */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to right, rgb(20,20,22) 0%, transparent 25%)',
+              pointerEvents: 'none',
+            }}
+          />
+
+          {/* Orange signal dot accent */}
           <div style={{ position: 'absolute', bottom: '2rem', right: '2rem', width: 8, height: 8, borderRadius: '50%', background: 'var(--signal)', boxShadow: '0 0 16px rgba(255,107,43,0.5)' }} />
         </div>
       </motion.div>
@@ -112,7 +139,7 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
 
 export function Process() {
   return (
-    <section className="section-border" style={{ position: 'relative', background: 'var(--bg)' }}>
+    <section id="system" className="section-border" style={{ position: 'relative', background: 'var(--bg)' }}>
       <div className="inner" style={{ padding: '7rem 40px 3rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '3rem' }}>
           <motion.p className="eyebrow" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
@@ -121,16 +148,16 @@ export function Process() {
           <motion.h2
             initial={{ opacity: 0, y: '2rem', filter: 'blur(6px)' }}
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true }} transition={{ duration: 0.9, ease: [0.16,1,0.3,1], delay: 0.1 }}
+            viewport={{ once: true }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
             style={{ fontFamily: 'var(--sans)', fontSize: 'clamp(2rem, 4.5vw, 3.5rem)', fontWeight: 600, lineHeight: 0.95, letterSpacing: '-0.045em', color: 'var(--text)', maxWidth: '22ch' }}
           >
             A system, not a{' '}
-            <em style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontWeight: 400, letterSpacing: '-0.025em', color: 'var(--signal)' }}>service.</em>
+            <span style={{ color: 'var(--signal)', fontStyle: 'normal' }}>service.</span>
           </motion.h2>
         </div>
       </div>
 
-      {/* Sticky scroll stack */}
+      {/* Sticky scroll stack wrapper */}
       <div className="inner" style={{ display: 'flex', flexDirection: 'column', gap: '25vh', padding: '0 40px 5vh' }}>
         {STEPS.map((step, i) => <ProcessCard key={step.num} step={step} i={i} />)}
       </div>

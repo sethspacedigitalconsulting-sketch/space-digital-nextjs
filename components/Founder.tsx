@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const rv = (delay = 0) => ({
   hidden: { opacity: 0, y: '2.5rem', filter: 'blur(5px)' },
-  show:   { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.95, ease: [0.16,1,0.3,1] as const, delay } },
+  show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.95, ease: [0.16, 1, 0.3, 1] as const, delay } },
 });
 
 const TOOLS = ['n8n', 'Zapier', 'Make.com', 'Meta Ads', 'Google Ads', 'TikTok Ads', 'SEO Architecture', 'AI Voice Systems', 'CRM Automation', 'DeepSeek', 'Perplexity AI', 'DALL-E'];
@@ -12,10 +12,10 @@ export function Founder() {
   return (
     <section className="section-border" id="about" style={{ padding: '10rem 4rem' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: '0 5rem', alignItems: 'start' }}>
-        {/* Left â€” Identity */}
+        {/* Left — Identity */}
         <div>
           <motion.p className="section-tag" variants={rv()} initial="hidden" whileInView="show" viewport={{ once: true }}>
-            07 â€” The Architect
+            07 — The Architect
           </motion.p>
 
           <motion.h2
@@ -26,13 +26,13 @@ export function Founder() {
           <motion.p
             variants={rv(0.17)} initial="hidden" whileInView="show" viewport={{ once: true }}
             style={{ fontSize: '0.62rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--signal)', marginBottom: '3rem', fontFamily: 'var(--sans)' }}>
-            Founder â€” Space Digital &amp; AI Consulting Â· Nairobi, Kenya
+            Founder — Space Digital &amp; AI Consulting · Nairobi, Kenya
           </motion.p>
 
           <motion.p
             variants={rv(0.24)} initial="hidden" whileInView="show" viewport={{ once: true }}
             style={{ fontFamily: 'var(--serif)', fontSize: '1.1rem', fontStyle: 'italic', fontWeight: 300, lineHeight: 1.9, color: 'var(--text-muted)', paddingLeft: '1.2rem', borderLeft: '1px solid var(--signal-dim)', marginBottom: '2.5rem' }}>
-            "I don&apos;t run campaigns. I architect systems â€” and I don&apos;t stop until the numbers prove it."
+            "I don&apos;t run campaigns. I architect systems — and I don&apos;t stop until the numbers prove it."
           </motion.p>
 
           <motion.p
@@ -44,7 +44,7 @@ export function Founder() {
           <motion.p
             variants={rv(0.36)} initial="hidden" whileInView="show" viewport={{ once: true }}
             style={{ fontSize: '0.82rem', fontWeight: 300, lineHeight: 1.85, color: 'var(--text-muted)', fontFamily: 'var(--sans)' }}>
-            Every engagement is approached as an infrastructure problem â€” calibrated, deployed, and refined until the system produces results that compound. Clients include healthcare providers, professional services firms, and digital agencies across Nairobi and beyond.
+            Every engagement is approached as an infrastructure problem — calibrated, deployed, and refined until the system produces results that compound. Clients include healthcare providers, professional services firms, and digital agencies across Nairobi and beyond.
           </motion.p>
         </div>
 
@@ -54,7 +54,7 @@ export function Founder() {
           style={{ background: 'linear-gradient(to bottom, transparent, var(--signal-dim) 15%, var(--signal-dim) 85%, transparent)', alignSelf: 'stretch', minHeight: 400 }}
         />
 
-        {/* Right â€” Capabilities */}
+        {/* Right — Capabilities */}
         <div>
           <motion.p
             variants={rv(0.05)} initial="hidden" whileInView="show" viewport={{ once: true }}
@@ -82,9 +82,9 @@ export function Founder() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
             {[
-              { label: 'Engagement Model', value: 'Retainer Â· Project Â· Advisory' },
-              { label: 'Location', value: 'Nairobi, Kenya Â· Remote-first' },
-              { label: 'Focus', value: 'SMEs Â· Healthcare Â· Professional Services' },
+              { label: 'Engagement Model', value: 'Retainer · Project · Advisory' },
+              { label: 'Location', value: 'Nairobi, Kenya · Remote-first' },
+              { label: 'Focus', value: 'SMEs · Healthcare · Professional Services' },
               { label: 'Founded', value: '2023' },
             ].map(({ label, value }, i) => (
               <motion.div
