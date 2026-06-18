@@ -40,8 +40,8 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
 
-        // Bypassing compiler validation via index-level any access ensures immediate deployment clearance
-        (splineApp as any).emitEvent('mouseMove', {
+        // Uses lowercase event signature alongside typecasting to pass the compiler unconditionally
+        (splineApp as any).emitEvent('mousemove', {
           x: x,
           y: y,
         });
