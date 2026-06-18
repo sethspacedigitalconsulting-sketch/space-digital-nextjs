@@ -1,79 +1,77 @@
 ﻿'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { Application } from '@splinetool/runtime';
+import { useEffect, useState, useRef } from 'react';
 
-interface SplineSceneProps {
+interface Props {
   scene: string;
   className?: string;
 }
 
-export function SplineScene({ scene, className }: SplineSceneProps) {
+export function SplineScene({ scene, className }: Props) {
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    const mobile = window.innerWidth < 768;
+    setIsMobile(mobile);
 
-    let splineApp: Application | null = null;
+    if (!mobile) {
+      // 1. Inject the official viewer script directly into the DOM window runtime thread
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/@splinetool/viewer@1.9.5/build/spline-viewer.js';
+      script.type = 'module';
 
-    // Direct native application instantiation avoids the React 19 version mismatch crash completely
-    splineApp = new Application(canvasRef.current);
+      script.onload = () => {
+        if (!canvasRef.current) return;
 
-    splineApp.load(scene)
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error("Spline engine canvas failed to load smoothly:", err);
-        setIsLoading(false);
-      });
+        // 2. Clear out any prior elements inside the canvas container parent block
+        canvasRef.current.innerHTML = '';
 
-    // ── THE RAW WINDOW MOUSE TRACKING ENGINE ──
-    const handleMouseMove = (event: MouseEvent) => {
-      if (!splineApp || typeof splineApp.emitEvent !== 'function' || !canvasRef.current) return;
+        // 3. Dynamically instantiate the HTML custom element node context
+        const viewer = document.createElement('spline-viewer');
+        viewer.setAttribute('url', scene);
+        viewer.style.width = '100%';
+        viewer.style.height = '100%';
 
-      try {
-        const rect = canvasRef.current.getBoundingClientRect();
+        canvasRef.current.appendChild(viewer);
+      };
 
-        // Calculate coordinate positions relative to the canvas bounding dimensions
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+      document.head.appendChild(script);
 
-        // Uses lowercase event signature alongside typecasting to pass the compiler unconditionally
-        (splineApp as any).emitEvent('mousemove', {
-          x: x,
-          y: y,
-        });
-      } catch (e) {
-        // Silent fallthrough to protect animation frame cycles
-      }
-    };
-
-    // Passive listener allows hyper-smooth 60fps canvas tracking execution threads
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-
-    // Clean up tracking event pipelines cleanly upon layout dismount
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (splineApp && typeof splineApp.dispose === 'function') {
-        try {
-          splineApp.dispose();
-        } catch (e) {
-          // Fallback handling
-        }
-      }
-    };
+      return () => {
+        script.remove();
+      };
+    }
   }, [scene]);
 
-  return (
-    <div className={`relative w-full h-full ${className || ''}`}>
-      {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0b] z-10">
-          <div className="w-6 h-6 border-2 border-zinc-800 border-t-[#FF6B2B] rounded-full animate-spin" />
+  // Before mount: return nothing to prevent server hydration mismatches
+  if (isMobile === null) return null;
+
+  // Mobile Blueprint: Render zero WebGL nodes, use hardware-accelerated CSS rings instead
+  if (isMobile) {
+    return (
+      <div className={`${className || ''} flex items-center justify-center`}>
+        <div className="relative w-56 h-56">
+          <div
+            className="absolute inset-0 rounded-full border border-orange-500/20 animate-ping"
+            style={{ animationDuration: '3s' }}
+          />
+          <div
+            className="absolute inset-6 rounded-full border border-orange-500/30 animate-ping"
+            style={{ animationDuration: '2.4s', animationDelay: '0.4s' }}
+          />
+          <div
+            className="absolute inset-12 rounded-full border border-orange-500/50 animate-ping"
+            style={{ animationDuration: '1.8s', animationDelay: '0.8s' }}
+          />
+          <div className="absolute inset-16 rounded-full bg-orange-500/10 flex items-center justify-center">
+            <span className="text-[#FF6B2B] text-3xl font-bold tracking-tight">S</span>
+          </div>
         </div>
-      )}
-      <canvas ref={canvasRef} className="w-full h-full block" />
-    </div>
-  );
+      </div>
+    );
+  }
+
+  // Desktop Baseline: Render the clean target container node canvas
+  return <div ref={canvasRef} className={className} />;
 }

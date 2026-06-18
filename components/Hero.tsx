@@ -96,8 +96,8 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Vertical scanning track line */}
-      <div style={{
+      {/* Vertical scanning track line — hidden on mobile */}
+      <div className="hidden md:block" style={{
         position: 'absolute', right: '4rem', top: '15%', bottom: '15%',
         width: 1, zIndex: 3,
         background: 'linear-gradient(to bottom, transparent, var(--border) 20%, var(--border) 80%, transparent)',
@@ -110,8 +110,8 @@ export function Hero() {
         }} />
       </div>
 
-      {/* ── CROSSHAIR TRACER MATRIX ── */}
-      <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
+      {/* ── CROSSHAIR TRACER MATRIX — Desktop Only ── */}
+      <div className="hidden md:block absolute inset-0 pointer-events-none z-10 overflow-hidden">
         <div
           className="absolute h-px bg-orange-500/15 left-0 right-0 -translate-y-1/2 transition-all duration-75 ease-out shadow-[0_0_8px_rgba(255,107,43,0.2)]"
           style={{ top: `${y}px` }}
@@ -127,7 +127,7 @@ export function Hero() {
       </div>
 
       {/* ── Content Foreground Container ── */}
-      <div className="inner relative z-20 pt-44 pb-12 w-full max-w-7xl mx-auto px-6 pointer-events-none">
+      <div className="inner relative z-20 pt-36 pb-12 w-full max-w-7xl mx-auto px-6 pointer-events-none">
 
         {/* Eyebrow */}
         <motion.p
@@ -144,7 +144,7 @@ export function Hero() {
         <h1
           className="select-none mb-12 text-left text-white pointer-events-auto max-w-xl lg:max-w-2xl"
           style={{
-            fontSize: 'clamp(3rem, 6vw, 5.5rem)',
+            fontSize: 'clamp(2.5rem, 6vw, 5.5rem)',
             lineHeight: '1.12',
             letterSpacing: '-0.02em'
           }}
@@ -177,6 +177,7 @@ export function Hero() {
                       ref={ulRef}
                       d="M2,7 C30,3 70,9 110,6 C150,3 190,8 218,5"
                       stroke="var(--signal)" strokeWidth="2.4" fill="none"
+                      strokeLinecap="round"
                       strokeLinecap="round"
                       strokeDasharray="400" strokeDashoffset="400"
                       style={{
@@ -218,9 +219,9 @@ export function Hero() {
           </a>
         </motion.div>
 
-        {/* Stats bar */}
+        {/* 2-Column Responsive Mobile Grid Stats Bar */}
         <motion.div
-          className="flex gap-10 flex-wrap pt-8 border-t border-zinc-900 pointer-events-auto"
+          className="grid grid-cols-2 gap-x-6 gap-y-5 sm:flex sm:flex-wrap sm:gap-10 pt-8 border-t border-zinc-900 pointer-events-auto"
           initial={{ opacity: 0, filter: 'blur(8px)', y: '2.5rem' }}
           animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 1.30 }}

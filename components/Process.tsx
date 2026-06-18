@@ -1,5 +1,6 @@
 'use client';
-import { useRef } from 'react';
+
+import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const STEPS = [
@@ -41,8 +42,20 @@ const STEPS = [
   },
 ];
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
+
 function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
   const ref = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.3, 1, 1, 0.3]);
   const scale = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.94, 1, 1, 0.94]);
@@ -54,17 +67,21 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
       ref={ref}
       style={{
         position: 'sticky',
-        top: `calc(8rem + ${i} * 1.5rem)`,
+        top: `calc(6rem + ${i} * 1.5rem)`,
         display: 'flex',
         alignItems: 'stretch',
+        width: '100%',
       }}
     >
       <motion.div
         style={{
-          display: 'grid', gridTemplateColumns: '1fr 1fr',
-          width: '100%', height: 480,
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+          width: '100%',
+          height: isMobile ? 'auto' : 480,
           background: 'rgb(20,20,22)',
           border: '1px solid var(--border)',
+          borderRadius: '16px',
           overflow: 'hidden',
           transformOrigin: 'center top',
           boxShadow: '0 1px 0 0 rgba(255,255,255,0.06) inset, 0 -1px 0 0 rgba(0,0,0,0.3) inset, 0 40px 80px -24px rgba(0,0,0,0.7)',
@@ -73,25 +90,25 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
         }}
       >
         {/* LEFT SIDE: Text Content Panel */}
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '2.75rem 3rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: isMobile ? '2.5rem 1.5rem' : '2.75rem 3rem' }}>
           <span style={{ fontFamily: 'var(--mono)', fontSize: '0.74rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--signal)', display: 'inline-block', marginBottom: '1.25rem' }}>
             {step.num}
             <span style={{ color: 'var(--text-muted)', margin: '0 0.4rem' }}>/</span>
             {step.total}
           </span>
 
-          <h3 style={{ fontFamily: 'var(--sans)', fontSize: 'clamp(1.75rem, 3.5vw, 3rem)', fontWeight: 600, lineHeight: 0.95, letterSpacing: '-0.04em', color: 'var(--text)', margin: '0 0 1.25rem', maxWidth: '18ch' }}>
+          <h3 style={{ fontFamily: 'var(--sans)', fontSize: 'clamp(1.5rem, 3.5vw, 2.5rem)', fontWeight: 600, lineHeight: 1.05, letterSpacing: '-0.04em', color: 'var(--text)', margin: '0 0 1.25rem' }}>
             {title}
             <span style={{ color: 'var(--signal)', fontStyle: 'normal' }}>{step.em}</span>
           </h3>
 
-          <p style={{ color: 'var(--text-soft)', fontSize: '1rem', lineHeight: 1.55, maxWidth: '50ch', margin: '0 0 1.75rem' }}>
+          <p style={{ color: 'var(--text-soft)', fontSize: '0.95rem', lineHeight: 1.6, maxWidth: '50ch', margin: '0 0 1.75rem' }}>
             {step.desc}
           </p>
 
-          <ul style={{ display: 'flex', flexWrap: 'wrap', gap: '0.55rem 1.75rem', margin: 0, padding: 0, listStyle: 'none' }}>
+          <ul style={{ display: 'flex', flexWrap: 'wrap', gap: '0.55rem 1.25rem', margin: 0, padding: 0, listStyle: 'none' }}>
             {step.deliverables.map(d => (
-              <li key={d} style={{ fontFamily: 'var(--mono)', fontSize: '0.74rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.55rem' }}>
+              <li key={d} style={{ fontFamily: 'var(--mono)', fontSize: '0.7rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.55rem' }}>
                 <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--text-faint)', flexShrink: 0, display: 'inline-block' }} />
                 {d}
               </li>
@@ -99,48 +116,29 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
           </ul>
         </div>
 
-        {/* RIGHT SIDE: Video Media Panel Viewport */}
-        <div style={{ background: 'var(--bg-elev)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <video
-            key={step.videoUrl}
-            src={step.videoUrl}
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: 0.85,
-            }}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-          />
-
-          {/* Left-edge smooth gradient blend */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to right, rgb(20,20,22) 0%, transparent 25%)',
-              pointerEvents: 'none',
-            }}
-          />
-
-          {/* Orange signal dot accent */}
-          <div style={{ position: 'absolute', bottom: '2rem', right: '2rem', width: 8, height: 8, borderRadius: '50%', background: 'var(--signal)', boxShadow: '0 0 16px rgba(255,107,43,0.5)' }} />
-        </div>
+        {/* RIGHT SIDE: Video Panel — cleanly hidden on mobile devices */}
+        {!isMobile && (
+          <div style={{ background: 'var(--bg-elev)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <video
+              key={step.videoUrl}
+              src={step.videoUrl}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+              autoPlay muted loop playsInline preload="auto"
+            />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgb(20,20,22) 0%, transparent 25%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', bottom: '2rem', right: '2rem', width: 8, height: 8, borderRadius: '50%', background: 'var(--signal)', boxShadow: '0 0 16px rgba(255,107,43,0.5)' }} />
+          </div>
+        )}
       </motion.div>
     </div>
   );
 }
 
 export function Process() {
+  const isMobile = useIsMobile();
   return (
     <section id="system" className="section-border" style={{ position: 'relative', background: 'var(--bg)' }}>
-      <div className="inner" style={{ padding: '7rem 40px 3rem' }}>
+      <div className="inner" style={{ padding: isMobile ? '5rem 1.5rem 2rem' : '7rem 40px 3rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '3rem' }}>
           <motion.p className="eyebrow" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
             From Briefing to Results
@@ -157,8 +155,7 @@ export function Process() {
         </div>
       </div>
 
-      {/* Sticky scroll stack wrapper */}
-      <div className="inner" style={{ display: 'flex', flexDirection: 'column', gap: '25vh', padding: '0 40px 5vh' }}>
+      <div className="inner" style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '4rem' : '25vh', padding: isMobile ? '0 1.5rem 5rem' : '0 40px 5vh' }}>
         {STEPS.map((step, i) => <ProcessCard key={step.num} step={step} i={i} />)}
       </div>
     </section>

@@ -1,4 +1,5 @@
 ﻿'use client';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const rv = (delay = 0) => ({
@@ -8,16 +9,28 @@ const rv = (delay = 0) => ({
 
 const TOOLS = ['n8n', 'Zapier', 'Make.com', 'Meta Ads', 'Google Ads', 'TikTok Ads', 'SEO Architecture', 'AI Voice Systems', 'CRM Automation', 'DeepSeek', 'Perplexity AI', 'DALL-E'];
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
+
 export function Founder() {
+  const isMobile = useIsMobile();
   return (
-    <section className="section-border" id="about" style={{ padding: '10rem 4rem' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: '0 5rem', alignItems: 'start' }}>
+    <section className="section-border" id="about" style={{ padding: isMobile ? '5rem 1.5rem' : '10rem 4rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1px 1fr', gap: isMobile ? '2.5rem 0' : '0 5rem', alignItems: 'start' }}>
+
         {/* Left — Identity */}
         <div>
           <motion.p className="section-tag" variants={rv()} initial="hidden" whileInView="show" viewport={{ once: true }}>
             07 — The Architect
           </motion.p>
-
           <motion.h2
             variants={rv(0.1)} initial="hidden" whileInView="show" viewport={{ once: true }}
             style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(2.2rem, 4vw, 3.8rem)', fontWeight: 600, color: 'var(--text)', lineHeight: 1.05, marginBottom: '0.4rem' }}>
@@ -28,19 +41,16 @@ export function Founder() {
             style={{ fontSize: '0.62rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--signal)', marginBottom: '3rem', fontFamily: 'var(--sans)' }}>
             Founder — Space Digital &amp; AI Consulting · Nairobi, Kenya
           </motion.p>
-
           <motion.p
             variants={rv(0.24)} initial="hidden" whileInView="show" viewport={{ once: true }}
             style={{ fontFamily: 'var(--serif)', fontSize: '1.1rem', fontStyle: 'italic', fontWeight: 300, lineHeight: 1.9, color: 'var(--text-muted)', paddingLeft: '1.2rem', borderLeft: '1px solid var(--signal-dim)', marginBottom: '2.5rem' }}>
             "I don&apos;t run campaigns. I architect systems — and I don&apos;t stop until the numbers prove it."
           </motion.p>
-
           <motion.p
             variants={rv(0.3)} initial="hidden" whileInView="show" viewport={{ once: true }}
             style={{ fontSize: '0.82rem', fontWeight: 300, lineHeight: 1.85, color: 'var(--text-muted)', fontFamily: 'var(--sans)', marginBottom: '1.6rem' }}>
             Space Digital was founded in 2023 with a singular conviction: that most businesses fail online not from lack of effort, but from lack of architecture. Paid media without strategy burns budgets. Content without distribution disappears. Automation without intelligence creates noise.
           </motion.p>
-
           <motion.p
             variants={rv(0.36)} initial="hidden" whileInView="show" viewport={{ once: true }}
             style={{ fontSize: '0.82rem', fontWeight: 300, lineHeight: 1.85, color: 'var(--text-muted)', fontFamily: 'var(--sans)' }}>
@@ -48,11 +58,13 @@ export function Founder() {
           </motion.p>
         </div>
 
-        {/* Divider */}
-        <motion.div
-          variants={rv(0.15)} initial="hidden" whileInView="show" viewport={{ once: true }}
-          style={{ background: 'linear-gradient(to bottom, transparent, var(--signal-dim) 15%, var(--signal-dim) 85%, transparent)', alignSelf: 'stretch', minHeight: 400 }}
-        />
+        {/* Divider — hidden cleanly on mobile */}
+        {!isMobile && (
+          <motion.div
+            variants={rv(0.15)} initial="hidden" whileInView="show" viewport={{ once: true }}
+            style={{ background: 'linear-gradient(to bottom, transparent, var(--signal-dim) 15%, var(--signal-dim) 85%, transparent)', alignSelf: 'stretch', minHeight: 400 }}
+          />
+        )}
 
         {/* Right — Capabilities */}
         <div>
@@ -61,7 +73,6 @@ export function Founder() {
             style={{ fontSize: '0.6rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--signal)', marginBottom: '2rem', fontFamily: 'var(--sans)' }}>
             Stack &amp; Capabilities
           </motion.p>
-
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginBottom: '4rem' }}>
             {TOOLS.map((tool, i) => (
               <motion.span
@@ -79,7 +90,6 @@ export function Founder() {
               </motion.span>
             ))}
           </div>
-
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
             {[
               { label: 'Engagement Model', value: 'Retainer · Project · Advisory' },
@@ -99,6 +109,7 @@ export function Founder() {
             <div style={{ borderTop: '1px solid var(--border)' }} />
           </div>
         </div>
+
       </div>
     </section>
   );

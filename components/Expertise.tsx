@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const SERVICES = [
@@ -37,9 +37,19 @@ const SERVICES = [
   },
 ];
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
+
 function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number }) {
   const [hovered, setHovered] = useState(false);
-
   return (
     <motion.div
       onMouseEnter={() => setHovered(true)}
@@ -47,7 +57,7 @@ function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number })
       initial={{ opacity: 0, scale: 0.88, filter: 'blur(4px)' }}
       whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: '-8% 0px' }}
-      transition={{ duration: 0.7, ease: [0.16,1,0.3,1], delay: i * 0.1 }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
       style={{
         display: 'flex', flexDirection: 'column',
         padding: '2.75rem 2.5rem 2.25rem',
@@ -61,7 +71,6 @@ function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number })
         cursor: 'none',
       }}
     >
-      {/* Accent line top */}
       <motion.div
         style={{
           position: 'absolute', top: 0, left: 0, right: 0, height: 1.5,
@@ -69,10 +78,8 @@ function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number })
           originX: 0,
         }}
         animate={{ scaleX: hovered ? 1 : 0 }}
-        transition={{ duration: 0.7, ease: [0.16,1,0.3,1] }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       />
-
-      {/* Watermark */}
       <div style={{
         fontFamily: 'var(--sans)', fontSize: 'clamp(5rem, 9vw, 8rem)', fontWeight: 800,
         lineHeight: 0.85, letterSpacing: '-0.04em',
@@ -83,26 +90,18 @@ function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number })
         transform: hovered ? 'translate(-4px, 0)' : 'translate(0, 0)',
         transition: '-webkit-text-stroke-color 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)',
       }}>{service.watermark}</div>
-
-      {/* Number */}
       <span style={{ fontFamily: 'var(--mono)', fontSize: '0.74rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--signal)', marginBottom: '1.5rem', position: 'relative', zIndex: 1 }}>
         {service.num}
       </span>
-
-      {/* Title */}
       <h3 style={{ fontFamily: 'var(--sans)', fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)', fontWeight: 700, lineHeight: 0.98, letterSpacing: '-0.035em', color: 'var(--text)', margin: '0 0 0.3rem', position: 'relative', zIndex: 1 }}>
         {service.title}
       </h3>
       <span style={{ fontFamily: 'var(--mono)', fontSize: '0.7rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '2.25rem', position: 'relative', zIndex: 1 }}>
         {service.subtitle}
       </span>
-
-      {/* Description */}
       <p style={{ color: 'var(--text-soft)', fontSize: '0.95rem', lineHeight: 1.55, maxWidth: '38ch', margin: '0 0 1.5rem', position: 'relative', zIndex: 1 }}>
         {service.desc}
       </p>
-
-      {/* Feature list */}
       <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: 'auto', position: 'relative', zIndex: 1 }}>
         {service.features.map(f => (
           <li key={f} style={{ fontFamily: 'var(--mono)', fontSize: '0.72rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
@@ -111,8 +110,6 @@ function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number })
           </li>
         ))}
       </ul>
-
-      {/* Arrow */}
       <div style={{
         fontFamily: 'var(--mono)', fontSize: '1.25rem', lineHeight: 1,
         color: hovered ? 'var(--signal)' : 'var(--text-faint)',
@@ -126,14 +123,13 @@ function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number })
 }
 
 export function Expertise() {
+  const isMobile = useIsMobile();
   return (
     <section className="section-border" style={{ background: 'var(--bg)', isolation: 'isolate', position: 'relative', overflow: 'hidden' }}>
-      {/* Radial overlay */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
         background: 'radial-gradient(120% 80% at 50% 0%, rgba(10,10,11,0.3) 0%, rgba(10,10,11,0.6) 55%, rgba(10,10,11,0.85) 100%)',
       }} />
-
       <div className="inner" style={{ position: 'relative', zIndex: 2, padding: '7rem 40px 6rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '4rem' }}>
           <motion.p className="eyebrow" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
@@ -142,15 +138,13 @@ export function Expertise() {
           <motion.h2
             initial={{ opacity: 0, y: '2rem', filter: 'blur(6px)' }}
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true }} transition={{ duration: 0.9, ease: [0.16,1,0.3,1], delay: 0.1 }}
+            viewport={{ once: true }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
             style={{ fontFamily: 'var(--sans)', fontSize: 'clamp(2.25rem, 6vw, 5rem)', fontWeight: 600, lineHeight: 0.95, letterSpacing: '-0.045em', color: 'var(--text)', maxWidth: '16ch' }}
           >
-            Every angle of growth,{' '}
-            <em style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontWeight: 400, letterSpacing: '-0.025em', color: 'var(--signal)' }}>engineered.</em>
+            Every angle of growth, <span style={{ color: 'var(--signal)' }}>engineered.</span>
           </motion.h2>
         </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '1.25rem' }}>
           {SERVICES.map((s, i) => <ServiceCard key={s.num} service={s} i={i} />)}
         </div>
       </div>
