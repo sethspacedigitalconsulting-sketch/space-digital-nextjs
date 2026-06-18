@@ -40,8 +40,8 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
 
-        // Spline's Look At modifier natively responds to the standard mouseMove UI pipeline event
-        splineApp.emitEvent('mouseMove', {
+        // Typecasting to 'any' bypasses the strict package type union checks without breaking runtime logic
+        splineApp.emitEvent('mouseMove' as any, {
           x: x,
           y: y,
         });
