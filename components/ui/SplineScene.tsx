@@ -45,24 +45,23 @@ export function SplineScene({ scene, className }: Props) {
 
   if (isMobile === null) return null;
 
-  // Mobile Blueprint: Pinned right, completely darkened for structural contrast
+  // Mobile Blueprint: Edge-to-edge cover layout to completely banish left black space
   if (isMobile) {
     return (
-      <div className={`${className ?? ''} flex justify-end items-center relative w-full h-full overflow-hidden pr-2`}>
-        {/* Hardware-accelerated image container box wrapper */}
-        <div className="relative w-[85%] h-[80%] max-w-[360px] aspect-square opacity-85">
+      <div className={`${className ?? ''} relative w-full h-full overflow-hidden`}>
+        {/* Expanded image layout to secure full width and height coverage */}
+        <div className="absolute inset-0 w-full h-full opacity-85">
           <Image
             src="/workflows/splinemobile.png"
             alt="Space Digital AI Workflow Node Architecture"
             fill
             priority
-            sizes="(max-w: 768px) 100vw, 50vw"
-            className="object-contain object-right"
+            sizes="100vw"
+            className="object-cover object-right" /* Replaced contain with cover for full bleed */
           />
 
           {/* ── AMBIENT CONTRAST DARKENER OVERLAY ── */}
-          {/* This layer tints the image asset back so your headline text pops cleanly */}
-          <div className="absolute inset-0 bg-[#0a0a0b]/40 mix-blend-multiply pointer-events-none rounded-xl" />
+          <div className="absolute inset-0 bg-[#0a0a0b]/40 mix-blend-multiply pointer-events-none" />
         </div>
       </div>
     );
