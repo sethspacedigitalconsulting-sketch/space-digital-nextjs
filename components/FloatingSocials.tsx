@@ -6,7 +6,8 @@ import { SocialTooltip, SocialItem } from "@/components/ui/social-media";
 
 const sethSocialLinks: SocialItem[] = [
     {
-        href: "https://api.whatsapp.com/message/RV5LUNZAXFW3M1?autoload=1&app_absent=0",
+        // Optimized clean deep-link format for both mobile app redirection and desktop browsers
+        href: "https://wa.me/message/RV5LUNZAXFW3M1",
         ariaLabel: "WhatsApp",
         tooltip: "Direct Chat",
         color: "#25D366",
