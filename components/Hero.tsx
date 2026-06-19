@@ -12,7 +12,6 @@ const HOVER_WORDS = ['INTELLIGENT', 'ENGINEERED', 'FOR SMBs', 'SCALING', '24/7 L
 
 const WORD_BASE = 0.60;
 const WORD_STEP = 0.08;
-
 const UNDERLINE_DELAYS = [1.94, 2.30];
 
 const STATS = [
@@ -26,7 +25,6 @@ export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const ul1 = useRef<SVGPathElement>(null);
   const ul2 = useRef<SVGPathElement>(null);
-
   const { x, y } = useMousePosition(containerRef);
 
   useEffect(() => {
@@ -46,10 +44,8 @@ export function Hero() {
         .draw { stroke-dashoffset: 0 !important; }
       `}</style>
 
-      {/* ── Spotlight ── */}
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="rgba(255,107,43,0.4)" />
 
-      {/* ── Ambient Background Lighting ── */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none',
         animation: 'heroLightIntro 1s 0.15s cubic-bezier(0.22,1,0.36,1) forwards, heroLightBreathe 3.6s 1.2s ease-in-out infinite',
@@ -63,7 +59,6 @@ export function Hero() {
         background: 'radial-gradient(ellipse 45% 35% at 20% 75%, rgba(255,107,43,0.10) 0%, transparent 65%)',
       }} />
 
-      {/* Hero overlay gradient */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
         backgroundImage: [
@@ -72,10 +67,10 @@ export function Hero() {
         ].join(', '),
       }} />
 
-      {/* ── Interactive Canvas/Scene Container ── */}
-      <div className="absolute inset-0 z-2 flex pointer-events-auto">
-        <div className="flex-1 pointer-events-none" />
-        <div className="flex-1 relative hue-rotate-180 saturate-200">
+      {/* ── FULL SCREEN BACKDROP CONTAINER OVERHAUL ── */}
+      <div className="absolute inset-0 z-0 md:z-2 md:flex pointer-events-none md:pointer-events-auto">
+        <div className="hidden md:flex md:flex-1 pointer-events-none" />
+        <div className="absolute inset-0 md:relative md:flex-1 w-full h-full hue-rotate-180 saturate-200">
           <SplineScene
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
             className="w-full h-full"
@@ -83,7 +78,6 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Vertical scanning track line — hidden on mobile */}
       <div className="hidden md:block" style={{
         position: 'absolute', right: '4rem', top: '15%', bottom: '15%',
         width: 1, zIndex: 3,
@@ -97,7 +91,6 @@ export function Hero() {
         }} />
       </div>
 
-      {/* ── CROSSHAIR TRACER MATRIX — Desktop Only ── */}
       <div className="hidden md:block absolute inset-0 pointer-events-none z-10 overflow-hidden">
         <div
           className="absolute h-px bg-orange-500/15 left-0 right-0 -translate-y-1/2 transition-all duration-75 ease-out shadow-[0_0_8px_rgba(255,107,43,0.2)]"
@@ -113,10 +106,7 @@ export function Hero() {
         />
       </div>
 
-      {/* ── Content Foreground Container ── */}
       <div className="inner relative z-20 pt-36 pb-12 w-full max-w-7xl mx-auto px-6 pointer-events-none">
-
-        {/* Eyebrow */}
         <motion.p
           className="text-xs uppercase tracking-widest font-mono mb-8 pointer-events-auto"
           style={{ color: 'var(--signal)' }}
@@ -127,7 +117,6 @@ export function Hero() {
           Space Digital &amp; AI Consulting — Nairobi, Kenya
         </motion.p>
 
-        {/* Headline */}
         <h1
           className="select-none mb-12 text-left text-white pointer-events-auto max-w-xl lg:max-w-2xl"
           style={{
@@ -178,7 +167,6 @@ export function Hero() {
           })}
         </h1>
 
-        {/* Sub Description */}
         <motion.div
           className="mb-10 max-w-xl pointer-events-auto"
           initial={{ opacity: 0, filter: 'blur(8px)', y: '2.5rem' }}
@@ -190,7 +178,6 @@ export function Hero() {
           </div>
         </motion.div>
 
-        {/* Actions */}
         <motion.div
           className="flex items-center gap-4 flex-wrap mb-14 pointer-events-auto"
           initial={{ opacity: 0, filter: 'blur(8px)', y: '2.5rem' }}
@@ -205,7 +192,6 @@ export function Hero() {
           </a>
         </motion.div>
 
-        {/* 2-Column Responsive Mobile Grid Stats Bar */}
         <motion.div
           className="grid grid-cols-2 gap-x-6 gap-y-5 sm:flex sm:flex-wrap sm:gap-10 pt-8 border-t border-zinc-900 pointer-events-auto"
           initial={{ opacity: 0, filter: 'blur(8px)', y: '2.5rem' }}
@@ -225,7 +211,6 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Background Ambience Animations */}
       <style>{`
         @keyframes heroLightIntro {
           100% { opacity: 0.51; transform: scale(1) translate(0px, 0px); }

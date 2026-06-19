@@ -19,7 +19,6 @@ export function SplineScene({ scene, className }: Props) {
     checkViewport();
     window.addEventListener('resize', checkViewport);
 
-    // Only inject the heavy WebGL engine script if the user is on desktop
     if (window.innerWidth >= 768) {
       const script = document.createElement('script');
       script.src = 'https://unpkg.com/@splinetool/viewer@1.9.5/build/spline-viewer.js';
@@ -45,29 +44,24 @@ export function SplineScene({ scene, className }: Props) {
 
   if (isMobile === null) return null;
 
-  // Mobile Blueprint: Edge-to-edge cover layout to completely banish left black space
+  // Mobile: Absolute background layer takeover
   if (isMobile) {
     return (
-      <div className={`${className ?? ''} relative w-full h-full overflow-hidden`}>
-        {/* Expanded image layout to secure full width and height coverage */}
-        <div className="absolute inset-0 w-full h-full opacity-85">
-          <Image
-            src="/workflows/splinemobile.png"
-            alt="Space Digital AI Workflow Node Architecture"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-right" /* Replaced contain with cover for full bleed */
-          />
-
-          {/* ── AMBIENT CONTRAST DARKENER OVERLAY ── */}
-          <div className="absolute inset-0 bg-[#0a0a0b]/40 mix-blend-multiply pointer-events-none" />
-        </div>
+      <div className="absolute inset-0 w-full h-full min-h-screen overflow-hidden">
+        <Image
+          src="/workflows/splinemobile.png"
+          alt="Space Digital Background Matrix"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center opacity-40"
+        />
+        {/* Deep background contrast darkener layout to blend image into text space */}
+        <div className="absolute inset-0 bg-[#0a0a0b]/60 mix-blend-multiply pointer-events-none" />
       </div>
     );
   }
 
-  // Desktop Baseline: Render the clean target container node canvas with branding mask
   return (
     <>
       <div ref={canvasRef} className={`${className ?? ''} relative spline-clean-container`} />
@@ -75,7 +69,6 @@ export function SplineScene({ scene, className }: Props) {
         .spline-clean-container spline-viewer {
           position: relative;
         }
-        /* Expanded mask box to entirely cover and block the external logo link */
         .spline-clean-container::after {
           content: '';
           position: absolute;
