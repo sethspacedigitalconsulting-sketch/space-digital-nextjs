@@ -62,13 +62,13 @@ export function Nav() {
       initial={{ opacity: 0, y: '-130%' }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-      className="fixed top-6 left-0 right-0 z-[1000] flex justify-center pointer-events-none"
+      className="fixed top-6 left-0 right-0 z-[1000] flex justify-center pointer-events-none px-2 md:px-0"
     >
       {/* ── CORE MENU ROW CAP CONTAINER ── */}
-      <div className="flex items-center gap-2 p-2 rounded-2xl bg-zinc-950/70 border border-white/5 backdrop-blur-xl pointer-events-auto select-none shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <div className="flex items-center gap-1.5 md:gap-2 p-1.5 md:p-2 rounded-2xl bg-zinc-950/70 border border-white/5 backdrop-blur-xl pointer-events-auto select-none shadow-[0_20px_50px_rgba(0,0,0,0.5)] w-full max-w-[calc(100%-1.5rem)] md:w-auto justify-between md:justify-start">
 
         {/* ── LOGO CONTAINER — Entirely static, edge-to-edge layout bounds ── */}
-        <div className="relative w-11 h-11 rounded-xl border border-[#FF6B2B]/20 bg-[#FF6B2B]/5 overflow-hidden flex items-center justify-center">
+        <div className="relative w-9 h-9 md:w-11 md:h-11 rounded-xl border border-[#FF6B2B]/20 bg-[#FF6B2B]/5 overflow-hidden flex items-center justify-center shrink-0">
           <a
             href="#home"
             className="relative w-full h-full block"
@@ -78,23 +78,25 @@ export function Nav() {
               src="/workflows/logo.png"
               alt="Space Digital logo"
               fill
-              className="object-cover" // Ensures graphic scales to edge outlines flawlessly
+              className="object-cover"
               priority
             />
           </a>
         </div>
 
         {/* ── NAVIGATION LINK ROW ── */}
-        <NavTabsAnimation
-          items={SYSTEM_NAV_ITEMS}
-          activeMenu={activeMenu}
-          setActiveMenu={setActiveMenu}
-        />
+        <div className="flex justify-center items-center flex-1 md:flex-initial">
+          <NavTabsAnimation
+            items={SYSTEM_NAV_ITEMS}
+            activeMenu={activeMenu}
+            setActiveMenu={setActiveMenu}
+          />
+        </div>
 
         {/* ── BRIEFING CTA BUTTON ── */}
         <a
           href="#contact"
-          className="btn btn-accent tracking-wide text-[0.72rem] px-5 h-11 inline-flex items-center rounded-xl font-semibold bg-[#FF6B2B] text-zinc-950 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,107,43,0.4)] shrink-0"
+          className="btn btn-accent tracking-wide text-[0.68rem] md:text-[0.72rem] px-3.5 md:px-5 h-9 md:h-11 inline-flex items-center rounded-xl font-semibold bg-[#FF6B2B] text-zinc-950 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,107,43,0.4)] shrink-0"
         >
           Get in Touch
         </a>

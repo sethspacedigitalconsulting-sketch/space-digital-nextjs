@@ -59,16 +59,25 @@ export function Works() {
   const previewRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (!(window.matchMedia?.("(hover: hover)").matches)) return;
+    const checkViewport = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+
+    if (!(window.matchMedia?.("(hover: hover)").matches) || window.innerWidth < 768) {
+      return () => window.removeEventListener('resize', checkViewport);
+    }
 
     const list = document.querySelector(".works-list");
     const preview = previewRef.current;
     const img = imgRef.current;
     const video = videoRef.current;
 
-    if (!list || !preview || !img || !video) return;
+    if (!list || !preview || !img || !video) return () => window.removeEventListener('resize', checkViewport);
 
     let targetX = 0, targetY = 0;
     let currentX = 0, currentY = 0;
@@ -117,11 +126,7 @@ export function Works() {
             video.style.display = 'none';
             video.removeAttribute('src');
             img.style.display = 'block';
-
             img.src = url;
-            img.onerror = () => {
-              img.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='280' viewBox='0 0 420 280'><rect width='100%' height='100%' fill='%2318181b'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='11' fill='%2352525b'>Case Image Preview</text></svg>";
-            };
           }
         }
 
@@ -150,6 +155,7 @@ export function Works() {
     list.addEventListener("mouseleave", onMouseLeave);
 
     return () => {
+      window.removeEventListener('resize', checkViewport);
       list.removeEventListener("mousemove", onMouseMove);
       list.removeEventListener("mouseleave", onMouseLeave);
       if (rafId) cancelAnimationFrame(rafId);
@@ -173,11 +179,17 @@ export function Works() {
         }
         .work-link {
           color: #ffffff; text-decoration: none;
-          display: grid; grid-template-columns: 60px 1fr auto auto auto;
-          align-items: baseline; gap: 2.5rem; padding: 2.25rem 0.5rem;
+          display: grid; grid-template-columns: auto 1fr auto;
+          align-items: center; gap: 1.25rem; padding: 1.5rem 0.5rem;
           position: relative; transition: padding-left 0.55s var(--works-easing);
         }
-        .work-link:hover { padding-left: 2.25rem; }
+        @media (min-width: 768px) {
+          .work-link {
+            grid-template-columns: 60px 1fr auto auto auto;
+            gap: 2.5rem; padding: 2.25rem 0.5rem;
+          }
+          .work-link:hover { padding-left: 2.25rem; }
+        }
         .work-link::before {
           content: ""; background: var(--works-signal);
           width: 0; height: 1px; position: absolute;
@@ -186,17 +198,19 @@ export function Works() {
         }
         .work-link:hover::before { width: 100%; }
         .work-num { font-family: monospace; color: #52525b; letter-spacing: 0.04em; font-size: 0.78rem; }
-        .work-name { margin: 0; font-size: clamp(1.65rem, 4.5vw, 3.25rem); font-weight: 600; line-height: 1; }
+        .work-name { margin: 0; font-size: clamp(1.2rem, 4vw, 3.25rem); font-weight: 600; line-height: 1.1; }
         .work-tag, .work-year { font-family: monospace; color: #71717a; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.78rem; }
         .work-arrow { font-family: monospace; color: #52525b; font-size: 1.05rem; transition: transform 0.45s var(--works-easing), color 0.4s var(--works-easing); }
         .work-link:hover .work-arrow { color: var(--works-signal); transform: translate(4px, -4px); }
-        .text-roll { display: inline-block; vertical-align: bottom; line-height: 0.95; position: relative; overflow: hidden; }
+        .text-roll { display: inline-block; vertical-align: bottom; line-height: 1.1; position: relative; overflow: hidden; }
         .text-roll-row { display: block; white-space: nowrap; }
         .text-roll-clone { position: absolute; inset: 0; }
         .text-roll-letter { display: inline-block; transform: translateY(0); transition: transform 0.52s var(--works-easing), color 0.45s ease-out; transition-delay: calc(var(--i, 0) * 14ms); }
         .text-roll-clone .text-roll-letter { color: var(--works-signal); transform: translateY(105%); }
-        .work-link:hover .text-roll-row .text-roll-letter { transform: translateY(-105%); }
-        .work-link:hover .text-roll-clone .text-roll-letter { transform: translateY(0); }
+        @media (min-width: 768px) {
+          .work-link:hover .text-roll-row .text-roll-letter { transform: translateY(-105%); }
+          .work-link:hover .text-roll-clone .text-roll-letter { transform: translateY(0); }
+        }
         .cursor-preview {
           pointer-events: none; z-index: 90; opacity: 0;
           width: 420px; height: 280px; border-radius: 1rem; overflow: hidden;
@@ -209,20 +223,20 @@ export function Works() {
         .cursor-preview img, .cursor-preview video { display: block; width: 100%; height: 100%; object-fit: cover; }
       `}</style>
 
-      <div className="works-inner max-w-7xl mx-auto px-6 py-24">
-        <header className="works-head flex flex-col gap-4 mb-16">
+      <div className="works-inner max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24">
+        <header className="works-head flex flex-col gap-4 mb-12 md:mb-16">
           <span className="works-eyebrow font-mono tracking-widest text-[#FF6B2B] uppercase text-xs flex items-center gap-2">
             <span className="w-8 h-px bg-[#FF6B2B]" />
             Selected Work / 2024 — 2026
           </span>
-          <h2 className="works-title text-4xl md:text-6xl font-bold tracking-tight text-white">
+          <h2 className="works-title text-3xl md:text-6xl font-bold tracking-tight text-white">
             What we've <em className="text-[#FF6B2B] italic font-serif font-normal">built</em>.
           </h2>
         </header>
 
         <ul className="works-list">
           {PROOF_ITEMS.map((item) => (
-            <li key={item.id} className="work-item group">
+            <li key={item.id} className="work-item group flex flex-col">
               <a
                 className="work-link"
                 href={item.destinationUrl}
@@ -266,15 +280,74 @@ export function Works() {
                 <span className="work-year hidden sm:inline text-right">{item.year}</span>
                 <span className="work-arrow text-right">↗</span>
               </a>
+
+              {/* Mobile Only: Inline scroll-triggered autoplay preview matrix */}
+              {isMobile && (
+                <div className="px-2 pb-6 w-full md:hidden">
+                  <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-white/5 bg-zinc-950 shadow-inner">
+                    <WorkMediaMobileCard src={item.mediaUrl} type={item.mediaType} />
+                  </div>
+                  <div className="flex justify-between items-center mt-2.5 px-1">
+                    <span className="text-[10px] font-mono tracking-wider text-[#FF6B2B] uppercase font-bold">{item.tag}</span>
+                    <span className="text-[10px] font-mono text-zinc-600">{item.year}</span>
+                  </div>
+                </div>
+              )}
             </li>
           ))}
         </ul>
       </div>
 
-      <div ref={previewRef} className="cursor-preview" aria-hidden="true">
+      <div ref={previewRef} className="cursor-preview hidden md:block" aria-hidden="true">
         <img ref={imgRef} alt="Case Preview" style={{ display: 'none' }} />
         <video ref={videoRef} style={{ display: 'none' }} />
       </div>
     </section>
+  );
+}
+
+/* ── HARDWARE-ACCELERATED MOBILE WORK OBSERVER ATOM ── */
+function WorkMediaMobileCard({ src, type }: { src: string; type: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (type !== 'video') return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (videoRef.current) {
+          if (entry.isIntersecting) {
+            videoRef.current.play().catch(() => { });
+          } else {
+            videoRef.current.pause();
+          }
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (videoRef.current) observer.observe(videoRef.current);
+    return () => observer.disconnect();
+  }, [type]);
+
+  if (type === 'video') {
+    return (
+      <video
+        ref={videoRef}
+        src={src}
+        muted
+        loop
+        playsInline
+        className="w-full h-full object-cover opacity-80"
+      />
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt="Case study deployment visual asset"
+      className="w-full h-full object-cover opacity-80"
+    />
   );
 }

@@ -4,7 +4,6 @@ import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ArrowUpRight, Play } from 'lucide-react';
 
-// Exact 5-item structural data stream
 const PROOF_ITEMS = [
     {
         type: 'static',
@@ -12,7 +11,7 @@ const PROOF_ITEMS = [
         title: 'Ulnar Medical Clinic',
         category: 'CLINICAL SEO & SITES',
         description: 'Custom Next.js infrastructure optimization driving a continuous patient acquisition pipeline and eliminating lead drop-off.',
-        imageSrc: '/workflows/ulnar-medical-case.png', // Placed in public/workflows/
+        imageSrc: '/workflows/ulnar-medical-case.png',
     },
     {
         type: 'static',
@@ -20,7 +19,7 @@ const PROOF_ITEMS = [
         title: 'Wibify Agency',
         category: 'INBOUND WEB ENGINE',
         description: 'High-performance operational scale blending clean digital presence with automated lead triage filters.',
-        imageSrc: '/workflows/wibify-agency-case.png', // Placed in public/workflows/
+        imageSrc: '/workflows/wibify-agency-case.png',
     },
     {
         type: 'video',
@@ -28,7 +27,7 @@ const PROOF_ITEMS = [
         value: '3.8× ROAS',
         label: 'Meta Conversion Ads',
         sublabel: 'Scalable client acquisition pipelines.',
-        videoUrl: '/workflows/metaads.mp4', // Your exact relative web path asset
+        videoUrl: '/workflows/metaads.mp4',
         destinationUrl: 'https://your-meta-ads-proof-dashboard.com',
         accentColor: '#FF6B2B'
     },
@@ -56,8 +55,8 @@ const PROOF_ITEMS = [
 
 export default function ProofInNumbers() {
     return (
-        <section id="proof" className="w-full py-28 bg-[#0a0a0b] border-t border-zinc-900 px-6 select-none">
-            <div className="max-w-7xl mx-auto flex flex-col gap-12">
+        <section id="proof" className="w-full py-16 md:py-28 bg-[#0a0a0b] border-t border-zinc-900 px-4 md:px-6 select-none overflow-hidden">
+            <div className="max-w-7xl mx-auto flex flex-col gap-10 md:gap-12">
 
                 {/* Section Header */}
                 <div className="flex flex-col gap-2 max-w-xl">
@@ -69,8 +68,8 @@ export default function ProofInNumbers() {
                     </h2>
                 </div>
 
-                {/* 5-Column Clean Grid Matrix */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+                {/* Mobile Responsive Grid Matrix */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start w-full max-w-full">
                     {PROOF_ITEMS.map((item) => {
                         if (item.type === 'static') {
                             return (
@@ -94,7 +93,7 @@ export default function ProofInNumbers() {
                                             src={item.imageSrc!}
                                             alt={item.title!}
                                             fill
-                                            className="object-cover opacity-25 group-hover:opacity-100 transition-opacity duration-500"
+                                            className="object-cover opacity-40 md:opacity-25 group-hover:opacity-100 transition-opacity duration-500"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-60 pointer-events-none" />
                                     </div>
@@ -102,7 +101,6 @@ export default function ProofInNumbers() {
                             );
                         }
 
-                        // Render Dynamic Hover Video Card for items 3, 4, and 5
                         return (
                             <VideoMetricCard
                                 key={item.id}
@@ -122,21 +120,39 @@ export default function ProofInNumbers() {
     );
 }
 
-/* ── HIGH PERFORMANCE ASPECT-RATIO VIDEO ATOM ── */
+/* ── INTERSECTION-OBSERVER MOBILE BACKED ATOM ── */
 function VideoMetricCard({ value, label, sublabel, videoUrl, destinationUrl, accentColor }: {
     value: string; label: string; sublabel: string; videoUrl: string; destinationUrl: string; accentColor: string;
 }) {
     const videoRef = useRef<HTMLVideoElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [aspectRatio, setAspectRatio] = useState<number>(16 / 9); // Base default ratio fallback
+    const [aspectRatio, setAspectRatio] = useState<number>(16 / 9);
 
     const handleLoadedMetadata = () => {
         if (videoRef.current) {
             const w = videoRef.current.videoWidth;
             const h = videoRef.current.videoHeight;
-            if (w && h) setAspectRatio(w / h); // Dynamically scale box matching native file dimensions
+            if (w && h) setAspectRatio(w / h);
         }
     };
+
+    useEffect(() => {
+        const isMobileDevice = window.innerWidth < 768;
+
+        if (isMobileDevice) {
+            // Mobile: Track position on the layout viewport
+            const observer = new IntersectionObserver(
+                ([entry]) => {
+                    setIsPlaying(entry.isIntersecting);
+                },
+                { threshold: 0.6 }
+            );
+
+            if (containerRef.current) observer.observe(containerRef.current);
+            return () => observer.disconnect();
+        }
+    }, []);
 
     useEffect(() => {
         if (videoRef.current) {
@@ -152,8 +168,9 @@ function VideoMetricCard({ value, label, sublabel, videoUrl, destinationUrl, acc
 
     return (
         <div
-            onMouseEnter={() => setIsPlaying(true)}
-            onMouseLeave={() => setIsPlaying(false)}
+            ref={containerRef}
+            onMouseEnter={() => { if (window.innerWidth >= 768) setIsPlaying(true); }}
+            onMouseLeave={() => { if (window.innerWidth >= 768) setIsPlaying(false); }}
             onClick={() => window.open(destinationUrl, '_blank', 'noopener,noreferrer')}
             className="group relative w-full rounded-2xl border border-zinc-900 bg-zinc-950/40 p-5 overflow-hidden transition-all duration-300 hover:border-zinc-800/80 hover:bg-zinc-900/20 flex flex-col gap-4 cursor-pointer"
         >
@@ -174,7 +191,6 @@ function VideoMetricCard({ value, label, sublabel, videoUrl, destinationUrl, acc
                 </div>
             </div>
 
-            {/* Dynamic Video Frame Box container */}
             <div
                 className="relative w-full overflow-hidden rounded-xl border border-white/5 bg-zinc-950 transition-all duration-300"
                 style={{ aspectRatio: aspectRatio }}
@@ -186,11 +202,11 @@ function VideoMetricCard({ value, label, sublabel, videoUrl, destinationUrl, acc
                     muted
                     playsInline
                     onLoadedMetadata={handleLoadedMetadata}
-                    className="w-full h-full object-cover opacity-25 group-hover:opacity-100 transition-all duration-500 ease-out"
+                    className="w-full h-full object-cover opacity-40 md:opacity-25 group-hover:opacity-100 transition-all duration-500 ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 via-transparent to-transparent pointer-events-none" />
 
-                {/* Play Overlay Indicator Icon */}
+                {/* Hide overlay icon immediately when the asset actively triggers playback loops */}
                 <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-all duration-300 ${isPlaying ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
                     <div className="w-10 h-10 rounded-full bg-zinc-900/90 backdrop-blur-md border border-white/10 flex items-center justify-center shadow-lg">
                         <Play size={14} className="text-white fill-white ml-0.5 opacity-80" />
@@ -198,7 +214,6 @@ function VideoMetricCard({ value, label, sublabel, videoUrl, destinationUrl, acc
                 </div>
             </div>
 
-            {/* Under-layer Glow Accent Pod */}
             <div
                 className="absolute -bottom-12 -right-12 w-24 h-24 rounded-full filter blur-[40px] opacity-0 transition-opacity duration-500 pointer-events-none group-hover:opacity-15"
                 style={{ backgroundColor: accentColor }}

@@ -2,23 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import dynamic from 'next/dynamic';
 import { Spotlight } from '@/components/ui/spotlight';
 import { useMousePosition } from '@/components/hooks/use-mouse-position';
 import { MagneticText } from '@/components/ui/morphing-cursor';
-
-// Safely isolate the Spline 3D Scene to client-side runtime to avoid server dispatcher crashes
-const SplineScene = dynamic(
-  () => import('@/components/ui/SplineScene').then((mod) => mod.SplineScene),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="w-full h-full flex items-center justify-center bg-[#0a0a0b]">
-        <div className="w-6 h-6 border-2 border-zinc-800 border-t-[#FF6B2B] rounded-full animate-spin" />
-      </div>
-    )
-  }
-);
+import { SplineScene } from '@/components/ui/SplineScene';
 
 const WORDS = ['Systems', 'for', 'brands', 'that', 'refuse', 'to', 'look', 'ordinary.'];
 const HOVER_WORDS = ['INTELLIGENT', 'ENGINEERED', 'FOR SMBs', 'SCALING', '24/7 LEAD', 'GENERATION', 'ROAS DRIVEN', 'AUTOMATION.'];
@@ -85,7 +72,7 @@ export function Hero() {
         ].join(', '),
       }} />
 
-      {/* ── Spline 3D Scene ── */}
+      {/* ── Interactive Canvas/Scene Container ── */}
       <div className="absolute inset-0 z-2 flex pointer-events-auto">
         <div className="flex-1 pointer-events-none" />
         <div className="flex-1 relative hue-rotate-180 saturate-200">
@@ -177,7 +164,6 @@ export function Hero() {
                       ref={ulRef}
                       d="M2,7 C30,3 70,9 110,6 C150,3 190,8 218,5"
                       stroke="var(--signal)" strokeWidth="2.4" fill="none"
-                      strokeLinecap="round"
                       strokeLinecap="round"
                       strokeDasharray="400" strokeDashoffset="400"
                       style={{
