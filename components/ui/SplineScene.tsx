@@ -45,25 +45,30 @@ export function SplineScene({ scene, className }: Props) {
 
   if (isMobile === null) return null;
 
-  // Mobile Blueprint: Renders your exact crisp Spline Robot PNG with zero framework lag
+  // Mobile Blueprint: Pinned right, completely darkened for structural contrast
   if (isMobile) {
     return (
-      <div className={`${className ?? ''} flex items-center justify-center relative w-full h-full overflow-hidden`}>
-        <div className="relative w-full h-[80%] max-w-[400px] aspect-square transition-all duration-700 ease-out opacity-90 animate-pulse" style={{ animationDuration: '4s' }}>
+      <div className={`${className ?? ''} flex justify-end items-center relative w-full h-full overflow-hidden pr-2`}>
+        {/* Hardware-accelerated image container box wrapper */}
+        <div className="relative w-[85%] h-[80%] max-w-[360px] aspect-square opacity-85">
           <Image
-            src="/workflows/splinessssss.png"
+            src="/workflows/splinemobile.png"
             alt="Space Digital AI Workflow Node Architecture"
             fill
             priority
             sizes="(max-w: 768px) 100vw, 50vw"
-            className="object-contain"
+            className="object-contain object-right"
           />
+
+          {/* ── AMBIENT CONTRAST DARKENER OVERLAY ── */}
+          {/* This layer tints the image asset back so your headline text pops cleanly */}
+          <div className="absolute inset-0 bg-[#0a0a0b]/40 mix-blend-multiply pointer-events-none rounded-xl" />
         </div>
       </div>
     );
   }
 
-  // Desktop Baseline: Render the container and apply a global stylesheet injection to mask the logo link node
+  // Desktop Baseline: Render the clean target container node canvas with branding mask
   return (
     <>
       <div ref={canvasRef} className={`${className ?? ''} relative spline-clean-container`} />
@@ -71,16 +76,16 @@ export function SplineScene({ scene, className }: Props) {
         .spline-clean-container spline-viewer {
           position: relative;
         }
-        /* Cover and block pointer access to the fixed logo tag placement safely */
+        /* Expanded mask box to entirely cover and block the external logo link */
         .spline-clean-container::after {
           content: '';
           position: absolute;
           bottom: 0;
           right: 0;
-          width: 140px;
-          height: 48px;
-          background: #0a0a0b; /* Coordinates perfectly with your background matrix color */
-          z-index: 40;
+          width: 180px;
+          height: 56px;
+          background: #0a0a0b;
+          z-index: 50;
           pointer-events: auto;
         }
       `}</style>
