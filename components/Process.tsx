@@ -77,6 +77,7 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
         style={{
           display: 'grid',
           gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+          gridTemplateRows: isMobile ? 'auto auto' : '1fr',
           width: '100%',
           height: isMobile ? 'auto' : 480,
           background: 'rgb(20,20,22)',
@@ -89,8 +90,27 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
           scale,
         }}
       >
-        {/* LEFT SIDE: Text Content Panel */}
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: isMobile ? '2.5rem 1.5rem' : '2.75rem 3rem' }}>
+        {/* VIDEO STRIP — top on mobile, right panel on desktop */}
+        {isMobile ? (
+          <div style={{
+            position: 'relative',
+            height: 180,
+            overflow: 'hidden',
+            flexShrink: 0,
+          }}>
+            <video
+              key={step.videoUrl}
+              src={step.videoUrl}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+              autoPlay muted loop playsInline preload="auto"
+            />
+            {/* Bottom fade into card body */}
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgb(20,20,22) 100%)', pointerEvents: 'none' }} />
+          </div>
+        ) : null}
+
+        {/* TEXT CONTENT */}
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: isMobile ? '2rem 1.5rem 2.5rem' : '2.75rem 3rem' }}>
           <span style={{ fontFamily: 'var(--mono)', fontSize: '0.74rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--signal)', display: 'inline-block', marginBottom: '1.25rem' }}>
             {step.num}
             <span style={{ color: 'var(--text-muted)', margin: '0 0.4rem' }}>/</span>
@@ -116,7 +136,7 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
           </ul>
         </div>
 
-        {/* RIGHT SIDE: Video Panel — cleanly hidden on mobile devices */}
+        {/* RIGHT VIDEO PANEL — desktop only */}
         {!isMobile && (
           <div style={{ background: 'var(--bg-elev)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <video
@@ -146,7 +166,8 @@ export function Process() {
           <motion.h2
             initial={{ opacity: 0, y: '2rem', filter: 'blur(6px)' }}
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
             style={{ fontFamily: 'var(--sans)', fontSize: 'clamp(2rem, 4.5vw, 3.5rem)', fontWeight: 600, lineHeight: 0.95, letterSpacing: '-0.045em', color: 'var(--text)', maxWidth: '22ch' }}
           >
             A system, not a{' '}
