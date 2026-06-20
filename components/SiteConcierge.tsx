@@ -12,57 +12,51 @@ export function SiteConcierge() {
     const [isHoveringElement, setIsHoveringElement] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
+    // Tracks the true active viewport section name dynamically
+    const [activeSection, setActiveSection] = useState("section-hero");
+
     const desktopTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const mobileTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const currentTargetRef = useRef<string | null>(null);
 
-    // The Master Website Context Dictionary - Built directly from your component files
+    // Mapped Dictionary representing the exact strings for your layout
     const getContextInfo = (tag: string): string => {
         switch (tag) {
-            // ── 1. HERO SECTION SPECIFIC BLOCKS ──
+            // SECTION FALLBACKS (Driven explicitly by Viewport Intersection, NOT guesswork numbers)
             case 'section-hero':
-                return "You are looking at our command headline. We build high-performance digital marketing systems fused with intelligent AI automation, explicitly engineered for companies moving faster than their industry legacy models.";
-            case 'hero-stats':
-                return "Our core baseline validation data parameters. We consistently deliver a 3.8× average Return on Ad Spend, achieve an immediate 67% reduction in client Cost-Per-Lead metrics, and maintain a 94% win rate inside local Google Map Pack Top-3 placements.";
-
-            // ── 2. WORKS / PROOF SECTION SPECIFIC BLOCKS ──
+                return "Space Digital engineers high-performance web systems and digital marketing campaigns for brands that refuse to look ordinary. We focus on eliminating structural friction.";
             case 'section-work':
-                return "Welcome to our Proof Engine. This list showcases production systems engineered between 2024 and 2026. Hover over any client name to instantly stream live ad video previews directly adjacent to your cursor frame.";
-            case 'case-ulnar':
-                return "Case File: Ulnar Medical Clinic. We deployed full frontend clinical SEO architecture and synchronized active calendar hooks to bridge patient acquisition traffic directly into automated booking panels.";
-            case 'case-wibify':
-                return "Case File: Wibify Agency. An elite inbound web engine optimized to turn cold traffic streams into qualified, recurring consulting contract pipeline volume with near-zero friction.";
-            case 'case-meta':
-                return "Case File: Meta Ads Framework. The active media reel demonstrating a verified 3.8× Return on Ad Spend. We surgically isolate high-intent target clients across hyper-targeted regional ad sets.";
-            case 'case-tiktok':
-                return "Case File: TikTok Velocity Matrix. A specialized short-form campaign strategy that reached 214% reach expansion. Engineered around algorithmic hook saturation mechanics for rapid audience scaling.";
-            case 'case-google':
-                return "Case File: Google Local pack optimization. Geo-intent infrastructure designed to position specialized service providers at the structural pinnacle of localized regional queries.";
-
-            // ── 3. EXPERTISE / FOUR DISCIPLINES SECTIONS ──
+                return "You are looking at our Proof Engine. We build tailored customer acquisition systems and clear frontend paths that guide high-intent prospects straight into synchronized calendars.";
             case 'section-ecosystem':
-                return "Our Four Disciplines Matrix. Discipline 1 is Market Resonance (SEO & Paid Ads). Discipline 2 is Operational Velocity, where we integrate n8n workflows, CRM automation pipelines, and advanced 24/7 AI Voice systems.";
-            case 'discipline-creative':
-                return "Discipline 3: Content Production. Short-form video assets engineered strictly around algorithmic hook rates and user retention metrics to drive monetization conversions rather than mere aesthetics.";
-            case 'discipline-web':
-                return "Discipline 4: Brand Architecture. Web experiences built from the ground up to establish premium authority, optimize UX design paths, and securely capture incoming prospect metrics.";
-
-            // ── 4. PROCESS / CARDS SECTION ──
+                return "Our technical automation matrix. We wire advanced platforms like Verbeo for zero-latency voice agents and n8n for background workflows to handle repetitive inbound scale.";
             case 'section-process':
                 return "Our 4-Step Operational System. Step 1 is Discovery & Diagnosis (Deep Audit). Step 2 is Strategy & Architecture (Mapping blueprints before code). Step 3 is Deploy & Integrate, and Step 4 is Compound & Scale.";
-
-            // ── 5. CALCULATOR SECTIONS ──
             case 'section-systems':
-                return "The Financial ROI Calculator. The traditional marketing tier scales visibility, but our high-value AI Automation setup ($1,500 setup + $450/month) completely self-funds by capturing leaked leads and eliminating missed calls.";
-
-            // ── 6. CONTACT GATEWAY BLOCKS ──
+                return "The Operational ROI Calculator terminal. Adjust the leakage sliders to calculate missed inbound calls and visualize how a 24/7 AI setup self-funds its implementation costs.";
             case 'section-contact':
                 return "The Space Digital Ingestion Gateway. Submit your business variables via our Intake form, or test our live voice channel by initializing a real-time call frame with our agent Spacey.";
-            case 'vapi-demo':
-                return "Live Telemetry Node: Spacey Voice Agent. Powered by custom low-latency frameworks, this agent answers instantly (~1s), qualifies enterprise leads, and connects into active database schedulers around the clock.";
 
+            // HOVER INTERACTION OVERRIDES
+            case 'hero-headline':
+                return "🎯 Core Manifesto: We engineer high-performance systems for brands that refuse to look ordinary.";
+            case 'hero-location':
+                return "📍 Nairobi Operations: We deploy growth-driven marketing layouts locally tailored for the Kenyan SMB landscape alongside distributed automated systems globally.";
+            case 'hero-stats':
+                return "📊 Performance Data Signals: Average 3.8x Return on Ad Spend and systematic 67% Cost-Per-Lead reduction pipelines captured via expert asset deployment.";
+            case 'case-ulnar':
+                return "🩺 Patient Acquisition: For Ulnar Medical, we integrated a clean frontend with automated scheduling maps to eliminate front-desk drag.";
+            case 'case-wibify':
+                return "🌐 Inbound Web Engine: Built for maximum data capture velocity and absolute conversion optimization framework metrics.";
+            case 'case-meta':
+                return "🎬 Meta Performance: The video trailing your mouse is a live asset proving a 3.8x ROAS capture framework. Clicking this takes you straight to our validation drive.";
+            case 'case-tiktok':
+                return "📱 TikTok Growth: Previews a faceless asset deployment campaign hitting 214% traffic reach velocity utilizing programmatic hooks.";
+            case 'case-google':
+                return "📍 Local SEO: This demonstrates how we dominate local queries, pushing regional service clients into the Top-3 Map Packs with a 94% win rate.";
+            case 'vapi-demo':
+                return "🤖 Live Voice Telemetry Node: Interact with Spacey to test our low-latency (~1s response time) qualification agent system live.";
             default:
-                return "Navigating Space Digital infrastructure. Hover your pointer or scroll across sections to unpack our automated pipelines.";
+                return "Navigating Space Digital infrastructure. Pause your movement on any element to analyze system performance vectors.";
         }
     };
 
@@ -73,8 +67,41 @@ export function SiteConcierge() {
         return () => window.removeEventListener('resize', checkDevice);
     }, []);
 
+    // ── THE ABSOLUTE INTERSECTION OBSERVER MATRIX ──
     useEffect(() => {
-        // ── DESKTOP IDLE DETECTION SCANNER ──
+        const sectionIds = ['home', 'work', 'ecosystem', 'system', 'systems', 'contact'];
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -40% 0px',
+            threshold: 0.15
+        };
+
+        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    if (id === 'home') setActiveSection('section-hero');
+                    else if (id === 'work') setActiveSection('section-work');
+                    else if (id === 'ecosystem') setActiveSection('section-ecosystem');
+                    else if (id === 'system') setActiveSection('section-process');
+                    else if (id === 'systems') setActiveSection('section-systems');
+                    else if (id === 'contact') setActiveSection('section-contact');
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        sectionIds.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
             if (window.innerWidth >= 768) {
                 setMousePos({ x: e.clientX + 15, y: e.clientY + 15 });
@@ -86,31 +113,21 @@ export function SiteConcierge() {
                 const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
 
                 desktopTimeoutRef.current = setTimeout(() => {
-                    let resolvedTip = tipType;
+                    const targetContext = tipType || activeSection;
 
-                    // Ultra-accurate scroll tracking map based directly on your page.tsx ids
-                    if (!resolvedTip) {
-                        const scrollY = window.scrollY;
-                        if (scrollY < 650) resolvedTip = 'section-hero';
-                        else if (scrollY >= 650 && scrollY < 1700) resolvedTip = 'section-work';
-                        else if (scrollY >= 1700 && scrollY < 2600) resolvedTip = 'section-ecosystem';
-                        else if (scrollY >= 2600 && scrollY < 3400) resolvedTip = 'section-process';
-                        else if (scrollY >= 3400 && scrollY < 4200) resolvedTip = 'section-systems';
-                        else resolvedTip = 'section-contact';
-                    }
+                    if (currentTargetRef.current === targetContext && isVisible) return;
 
-                    currentTargetRef.current = resolvedTip;
+                    currentTargetRef.current = targetContext;
                     setIsHoveringElement(!!closestTip);
-                    setTipText(getContextInfo(resolvedTip));
+                    setTipText(getContextInfo(targetContext));
                     setIsVisible(true);
                     setIsLoading(true);
 
-                    setTimeout(() => setIsLoading(false), 220);
-                }, 80); // Quick 80ms stop-check window
+                    setTimeout(() => setIsLoading(false), 200);
+                }, 80);
             }
         };
 
-        // ── MOBILE GESTURAL SCREEN CONTACT TIMING ──
         const handleTouchStart = (e: TouchEvent) => {
             if (window.innerWidth < 768) {
                 if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
@@ -119,20 +136,11 @@ export function SiteConcierge() {
                 const closestTip = target.closest('[data-concierge-tip]');
                 const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
 
-                let resolvedTip = tipType;
-                if (!resolvedTip) {
-                    const scrollY = window.scrollY;
-                    if (scrollY < 550) resolvedTip = 'section-hero';
-                    else if (scrollY >= 550 && scrollY < 1450) resolvedTip = 'section-work';
-                    else if (scrollY >= 1450 && scrollY < 2300) resolvedTip = 'section-ecosystem';
-                    else if (scrollY >= 2300 && scrollY < 3200) resolvedTip = 'section-process';
-                    else if (scrollY >= 3200 && scrollY < 3900) resolvedTip = 'section-systems';
-                    else resolvedTip = 'section-contact';
-                }
+                const targetContext = tipType || activeSection;
 
-                currentTargetRef.current = resolvedTip;
+                currentTargetRef.current = targetContext;
                 setIsHoveringElement(!!closestTip);
-                setTipText(getContextInfo(resolvedTip));
+                setTipText(getContextInfo(targetContext));
                 setIsVisible(true);
                 setIsLoading(true);
 
@@ -144,7 +152,7 @@ export function SiteConcierge() {
             if (window.innerWidth < 768) {
                 mobileTimeoutRef.current = setTimeout(() => {
                     setIsVisible(false);
-                }, 1200); // Disappears shortly after scroll/touch breaks
+                }, 1200);
             }
         };
 
@@ -159,7 +167,7 @@ export function SiteConcierge() {
             if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
             if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
         };
-    }, []);
+    }, [activeSection, isVisible]);
 
     return (
         <AnimatePresence mode="wait">
@@ -189,7 +197,7 @@ export function SiteConcierge() {
                             : { opacity: 0, scale: 0.96, y: 3 }
                     }
                     animate={{
-                        opacity: isHoveringElement ? 0.95 : 0.60, // 60% visibility baseline
+                        opacity: isHoveringElement ? 0.95 : 0.60,
                         y: 0,
                         scale: 1,
                         x: isMobile ? '-50%' : '0%'
@@ -235,7 +243,8 @@ export function SiteConcierge() {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     transition={{ duration: 0.15 }}
-                                    className="text-[11px] leading-relaxed text-zinc-300 font-sans font-light tracking-wide selection:bg-transparent"
+                                    /* ── Overhauled text coloring utility directly here ── */
+                                    className="text-[11px] leading-relaxed text-[#FF6B2B] font-sans font-light tracking-wide selection:bg-transparent"
                                 >
                                     {tipText}
                                 </motion.p>
