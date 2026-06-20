@@ -11,52 +11,53 @@ export function SiteConcierge() {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [isHoveringElement, setIsHoveringElement] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
-
-    // Tracks the true active viewport section name dynamically
-    const [activeSection, setActiveSection] = useState("section-hero");
+    const [activeSection, setActiveSection] = useState("home");
 
     const desktopTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const mobileTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const currentTargetRef = useRef<string | null>(null);
 
-    // Mapped Dictionary representing the exact strings for your layout
     const getContextInfo = (tag: string): string => {
         switch (tag) {
-            // SECTION FALLBACKS (Driven explicitly by Viewport Intersection, NOT guesswork numbers)
-            case 'section-hero':
-                return "Space Digital engineers high-performance web systems and digital marketing campaigns for brands that refuse to look ordinary. We focus on eliminating structural friction.";
-            case 'section-work':
-                return "You are looking at our Proof Engine. We build tailored customer acquisition systems and clear frontend paths that guide high-intent prospects straight into synchronized calendars.";
-            case 'section-ecosystem':
-                return "Our technical automation matrix. We wire advanced platforms like Verbeo for zero-latency voice agents and n8n for background workflows to handle repetitive inbound scale.";
-            case 'section-process':
-                return "Our 4-Step Operational System. Step 1 is Discovery & Diagnosis (Deep Audit). Step 2 is Strategy & Architecture (Mapping blueprints before code). Step 3 is Deploy & Integrate, and Step 4 is Compound & Scale.";
-            case 'section-systems':
-                return "The Operational ROI Calculator terminal. Adjust the leakage sliders to calculate missed inbound calls and visualize how a 24/7 AI setup self-funds its implementation costs.";
-            case 'section-contact':
-                return "The Space Digital Ingestion Gateway. Submit your business variables via our Intake form, or test our live voice channel by initializing a real-time call frame with our agent Spacey.";
-
-            // HOVER INTERACTION OVERRIDES
+            // Direct Component Hovers
             case 'hero-headline':
-                return "🎯 Core Manifesto: We engineer high-performance systems for brands that refuse to look ordinary.";
+                return "Core Manifesto: We engineer high-performance web systems and digital marketing campaigns for brands that refuse to look ordinary.";
             case 'hero-location':
-                return "📍 Nairobi Operations: We deploy growth-driven marketing layouts locally tailored for the Kenyan SMB landscape alongside distributed automated systems globally.";
+                return "Nairobi Operations: Space Digital proudly deploys growth-driven consulting frameworks locally engineered for the Kenyan enterprise landscape.";
             case 'hero-stats':
-                return "📊 Performance Data Signals: Average 3.8x Return on Ad Spend and systematic 67% Cost-Per-Lead reduction pipelines captured via expert asset deployment.";
+                return "Performance Data Signals: Our setups deliver a 3.8× average ROAS, 67% reduction in CPL, and 94% win rate inside local Map Pack Top-3 tiers.";
             case 'case-ulnar':
-                return "🩺 Patient Acquisition: For Ulnar Medical, we integrated a clean frontend with automated scheduling maps to eliminate front-desk drag.";
+                return "Case Study: Ulnar Medical Clinic. Deployed frontend clinical SEO layouts integrated with automated booking hooks to destroy front-desk drop-off.";
             case 'case-wibify':
-                return "🌐 Inbound Web Engine: Built for maximum data capture velocity and absolute conversion optimization framework metrics.";
+                return "Case Study: Wibify Agency. High-performance inbound web engine optimized to turn traffic streams into qualified consulting contracts.";
             case 'case-meta':
-                return "🎬 Meta Performance: The video trailing your mouse is a live asset proving a 3.8x ROAS capture framework. Clicking this takes you straight to our validation drive.";
+                return "Performance Reel: Meta Campaign. The video asset trailing your mouse proves a verified 3.8× Return on Ad Spend using surgical intent filtering.";
             case 'case-tiktok':
-                return "📱 TikTok Growth: Previews a faceless asset deployment campaign hitting 214% traffic reach velocity utilizing programmatic hooks.";
+                return "Performance Reel: TikTok Velocity. Demonstrating a faceless short-form distribution campaign hitting a 214% traffic reach velocity spike.";
             case 'case-google':
-                return "📍 Local SEO: This demonstrates how we dominate local queries, pushing regional service clients into the Top-3 Map Packs with a 94% win rate.";
+                return "Performance Reel: Google Local. Dominating local regional queries to place specialized service providers directly into Top Map Pack tiers.";
             case 'vapi-demo':
-                return "🤖 Live Voice Telemetry Node: Interact with Spacey to test our low-latency (~1s response time) qualification agent system live.";
+                return "Live Telemetry Node: Spacey Voice Agent. Powered by custom low-latency voice engines, this agent qualifies leads and triggers CRM bookings 24/7.";
+
+            // Flawless Viewport Occupancy Fallbacks
+            case 'home':
+                return "Space Digital engineers high-performance digital marketing campaigns fused with intelligent AI automation, explicitly engineered for companies moving faster than their industry.";
+            case 'work':
+                return "You are reviewing our Proof Engine tracking verified client metrics built between 2024 and 2026. Hover over any brand asset row to stream media reels directly to your pointer.";
+            case 'ecosystem':
+                return "Unpacking our core operational growth tracks: Service Tier 1 focuses on traditional multi-channel digital marketing, while Tier 2 deploys automated conversational engines.";
+            case 'system':
+                return "Our 4-step deployment methodology engineered to protect pipeline scalability: (1) Diagnosis, (2) Architecture Blueprinting, (3) Rapid Integration, and (4) Compounded Scale.";
+            case 'systems':
+                return "Quantifiable ROI Terminal. Our automated setups ($1,500 One-Time Setup + $450/month Management) routinely scale profitability by eliminating missed inbound lead capture opportunities entirely.";
+            case 'contact':
+                return "The Space Digital Ingestion Gateway. Submit your live operational variables via our onboarding form, or test our live voice channel by initializing a real-time call window with Spacey.";
+            case 'about':
+                return "Space Digital was built by Lead Consultant Seth Onyango to blend traditional human growth marketing models directly with high-performance voice automation assets.";
+            case 'faq':
+                return "Frequently Asked Questions Node. Here we clear up onboarding timelines, technical specifications of our voice infrastructure, and management details.";
             default:
-                return "Navigating Space Digital infrastructure. Pause your movement on any element to analyze system performance vectors.";
+                return "Navigating Space Digital infrastructure. Pause your movement or touch the screen to let Spacey unpack system performance data.";
         }
     };
 
@@ -67,41 +68,40 @@ export function SiteConcierge() {
         return () => window.removeEventListener('resize', checkDevice);
     }, []);
 
-    // ── THE ABSOLUTE INTERSECTION OBSERVER MATRIX ──
+    // ── HIGH-PRECISION SPATIAL VIEWPORT TRACKER ──
     useEffect(() => {
-        const sectionIds = ['home', 'work', 'ecosystem', 'system', 'systems', 'contact'];
+        const handleSpatialCheck = () => {
+            // Maps completely 1:1 with your clean page.tsx IDs
+            const sections = ['home', 'work', 'ecosystem', 'system', 'systems', 'contact', 'about', 'faq'];
+            let currentActive = 'home';
+            let maxVisibleHeight = 0;
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '-20% 0px -40% 0px',
-            threshold: 0.15
-        };
-
-        const observerCallback = (entries: IntersectionObserverEntry[]) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
-                    if (id === 'home') setActiveSection('section-hero');
-                    else if (id === 'work') setActiveSection('section-work');
-                    else if (id === 'ecosystem') setActiveSection('section-ecosystem');
-                    else if (id === 'system') setActiveSection('section-process');
-                    else if (id === 'systems') setActiveSection('section-systems');
-                    else if (id === 'contact') setActiveSection('section-contact');
+            sections.forEach((id) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+                    if (visibleHeight > maxVisibleHeight) {
+                        maxVisibleHeight = visibleHeight;
+                        currentActive = id;
+                    }
                 }
             });
+            setActiveSection(currentActive);
         };
 
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
+        window.addEventListener('scroll', handleSpatialCheck, { passive: true });
+        window.addEventListener('resize', handleSpatialCheck);
+        handleSpatialCheck();
 
-        sectionIds.forEach((id) => {
-            const el = document.getElementById(id);
-            if (el) observer.observe(el);
-        });
-
-        return () => observer.disconnect();
+        return () => {
+            window.removeEventListener('scroll', handleSpatialCheck);
+            window.removeEventListener('resize', handleSpatialCheck);
+        };
     }, []);
 
     useEffect(() => {
+        // Desktop movement halt engine
         const handleMouseMove = (e: MouseEvent) => {
             if (window.innerWidth >= 768) {
                 setMousePos({ x: e.clientX + 15, y: e.clientY + 15 });
@@ -115,8 +115,6 @@ export function SiteConcierge() {
                 desktopTimeoutRef.current = setTimeout(() => {
                     const targetContext = tipType || activeSection;
 
-                    if (currentTargetRef.current === targetContext && isVisible) return;
-
                     currentTargetRef.current = targetContext;
                     setIsHoveringElement(!!closestTip);
                     setTipText(getContextInfo(targetContext));
@@ -128,6 +126,7 @@ export function SiteConcierge() {
             }
         };
 
+        // Mobile touch tracking gestural engine
         const handleTouchStart = (e: TouchEvent) => {
             if (window.innerWidth < 768) {
                 if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
@@ -212,7 +211,7 @@ export function SiteConcierge() {
                 >
                     <div className="flex items-center justify-between border-b border-white/5 pb-2">
                         <div className="flex items-center gap-2">
-                            <Sparkles size={11} className="text-[#FF6B2B] animate-pulse" />
+                            <Sparkles size={11} style={{ color: 'var(--signal)' }} className="animate-pulse" />
                             <span className="text-[9px] font-mono uppercase text-zinc-400 tracking-widest font-medium">Space Core Guide</span>
                         </div>
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
@@ -231,7 +230,8 @@ export function SiteConcierge() {
                                     {[0, 0.15, 0.3].map((delay, i) => (
                                         <motion.div
                                             key={i}
-                                            className="w-1.5 h-1.5 rounded-full bg-[#FF6B2B]"
+                                            className="w-1.5 h-1.5 rounded-full"
+                                            style={{ backgroundColor: 'var(--signal)' }}
                                             animate={{ y: [0, -5, 0] }}
                                             transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut", delay }}
                                         />
@@ -243,8 +243,9 @@ export function SiteConcierge() {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     transition={{ duration: 0.15 }}
-                                    /* ── Overhauled text coloring utility directly here ── */
-                                    className="text-[11px] leading-relaxed text-[#FF6B2B] font-sans font-light tracking-wide selection:bg-transparent"
+                                    /* Hardcoded brand variable forced orange bypass */
+                                    style={{ color: 'var(--signal)' }}
+                                    className="text-[11px] leading-relaxed font-sans font-medium tracking-wide selection:bg-transparent"
                                 >
                                     {tipText}
                                 </motion.p>
