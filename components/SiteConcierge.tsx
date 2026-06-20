@@ -16,7 +16,6 @@ export function SiteConcierge() {
     const mobileTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const currentTargetRef = useRef<string | null>(null);
 
-    // Core System Dictionary containing ultra-deep contextual copy blocks
     const getContextInfo = (tag: string): string => {
         switch (tag) {
             case 'hero-headline':
@@ -57,7 +56,6 @@ export function SiteConcierge() {
         checkDevice();
         window.addEventListener('resize', checkDevice);
 
-        // 1. DESKTOP CURSOR OVERRIDE PROTOCOL
         if (isVisible && !isMobile) {
             document.body.style.cursor = 'none';
             const style = document.createElement('style');
@@ -74,30 +72,35 @@ export function SiteConcierge() {
     }, [isVisible, isMobile]);
 
     useEffect(() => {
-        // 2. DESKTOP MOVEMENT & IDLE TIMING LOGIC
+        // HIGH-VELOCITY MOUSE TRACKING ENGINE
         const handleMouseMove = (e: MouseEvent) => {
             if (window.innerWidth >= 768) {
                 setMousePos({ x: e.clientX, y: e.clientY });
-                setIsVisible(false);
+
+                // Keeps it visible instead of flickering it off completely on minor adjustments
                 if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
 
                 const target = e.target as HTMLElement;
                 const closestTip = target.closest('[data-concierge-tip]');
                 const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
 
+                // CRITICAL FIX: Slashes response wait down from 650ms to a rapid 80ms stop window
                 desktopTimeoutRef.current = setTimeout(() => {
+                    if (currentTargetRef.current === tipType && isVisible) return; // Prevent layout resetting if hovering same block
+
                     currentTargetRef.current = tipType;
                     setIsHoveringElement(!!closestTip);
                     setTipText(getContextInfo(tipType || "default"));
                     setIsVisible(true);
                     setIsLoading(true);
 
-                    setTimeout(() => setIsLoading(false), 900);
-                }, 650);
+                    // CRITICAL FIX: Speeds up the typing simulation wait from 900ms to 250ms
+                    setTimeout(() => setIsLoading(false), 250);
+                }, 80);
             }
         };
 
-        // 3. MOBILE TOUCH GESTURAL LOGIC (CENTRALLY MOUNTED)
+        // INSTANT TOUCH RESPONSE ENGINE
         const handleTouchStart = (e: TouchEvent) => {
             if (window.innerWidth < 768) {
                 if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
@@ -112,7 +115,7 @@ export function SiteConcierge() {
                 setIsVisible(true);
                 setIsLoading(true);
 
-                setTimeout(() => setIsLoading(false), 700);
+                setTimeout(() => setIsLoading(false), 200);
             }
         };
 
@@ -120,7 +123,7 @@ export function SiteConcierge() {
             if (window.innerWidth < 768) {
                 mobileTimeoutRef.current = setTimeout(() => {
                     setIsVisible(false);
-                }, 1500); // Kept alive slightly longer for solid mobile readability
+                }, 1200);
             }
         };
 
@@ -135,18 +138,17 @@ export function SiteConcierge() {
             if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
             if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
         };
-    }, []);
+    }, [isVisible]);
 
     return (
         <AnimatePresence mode="wait">
             {isVisible && (
                 <motion.div
-                    // Responsive layout switching mechanism
                     style={
                         isMobile
                             ? {
                                 position: 'fixed',
-                                bottom: '110px', // Suspended cleanly right above your orange social action-bar
+                                bottom: '110px',
                                 left: '50%',
                                 transform: 'translateX(-50%)',
                                 pointerEvents: 'none',
@@ -163,24 +165,23 @@ export function SiteConcierge() {
                     }
                     initial={
                         isMobile
-                            ? { opacity: 0, y: 20, x: '-50%' }
-                            : { opacity: 0, scale: 0.92, y: 5 }
+                            ? { opacity: 0, y: 15, x: '-50%' }
+                            : { opacity: 0, scale: 0.96, y: 3 }
                     }
                     animate={{
                         opacity: isHoveringElement ? 0.95 : 0.60,
-                        y: isMobile ? 0 : 0,
-                        scale: isMobile ? 1 : 1,
+                        y: 0,
+                        scale: 1,
                         x: isMobile ? '-50%' : '0%'
                     }}
                     exit={
                         isMobile
-                            ? { opacity: 0, y: 15, x: '-50%' }
-                            : { opacity: 0, scale: 0.95 }
+                            ? { opacity: 0, y: 10, x: '-50%' }
+                            : { opacity: 0, scale: 0.96 }
                     }
-                    transition={{ type: 'spring', stiffness: 420, damping: 30 }}
+                    transition={{ type: 'spring', stiffness: 550, damping: 35 }}
                     className="w-[calc(100%-2rem)] max-w-[340px] md:w-[320px] rounded-lg border border-white/10 bg-zinc-950 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex flex-col gap-2 select-none"
                 >
-                    {/* Header Track */}
                     <div className="flex items-center justify-between border-b border-white/5 pb-2">
                         <div className="flex items-center gap-2">
                             <Sparkles size={11} className="text-[#FF6B2B] animate-pulse" />
@@ -189,7 +190,6 @@ export function SiteConcierge() {
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
                     </div>
 
-                    {/* Typing Loading / Conversational Text Stream */}
                     <div className="min-h-[44px] flex items-center">
                         <AnimatePresence mode="wait">
                             {isLoading ? (
@@ -214,7 +214,7 @@ export function SiteConcierge() {
                                     key="text"
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.25 }}
+                                    transition={{ duration: 0.15 }}
                                     className="text-[11px] leading-relaxed text-zinc-300 font-sans font-light tracking-wide selection:bg-transparent"
                                 >
                                     {tipText}

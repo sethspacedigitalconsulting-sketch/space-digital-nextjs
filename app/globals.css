@@ -282,3 +282,15 @@ body {
     padding-bottom: 5rem !important;
   }
 }
+
+/* ── 9. DYNAMIC SITE CONCIERGE HOVER ACCELERATION ── */
+/* Forces parent containers to completely capture the hover intersections instead of inner child loops */
+[data-concierge-tip] * {
+  pointer-events: none !important;
+}
+
+/* Keeps range slider interaction nodes fully operational inside the ROI terminal template */
+#systems input[type="range"],
+#systems input[type="range"] * {
+  pointer-events: auto !important;
+}
