@@ -227,6 +227,13 @@ export function Works() {
                 rel="noopener noreferrer"
                 data-preview={item.mediaUrl}
                 data-media-type={item.mediaType}
+                /* ── TELEMETRY CONTEXT INJECTION NODE ── */
+                data-concierge-tip={
+                  item.id === 'ulnar' ? 'case-ulnar' :
+                    item.id === 'wibify' ? 'case-wibify' :
+                      item.id === 'meta' ? 'case-meta' :
+                        item.id === 'tiktok' ? 'case-tiktok' : 'case-google'
+                }
               >
                 {/* ── TOP ROW (mobile) / ALL COLS (desktop) ── */}
 
@@ -256,7 +263,6 @@ export function Works() {
                 </div>
 
                 {/* ── META ROW: tag + year + arrow ── */}
-                {/* On mobile this sits below the name row; on desktop it's inline */}
                 <div className="work-link-meta">
                   <span className="work-tag">{item.tag}</span>
                   <span className="work-year">{item.year}</span>

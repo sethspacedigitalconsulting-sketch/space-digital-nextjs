@@ -87,8 +87,11 @@ export function ContactGateway() {
 
         <div className="space-y-6">
 
-          {/* Live Voice Demo Block */}
-          <div className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-5">
+          {/* Live Voice Demo Block with Concierge Telemetry Hook */}
+          <div
+            className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-5"
+            data-concierge-tip="vapi-demo"
+          >
             {/* Status indicator row */}
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${callStatus === 'active' ? 'bg-green-400 animate-pulse' : callStatus === 'connecting' ? 'bg-yellow-400 animate-pulse' : 'bg-[#FF6B2B]'}`} />
@@ -160,7 +163,7 @@ export function ContactGateway() {
 
                     <div className="w-full">
                       <input
-                        type="email"
+                        type="author"
                         name="email"
                         required
                         placeholder="Email Address"
