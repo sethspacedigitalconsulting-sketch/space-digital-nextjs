@@ -1,200 +1,195 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, X, ArrowRight, CornerDownLeft, Sparkles, HelpCircle } from 'lucide-react';
-
-interface Milestone {
-    text: string;
-    targetId: string;
-    nextLabel: string;
-    skipLabel?: string;
-}
-
-const TOUR_MILESTONES: Milestone[] = [
-    {
-        text: "Welcome to Space Digital. I am your optimization guide. Most agency sites are passive brochures—we engineer active pipelines. Let's take a look under the hood at how we fix broken conversion models.",
-        targetId: "home",
-        nextLabel: "Step 1: See Validated Case Studies →",
-        skipLabel: "Skip to Pricing 💰"
-    },
-    {
-        text: "Here is our engine in the wild. Look at our work—we deploy seamless scheduling hubs and specialized client pipelines that capture high-intent traffic. We don't just optimize for vanity clicks; we route traffic directly into automated calendars.",
-        targetId: "work",
-        nextLabel: "Step 2: View Our Service Tiers →",
-        skipLabel: "Skip to Contact 🚀"
-    },
-    {
-        text: "This is where we eliminate overhead. We blend traditional digital marketing (SEO & Ads) with high-value AI Agent Automation ($1,500 setup + $450/month). This setup provides 24/7 coverage, stops lead drop-off completely, and slashes staff turnover bottlenecks.",
-        targetId: "pricing",
-        nextLabel: "Final Step: Initiate Briefing 🚀"
-    },
-    {
-        text: "The tour is complete and the blueprint is ready. Let's lock in your growth tracking setup. Tap below to launch an instant WhatsApp briefing or secure a dedicated 30-minute consultation via Calendly.",
-        targetId: "contact",
-        nextLabel: "Complete Tour ✅"
-    }
-];
+import { Bot, X, Sparkles, ShieldCheck } from 'lucide-react';
 
 export function SiteConcierge() {
     const [isActive, setIsActive] = useState(false);
-    const [currentStep, setCurrentStep] = useState(0);
+    const [isMinimized, setIsMinimized] = useState(false);
 
-    // Auto-scroll trigger handler linked directly to our Next.js State engine
-    const executeScroll = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            const offset = 80; // Safely clears top navigation headers
-            const bodyRect = document.body.getBoundingClientRect().top;
-            const elementRect = element.getBoundingClientRect().top;
-            const elementPosition = elementRect - bodyRect;
-            const offsetPosition = elementPosition - offset;
+    // Baseline onboarding instruction string
+    const [tipText, setTipText] = useState("I'm your ambient guide. Hover your cursor over any section or button to break down our system architecture.");
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-        }
-    };
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const [isHoveringElement, setIsHoveringElement] = useState(false);
 
-    const handleNext = () => {
-        if (currentStep < TOUR_MILESTONES.length - 1) {
-            const nextStep = currentStep + 1;
-            setCurrentStep(nextStep);
-            executeScroll(TOUR_MILESTONES[nextStep].targetId);
-        } else {
-            // Tour completed safely
-            setIsActive(false);
-            setCurrentStep(0);
-        }
-    };
+    useEffect(() => {
+        if (!isActive || isMinimized) return;
 
-    const handleSkipToPricing = () => {
-        setCurrentStep(2); // Jump straight to pricing tier data index array
-        executeScroll('pricing');
-    };
+        // ── DESKTOP MOUSE COURIER TRACKING ──
+        const handleMouseMove = (e: MouseEvent) => {
+            // Offset by 20px so it perfectly frames next to the standard arrow cursor pointer
+            setMousePos({ x: e.clientX + 20, y: e.clientY + 20 });
+        };
 
-    const handleSkipToContact = () => {
-        setCurrentStep(3); // Jump directly to contact frame bounds
-        executeScroll('contact');
-    };
+        // ── MOBILE COMPANION TOUCH TRACKING ──
+        const handleTouchMove = (e: TouchEvent) => {
+            if (e.touches.length > 0) {
+                const touch = e.touches[0];
+                // Offset 70px above the finger so it is never hidden by their hand while scrolling
+                setMousePos({ x: touch.clientX, y: touch.clientY - 70 });
+            }
+        };
+
+        // ── OMNIPRESENT SITE ARCHITECTURE DICTIONARY ──
+        const handleMouseOver = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            const closestTip = target.closest('[data-concierge-tip]');
+
+            if (closestTip) {
+                setIsHoveringElement(true);
+                const tipType = closestTip.getAttribute('data-concierge-tip');
+
+                switch (tipType) {
+                    // 1. HERO & POSITIONING
+                    case 'hero-headline':
+                        setTipText("🎯 This is our core manifesto: engineering modern web workflows for brands that refuse to look ordinary. We eliminate traditional friction patterns.");
+                        break;
+                    case 'hero-location':
+                        setTipText("📍 We proudly operate directly out of Nairobi, Kenya, deploying systems tailored for the local market and expanding SMB frameworks globally.");
+                        break;
+
+                    // 2. SOCIALS & QUICK ACTION TRACKS
+                    case 'social-bar':
+                        setTipText("⚡ Quick Contact Hub. Tap to launch an instant conversation inside WhatsApp or jump straight into our Calendly dashboard to secure a strategy briefing.");
+                        break;
+
+                    // 3. CASE STUDIES & RESULTS MATRIX (THE PROOF ENGINE)
+                    case 'video-ads':
+                        setTipText("🔥 High-converting ad creatives. We design, optimize, and distribute performance-driven assets that capture user intent and push them directly into booking funnels.");
+                        break;
+                    case 'case-ulnar':
+                        setTipText("🩺 Case Validation: Ulnar Medical. We deployed a custom website architecture integrated with synchronized scheduling hooks to automate patient acquisition workflows.");
+                        break;
+                    case 'case-bigwash':
+                        setTipText("🧼 Case Validation: Big Wash Stores. Engineered an omni-channel digital turnaround across TikTok and Facebook to generate recurring local foot traffic.");
+                        break;
+                    case 'case-kaekebeth':
+                        setTipText("👗 Case Validation: KaekeBeth Couture. Deployed a specialized Luxury Design Concierge text automation agent to seamlessly manage premium fitting lifecycles.");
+                        break;
+
+                    // 4. METRICS & TRUST SIGNALS
+                    case 'stat-roas':
+                        setTipText("📈 Data Signal: 3.8× Average ROAS. Our digital marketing frameworks are built to maximize return on ad spend by surgically filtering high-intent target clients.");
+                        break;
+                    case 'stat-cpl':
+                        setTipText("📉 Data Signal: 67% Cost-Per-Lead Reduction. We blend standard SEO with strategic automation inputs to eliminate expensive, wasted ad clicks.");
+                        break;
+                    case 'stat-ai-call':
+                        setTipText("📞 Data Signal: 82% AI Call Resolution. Built utilizing platforms like Verbeo.ai to answer missed calls instantly, book leads, and wipe out front-desk backlogs.");
+                        break;
+
+                    // 5. SERVICE TIERS & PRICING
+                    case 'tier-marketing':
+                        setTipText("📢 Tier 1: Traditional Digital Marketing. Elite execution across high-performance SEO, Google Ads management, and systematic social media customer acquisition funnels.");
+                        break;
+                    case 'tier-automation':
+                        setTipText("🤖 Tier 2: AI Agent Automation. 24/7 Voice and Text Agents built to book clients and log CRM leads instantly. Price structured at $1,500 setup + $450/month management fee.");
+                        break;
+                    case 'pricing-roi':
+                        setTipText("💼 Cost Justification: The $1,500 setup + $450/mo management framework instantly pays for itself by capturing missed inbound calls, eliminating staff turnover, and securing 24/7 coverage.");
+                        break;
+
+                    // 6. CALL TO ACTIONS & INBOUND CHANNELS
+                    case 'cta-whatsapp':
+                        setTipText("💬 Direct Link: Launches an instant chat session via WhatsApp. Deep-linking logic is fully optimized for immediate smartphone redirection.");
+                        break;
+                    case 'cta-calendly':
+                        setTipText("📅 Direct Hook: Launches our active Calendly interface to lock down a structured 30-minute operational optimization blueprint call.");
+                        break;
+
+                    default:
+                        setIsHoveringElement(false);
+                }
+            } else {
+                setIsHoveringElement(false);
+            }
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('touchmove', handleTouchMove);
+        window.addEventListener('mouseover', handleMouseOver);
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('touchmove', handleTouchMove);
+            window.removeEventListener('mouseover', handleMouseOver);
+        };
+    }, [isActive, isMinimized]);
 
     return (
         <>
-            {/* ── STATE 1: THE FLOATING BEACON TRIGER ── */}
+            {/* ── STATE 1: THE FLOATING TRIGER BEACON ── */}
             <AnimatePresence>
-                {!isActive && (
+                {(!isActive || isMinimized) && (
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
-                        className="fixed bottom-24 right-6 md:bottom-8 md:right-8 z-[998] flex items-center gap-3 pointer-events-auto"
+                        className="fixed bottom-24 right-6 md:bottom-8 md:right-8 z-[999] flex items-center gap-3"
                     >
-                        {/* Desktop Quick Indicator Flag Badge Label */}
-                        <span className="hidden md:inline-block font-mono text-[10px] uppercase tracking-widest bg-zinc-950/80 border border-white/5 text-zinc-400 px-3 py-1.5 rounded-lg backdrop-blur-md">
-                            Launch Space Concierge
+                        <span className="hidden md:inline-block font-mono text-[9px] uppercase tracking-widest bg-zinc-950/90 border border-white/5 text-zinc-400 px-3 py-1.5 rounded-lg backdrop-blur-md">
+                            {isMinimized ? "Guide Minimized" : "Talk to Spacey Agent"}
                         </span>
-
-                        {/* The Pulsing Core Button Trigger Ring */}
                         <button
                             onClick={() => {
                                 setIsActive(true);
-                                executeScroll('home');
+                                setIsMinimized(false);
+                                setTipText("Perfect! I'm shadowing your path. Hover your cursor over any element to see our system mechanics.");
                             }}
-                            className="w-12 h-12 rounded-full bg-zinc-950 border border-[#FF6B2B] text-[#FF6B2B] flex items-center justify-center shadow-[0_0_20px_rgba(255,107,43,0.25)] transition-all duration-300 hover:scale-110 hover:shadow-[0_0_25px_rgba(255,107,43,0.45)] active:scale-95 relative overflow-hidden group"
-                            aria-label="Initialize interactive guide"
+                            className="w-12 h-12 rounded-full bg-zinc-950 border border-[#FF6B2B] text-[#FF6B2B] flex items-center justify-center shadow-[0_0_20px_rgba(255,107,43,0.3)] transition-all hover:scale-110 relative"
                         >
-                            <div className="absolute inset-0 bg-[#FF6B2B]/5 animate-ping rounded-full pointer-events-none" style={{ animationDuration: '3s' }} />
-                            <Bot size={20} className="transition-transform group-hover:rotate-12" />
+                            <Bot size={18} />
+                            <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse border border-zinc-950" />
                         </button>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            {/* ── STATE 2: THE INTERACTIVE CONCIERGE PANEL ── */}
+            {/* ── STATE 2: THE AMBIENT SHADOW COMPANION (40% BASELINE) ── */}
             <AnimatePresence>
-                {isActive && (
+                {isActive && !isMinimized && (
                     <motion.div
-                        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 25, scale: 0.95 }}
-                        transition={{ type: 'spring', stiffness: 350, damping: 26 }}
-                        className="fixed bottom-24 right-4 left-4 md:left-auto md:right-8 md:bottom-8 z-[998] w-[calc(100%-2rem)] md:w-[360px] rounded-2xl border border-white/5 bg-zinc-950/90 backdrop-blur-xl shadow-[0_25px_60px_rgba(0,0,0,0.7)] flex flex-col overflow-hidden pointer-events-auto"
+                        style={{
+                            position: 'fixed',
+                            left: mousePos.x,
+                            top: mousePos.y,
+                            pointerEvents: 'auto',
+                            zIndex: 9999
+                        }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{
+                            opacity: isHoveringElement ? 0.95 : 0.40, // Blends down to a soft 40% when moving over background to remain sleek
+                            scale: isHoveringElement ? 1.02 : 1
+                        }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                        className="w-[280px] md:w-[320px] rounded-xl border border-[#FF6B2B]/20 bg-zinc-950/85 backdrop-blur-md p-3.5 shadow-[0_15px_40px_rgba(0,0,0,0.6)] flex flex-col gap-2 transition-opacity duration-200"
                     >
-                        {/* Header Track Panel Interface */}
-                        <div className="p-4 bg-zinc-900/40 border-b border-white/5 flex items-center justify-between">
-                            <div className="flex items-center gap-2.5">
-                                <div className="w-8 h-8 rounded-xl bg-[#FF6B2B]/10 border border-[#FF6B2B]/30 flex items-center justify-center">
-                                    <Sparkles size={14} className="text-[#FF6B2B] animate-pulse" />
-                                </div>
-                                <div>
-                                    <h4 className="text-xs font-semibold text-white tracking-wide font-sans">Space Site Concierge</h4>
-                                    <div className="flex items-center gap-1.5 mt-0.5">
-                                        <span className="text-[9px] font-mono uppercase text-[#FF6B2B] tracking-wider">
-                                            Milestone {currentStep + 1} of {TOUR_MILESTONES.length}
-                                        </span>
-                                    </div>
-                                </div>
+                        {/* Header Track */}
+                        <div className="flex items-center justify-between border-b border-white/5 pb-1.5">
+                            <div className="flex items-center gap-1.5">
+                                <Sparkles size={11} className="text-[#FF6B2B]" />
+                                <span className="text-[9px] font-mono uppercase text-zinc-400 tracking-wider">Space System Guide</span>
                             </div>
+
                             <button
-                                onClick={() => setIsActive(false)}
-                                className="w-7 h-7 rounded-lg bg-zinc-900/50 border border-white/5 flex items-center justify-center text-zinc-500 hover:text-white transition-colors"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsMinimized(true);
+                                }}
+                                className="w-5 h-5 rounded-md bg-zinc-900/80 text-zinc-500 hover:text-white border border-white/5 flex items-center justify-center transition-colors"
+                                title="Minimize Guide"
                             >
-                                <X size={14} />
+                                <X size={11} />
                             </button>
                         </div>
 
-                        {/* Script Text Container Bubble Row Block */}
-                        <div className="p-5 flex flex-col gap-4">
-                            <p className="text-xs text-zinc-300 leading-relaxed font-sans font-light">
-                                {TOUR_MILESTONES[currentStep].text}
-                            </p>
-
-                            {/* Final Milestone Context Deep Linking Call Actions */}
-                            {currentStep === 3 && (
-                                <div className="flex gap-2 pt-1">
-                                    <a
-                                        href="https://wa.me/message/RV5LUNZAXFW3M1"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex-1 h-9 bg-zinc-900 text-white border border-white/10 text-[11px] font-mono rounded-lg flex items-center justify-center gap-1.5 hover:bg-zinc-800 transition-colors"
-                                    >
-                                        WhatsApp Chat
-                                    </a>
-                                    <a
-                                        href="https://calendly.com/seth-spacedigitalconsulting/30min"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex-1 h-9 bg-[#FF6B2B] text-zinc-950 text-[11px] font-mono font-bold rounded-lg flex items-center justify-center gap-1 hover:opacity-90 transition-opacity"
-                                    >
-                                        Book Call 📅
-                                    </a>
-                                </div>
-                            )}
-
-                            {/* Action Button Segment Hierarchy */}
-                            <div className="flex flex-col gap-2 pt-2 border-t border-white/5">
-                                <button
-                                    onClick={handleNext}
-                                    className="w-full h-10 bg-zinc-900 hover:bg-zinc-800 border border-[#FF6B2B]/40 text-white text-xs font-medium rounded-xl flex items-center justify-between px-4 transition-all group active:scale-98"
-                                >
-                                    <span className="font-mono text-[11px] text-zinc-200">
-                                        {TOUR_MILESTONES[currentStep].nextLabel}
-                                    </span>
-                                    <ArrowRight size={13} className="text-[#FF6B2B] transition-transform group-hover:translate-x-1" />
-                                </button>
-
-                                {/* Conditional Skip Track Options */}
-                                {TOUR_MILESTONES[currentStep].skipLabel && (
-                                    <button
-                                        onClick={currentStep === 0 ? handleSkipToPricing : handleSkipToContact}
-                                        className="text-left font-mono text-[10px] text-zinc-500 hover:text-zinc-300 pl-2 pt-0.5 transition-colors"
-                                    >
-                                        ⏩ {TOUR_MILESTONES[currentStep].skipLabel}
-                                    </button>
-                                )}
-                            </div>
-                        </div>
+                        {/* Narrative Context Bubble Stream */}
+                        <p className="text-[11px] leading-relaxed text-zinc-200 font-sans font-light selection:bg-transparent">
+                            {tipText}
+                        </p>
                     </motion.div>
                 )}
             </AnimatePresence>
