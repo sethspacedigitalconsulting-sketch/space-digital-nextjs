@@ -57,9 +57,9 @@ export function FloatingSocials() {
                             className="flex flex-col items-center gap-1 group relative p-2 transition-transform active:scale-95"
                             aria-label={item.ariaLabel}
                         >
-                            {/* ── INDIVIDUAL CARD COMPONENT OUTLINE: Shifted from border-white/10 to clear brand orange ── */}
+                            {/* ── INDIVIDUAL CARD COMPONENT BACKGROUND SWAP: Switched inner fill to signature orange ── */}
                             <div
-                                className="w-9 h-9 rounded-xl flex items-center justify-center border border-[#FF6B2B]/40 bg-zinc-900/50 shadow-[0_0_10px_rgba(255,107,43,0.1)] transition-colors"
+                                className="w-9 h-9 rounded-xl flex items-center justify-center border border-[#FF6B2B] bg-[#FF6B2B] shadow-[0_0_15px_rgba(255,107,43,0.35)] transition-colors"
                                 style={{ transform: 'translateZ(0)' }}
                             >
                                 <div className="relative w-5 h-5">
@@ -67,7 +67,7 @@ export function FloatingSocials() {
                                         src={item.svgUrl}
                                         alt={item.ariaLabel}
                                         fill
-                                        className="object-contain"
+                                        className="object-contain brightness-0 invert" /* Keeps the logos crisp and contrasting on the orange backplate */
                                     />
                                 </div>
                             </div>
