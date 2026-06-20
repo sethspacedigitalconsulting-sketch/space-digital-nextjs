@@ -9,109 +9,77 @@ export function SiteConcierge() {
     const [isLoading, setIsLoading] = useState(false);
     const [tipText, setTipText] = useState("");
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-    const [isHoveringElement, setIsHoveringElement] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
     const desktopTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const mobileTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const currentTargetRef = useRef<string | null>(null);
 
-    const getContextInfo = (tag: string): string => {
-        switch (tag) {
-            case 'hero-headline':
-                return "Space Digital operates as a non-traditional systems architecture collective. We engineer high-performance visual interfaces and asynchronous operational loops for brands seeking extreme market scalability.";
-            case 'hero-location':
-                return "Based directly out of Nairobi, Kenya. We build localized high-throughput conversion machines tailored for the regional economic sector while scaling distributed infrastructure for global SMBs.";
-            case 'social-bar':
-                return "Direct access conduits. These links bypass standard form-fill friction by routing user sessions straight into active WhatsApp chat lines or our persistent 30-minute Calendly scheduler.";
-            case 'video-ads':
-                return "Performance distribution metrics. These assets represent high-velocity, short-form creative ad models engineered to isolate target intent and pipeline regional clients at minimal acquisition cost.";
-            case 'case-ulnar':
-                return "Case Study Node: Ulnar Medical Clinic. Deployed full frontend architecture optimized for localized search patterns and integrated multi-channel scheduling hooks to completely wipe out back-office drop-off loops.";
-            case 'case-wibify':
-                return "Case Study Node: Wibify Agency. Developed a modern Webflow-to-NextJS landing layout optimized to transform organic inbound traffic streams into qualified consulting contracts.";
-            case 'case-bigwash':
-                return "Case Study Node: Big Wash Stores. Constructed a multi-platform distribution engine across TikTok and Facebook, utilizing targeted geo-fencing to systematically scale local foot-traffic.";
-            case 'case-kaekebeth':
-                return "Case Study Node: KaekeBeth Couture. Engineered a specialized Luxury Design Concierge text agent built to navigate high-value client fitting lifecycles automatically.";
-            case 'tier-marketing':
-                return "Service Tier 1: Traditional Digital Marketing. Systematic operational deployment covering high-intent Search Engine Optimization, hyper-targeted Google Ads positioning, and direct-response customer acquisition paths.";
-            case 'tier-automation':
-                return "Service Tier 2: AI Agent Automation. Full deployment of automated 24/7 Voice and Text engines to triage missed inbound communication. Positioned at a baseline flat fee of $1,500 setup plus $450 per month management.";
-            case 'pricing-roi':
-                return "Monetization Analysis: The $1,500 installation and $450 monthly management infrastructure self-funds by capturing missed lead streams, ensuring permanent coverage, and cutting staff churn completely.";
-            case 'cta-whatsapp':
-                return "WhatsApp Deep Link. This action vector initiates an instant communication thread directly with our strategic consulting lead for rapid campaign initialization.";
-            case 'cta-calendly':
-                return "Calendly Access Bridge. Tap to secure an open operations evaluation call on the master calendar to unpack pipeline leakages inside your current enterprise structure.";
-            default:
-                return "Currently scanning site nodes. Space Digital builds traditional high-velocity marketing pipelines alongside automated voice networks using frameworks like Verbeo.";
+    // Absolute Context Dictionary mapped strictly to your page.tsx positions
+    const getScrollSectionContext = (scrollY: number): string => {
+        // 1. HERO SECTION BOUNDS (Top of page)
+        if (scrollY < 700) {
+            return "Space Digital engineers high-performance web systems and digital marketing campaigns for brands that refuse to look ordinary. We focus on eliminating structural friction.";
         }
+        // 2. SELECTED WORKS / CASE STUDIES SECTION (#work)
+        if (scrollY >= 700 && scrollY < 1800) {
+            return "You are exploring our Selected Work engine. Here, we track performance data like Ulnar Medical's patient acquisition hub, Meta campaign ROAS metrics, and local reach funnels.";
+        }
+        // 3. EXPERTISE / TECH ECOSYSTEM SECTION (#ecosystem)
+        if (scrollY >= 1800 && scrollY < 2600) {
+            return "This is our technical architecture ecosystem layer. We integrate customized background automations using n8n and implement low-latency voice agent networks like Verbeo.";
+        }
+        // 4. FINANCIAL ROI TERMINAL (#systems)
+        if (scrollY >= 2600 && scrollY < 3500) {
+            return "The Operational ROI Calculator terminal. Adjust the leakage sliders to calculate missed inbound calls and visualize how a 24/7 AI setup self-funds its implementation costs.";
+        }
+        // 5. CONVERSION GATEWAY (#contact)
+        if (scrollY >= 3500 && scrollY < 4300) {
+            return "The Space Digital Conversion Gateway. Initiate a live voice triage test with our agent framework or select the optimized WhatsApp link to secure an operational blueprint briefing.";
+        }
+        // 6. ABOUT THE FOUNDER / CLOSING (#about)
+        return "Space Digital was built by Lead Consultant Seth Onyango to blend traditional human growth marketing models directly with high-performance voice automation assets.";
     };
 
     useEffect(() => {
-        const checkDevice = () => {
-            setIsMobile(window.innerWidth < 768);
-        };
+        const checkDevice = () => setIsMobile(window.innerWidth < 768);
         checkDevice();
         window.addEventListener('resize', checkDevice);
-
-        if (isVisible && !isMobile) {
-            document.body.style.cursor = 'none';
-            const style = document.createElement('style');
-            style.id = 'concierge-cursor-override';
-            style.innerHTML = 'a, button, input, [role="button"], .work-link { cursor: none !important; }';
-            document.head.appendChild(style);
-        }
-
-        return () => {
-            window.removeEventListener('resize', checkDevice);
-            document.body.style.cursor = 'default';
-            document.getElementById('concierge-cursor-override')?.remove();
-        };
-    }, [isVisible, isMobile]);
+        return () => window.removeEventListener('resize', checkDevice);
+    }, []);
 
     useEffect(() => {
-        // HIGH-VELOCITY MOUSE TRACKING ENGINE
+        // ── DESKTOP: DETECT ON-STOP POSITION ──
         const handleMouseMove = (e: MouseEvent) => {
             if (window.innerWidth >= 768) {
-                setMousePos({ x: e.clientX, y: e.clientY });
+                // Offset slightly down and right from standard cursor tip
+                setMousePos({ x: e.clientX + 15, y: e.clientY + 15 });
 
-                // Keeps it visible instead of flickering it off completely on minor adjustments
+                // Hide immediately whenever the cursor is actively in flight
+                setIsVisible(false);
                 if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
 
-                const target = e.target as HTMLElement;
-                const closestTip = target.closest('[data-concierge-tip]');
-                const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
+                // Capture current viewport metrics at this exact spatial coordinate step
+                const currentScroll = window.scrollY;
 
-                // CRITICAL FIX: Slashes response wait down from 650ms to a rapid 80ms stop window
+                // Trigger presentation ONLY when the cursor stops completely for 500ms
                 desktopTimeoutRef.current = setTimeout(() => {
-                    if (currentTargetRef.current === tipType && isVisible) return; // Prevent layout resetting if hovering same block
-
-                    currentTargetRef.current = tipType;
-                    setIsHoveringElement(!!closestTip);
-                    setTipText(getContextInfo(tipType || "default"));
+                    setTipText(getScrollSectionContext(currentScroll));
                     setIsVisible(true);
                     setIsLoading(true);
 
-                    // CRITICAL FIX: Speeds up the typing simulation wait from 900ms to 250ms
+                    // Render micro 3-dot typing delay sequence
                     setTimeout(() => setIsLoading(false), 250);
-                }, 80);
+                }, 500);
             }
         };
 
-        // INSTANT TOUCH RESPONSE ENGINE
-        const handleTouchStart = (e: TouchEvent) => {
+        // ── MOBILE: GESTURAL SCREEN CONTACT TIMING ──
+        const handleTouchStart = () => {
             if (window.innerWidth < 768) {
                 if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
 
-                const target = e.target as HTMLElement;
-                const closestTip = target.closest('[data-concierge-tip]');
-                const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
-
-                currentTargetRef.current = tipType;
-                setIsHoveringElement(!!closestTip);
-                setTipText(getContextInfo(tipType || "default"));
+                const currentScroll = window.scrollY;
+                setTipText(getScrollSectionContext(currentScroll));
                 setIsVisible(true);
                 setIsLoading(true);
 
@@ -121,6 +89,7 @@ export function SiteConcierge() {
 
         const handleTouchEnd = () => {
             if (window.innerWidth < 768) {
+                // Disappears cleanly 1.2 seconds after screen pressure breaks
                 mobileTimeoutRef.current = setTimeout(() => {
                     setIsVisible(false);
                 }, 1200);
@@ -138,7 +107,7 @@ export function SiteConcierge() {
             if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
             if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
         };
-    }, [isVisible]);
+    }, []);
 
     return (
         <AnimatePresence mode="wait">
@@ -151,25 +120,24 @@ export function SiteConcierge() {
                                 bottom: '110px',
                                 left: '50%',
                                 transform: 'translateX(-50%)',
-                                pointerEvents: 'none',
+                                pointerEvents: 'none', // Strict guard: click events pass completely straight through to buttons behind it
                                 zIndex: 999999,
                             }
                             : {
                                 position: 'fixed',
                                 left: mousePos.x,
                                 top: mousePos.y,
-                                transform: 'translate(-12px, -12px)',
-                                pointerEvents: 'none',
+                                pointerEvents: 'none', // Strict guard: cursor never clashes with text container box layouts
                                 zIndex: 999999,
                             }
                     }
                     initial={
                         isMobile
                             ? { opacity: 0, y: 15, x: '-50%' }
-                            : { opacity: 0, scale: 0.96, y: 3 }
+                            : { opacity: 0, scale: 0.96, y: 4 }
                     }
                     animate={{
-                        opacity: isHoveringElement ? 0.95 : 0.60,
+                        opacity: 0.95,
                         y: 0,
                         scale: 1,
                         x: isMobile ? '-50%' : '0%'
@@ -179,9 +147,10 @@ export function SiteConcierge() {
                             ? { opacity: 0, y: 10, x: '-50%' }
                             : { opacity: 0, scale: 0.96 }
                     }
-                    transition={{ type: 'spring', stiffness: 550, damping: 35 }}
-                    className="w-[calc(100%-2rem)] max-w-[340px] md:w-[320px] rounded-lg border border-white/10 bg-zinc-950 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex flex-col gap-2 select-none"
+                    transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                    className="w-[calc(100%-2rem)] max-w-[340px] md:w-[320px] rounded-lg border border-white/10 bg-zinc-950 p-4 shadow-[0_25px_50px_rgba(0,0,0,0.95)] flex flex-col gap-2 select-none"
                 >
+                    {/* Header Bar Area */}
                     <div className="flex items-center justify-between border-b border-white/5 pb-2">
                         <div className="flex items-center gap-2">
                             <Sparkles size={11} className="text-[#FF6B2B] animate-pulse" />
@@ -190,6 +159,7 @@ export function SiteConcierge() {
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
                     </div>
 
+                    {/* Typing Animation Loader Container Layout */}
                     <div className="min-h-[44px] flex items-center">
                         <AnimatePresence mode="wait">
                             {isLoading ? (
