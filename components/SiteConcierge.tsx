@@ -1,180 +1,229 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, X, Sparkles, TrendingUp } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 export function SiteConcierge() {
-    const [isActive, setIsActive] = useState(true);
-    const [isMinimized, setIsMinimized] = useState(false);
-    const [tipText, setTipText] = useState("Jambo! I'm Spacey, your live system guide. Move your cursor or finger over items to decode our architecture.");
-
+    const [isVisible, setIsVisible] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [tipText, setTipText] = useState("");
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [isHoveringElement, setIsHoveringElement] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
-    // Global cursor takeover state engine configuration
+    const desktopTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const mobileTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const currentTargetRef = useRef<string | null>(null);
+
+    // Core System Dictionary containing ultra-deep contextual copy blocks
+    const getContextInfo = (tag: string): string => {
+        switch (tag) {
+            case 'hero-headline':
+                return "Space Digital operates as a non-traditional systems architecture collective. We engineer high-performance visual interfaces and asynchronous operational loops for brands seeking extreme market scalability.";
+            case 'hero-location':
+                return "Based directly out of Nairobi, Kenya. We build localized high-throughput conversion machines tailored for the regional economic sector while scaling distributed infrastructure for global SMBs.";
+            case 'social-bar':
+                return "Direct access conduits. These links bypass standard form-fill friction by routing user sessions straight into active WhatsApp chat lines or our persistent 30-minute Calendly scheduler.";
+            case 'video-ads':
+                return "Performance distribution metrics. These assets represent high-velocity, short-form creative ad models engineered to isolate target intent and pipeline regional clients at minimal acquisition cost.";
+            case 'case-ulnar':
+                return "Case Study Node: Ulnar Medical Clinic. Deployed full frontend architecture optimized for localized search patterns and integrated multi-channel scheduling hooks to completely wipe out back-office drop-off loops.";
+            case 'case-wibify':
+                return "Case Study Node: Wibify Agency. Developed a modern Webflow-to-NextJS landing layout optimized to transform organic inbound traffic streams into qualified consulting contracts.";
+            case 'case-bigwash':
+                return "Case Study Node: Big Wash Stores. Constructed a multi-platform distribution engine across TikTok and Facebook, utilizing targeted geo-fencing to systematically scale local foot-traffic.";
+            case 'case-kaekebeth':
+                return "Case Study Node: KaekeBeth Couture. Engineered a specialized Luxury Design Concierge text agent built to navigate high-value client fitting lifecycles automatically.";
+            case 'tier-marketing':
+                return "Service Tier 1: Traditional Digital Marketing. Systematic operational deployment covering high-intent Search Engine Optimization, hyper-targeted Google Ads positioning, and direct-response customer acquisition paths.";
+            case 'tier-automation':
+                return "Service Tier 2: AI Agent Automation. Full deployment of automated 24/7 Voice and Text engines to triage missed inbound communication. Positioned at a baseline flat fee of $1,500 setup plus $450 per month management.";
+            case 'pricing-roi':
+                return "Monetization Analysis: The $1,500 installation and $450 monthly management infrastructure self-funds by capturing missed lead streams, ensuring permanent coverage, and cutting staff churn completely.";
+            case 'cta-whatsapp':
+                return "WhatsApp Deep Link. This action vector initiates an instant communication thread directly with our strategic consulting lead for rapid campaign initialization.";
+            case 'cta-calendly':
+                return "Calendly Access Bridge. Tap to secure an open operations evaluation call on the master calendar to unpack pipeline leakages inside your current enterprise structure.";
+            default:
+                return "Currently scanning site nodes. Space Digital builds traditional high-velocity marketing pipelines alongside automated voice networks using frameworks like Verbeo.";
+        }
+    };
+
     useEffect(() => {
-        if (isActive && !isMinimized) {
+        const checkDevice = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkDevice();
+        window.addEventListener('resize', checkDevice);
+
+        // 1. DESKTOP CURSOR OVERRIDE PROTOCOL
+        if (isVisible && !isMobile) {
             document.body.style.cursor = 'none';
             const style = document.createElement('style');
             style.id = 'concierge-cursor-override';
             style.innerHTML = 'a, button, input, [role="button"], .work-link { cursor: none !important; }';
             document.head.appendChild(style);
+        }
 
-            return () => {
-                document.body.style.cursor = 'default';
-                document.getElementById('concierge-cursor-override')?.remove();
-            };
-        } else {
+        return () => {
+            window.removeEventListener('resize', checkDevice);
             document.body.style.cursor = 'default';
             document.getElementById('concierge-cursor-override')?.remove();
-        }
-    }, [isActive, isMinimized]);
+        };
+    }, [isVisible, isMobile]);
 
     useEffect(() => {
-        if (!isActive || isMinimized) return;
-
+        // 2. DESKTOP MOVEMENT & IDLE TIMING LOGIC
         const handleMouseMove = (e: MouseEvent) => {
-            setMousePos({ x: e.clientX, y: e.clientY });
-        };
+            if (window.innerWidth >= 768) {
+                setMousePos({ x: e.clientX, y: e.clientY });
+                setIsVisible(false);
+                if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
 
-        const handleTouchMove = (e: TouchEvent) => {
-            if (e.touches.length > 0) {
-                const touch = e.touches[0];
-                setMousePos({ x: touch.clientX, y: touch.clientY - 65 });
+                const target = e.target as HTMLElement;
+                const closestTip = target.closest('[data-concierge-tip]');
+                const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
+
+                desktopTimeoutRef.current = setTimeout(() => {
+                    currentTargetRef.current = tipType;
+                    setIsHoveringElement(!!closestTip);
+                    setTipText(getContextInfo(tipType || "default"));
+                    setIsVisible(true);
+                    setIsLoading(true);
+
+                    setTimeout(() => setIsLoading(false), 900);
+                }, 650);
             }
         };
 
-        const handleMouseOver = (e: MouseEvent) => {
-            const target = e.target as HTMLElement;
+        // 3. MOBILE TOUCH GESTURAL LOGIC (CENTRALLY MOUNTED)
+        const handleTouchStart = (e: TouchEvent) => {
+            if (window.innerWidth < 768) {
+                if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
 
-            // Dynamic mapping for individual case items
-            const workLink = target.closest('.work-link');
-            const calcSection = target.closest('#systems');
-            const inputElement = target.closest('input[type="range"]');
-            const ctaGate = target.closest('#contact');
+                const target = e.target as HTMLElement;
+                const closestTip = target.closest('[data-concierge-tip]');
+                const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
 
-            if (workLink) {
-                setIsHoveringElement(true);
-                const previewUrl = workLink.getAttribute('data-preview') || '';
+                currentTargetRef.current = tipType;
+                setIsHoveringElement(!!closestTip);
+                setTipText(getContextInfo(tipType || "default"));
+                setIsVisible(true);
+                setIsLoading(true);
 
-                if (previewUrl.includes('ulnar')) {
-                    setTipText("🩺 Ulnar Medical: Notice the inline media engine. We built this custom site to pipeline high-intent patients directly into an automated booking hub, destroying front-desk lag.");
-                } else if (previewUrl.includes('wibify')) {
-                    setTipText("🌐 Wibify Agency: High-performance inbound system architecture built for scalability and near-zero conversion friction loops.");
-                } else if (previewUrl.includes('metaads')) {
-                    setTipText("🎬 Meta Performance: The video trailing your mouse is a live asset proving a 3.8x ROAS capture framework. Clicking this takes you straight to our validation drive.");
-                } else if (previewUrl.includes('tiktokads')) {
-                    setTipText("📱 TikTok Growth: Hovering here previews a faceless campaign that hit 214% reach velocity. Click to explore the asset blueprint.");
-                } else if (previewUrl.includes('googlelocalads')) {
-                    setTipText("📍 Local SEO: This demonstrates how we dominate local queries, pushing regional service clients into the Top-3 Map Packs with a 94% win rate.");
-                }
-                return;
+                setTimeout(() => setIsLoading(false), 700);
             }
+        };
 
-            if (inputElement && calcSection) {
-                setIsHoveringElement(true);
-                setTipText("📊 Interactive Terminal: Drag these sliders to map your own operational bottlenecks. Spacey can deploy a voice engine to salvage that leaked revenue around the clock.");
-                return;
-            }
-
-            if (calcSection) {
-                setIsHoveringElement(true);
-                setTipText("💰 ROI Infrastructure: Look at the pricing model. Our $1,500 setup and $450/mo management framework self-funds instantly by eliminating human turnover and capturing 100% of missed calls.");
-                return;
-            }
-
-            if (ctaGate) {
-                setIsHoveringElement(true);
-                setTipText("🤖 Conversation Gate: Right here you can initialize a live system briefing. Test our platform directly by calling Spacey or launching a clean WhatsApp interface.");
-                return;
-            }
-
-            // Revert to page-level structural pointers based on vertical scrolls
-            setIsHoveringElement(false);
-            if (window.scrollY < 400) {
-                setTipText("Jambo! Move your cursor or finger over any case study or interactive section below to let me unpack the data mechanics.");
-            } else {
-                setTipText("Following your lead. Hover over case links, statistics, or the calculator inputs to view system metrics.");
+        const handleTouchEnd = () => {
+            if (window.innerWidth < 768) {
+                mobileTimeoutRef.current = setTimeout(() => {
+                    setIsVisible(false);
+                }, 1500); // Kept alive slightly longer for solid mobile readability
             }
         };
 
         window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('touchmove', handleTouchMove);
-        window.addEventListener('mouseover', handleMouseOver);
+        window.addEventListener('touchstart', handleTouchStart, { passive: true });
+        window.addEventListener('touchend', handleTouchEnd);
 
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('touchmove', handleTouchMove);
-            window.removeEventListener('mouseover', handleMouseOver);
+            window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchend', handleTouchEnd);
+            if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
+            if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
         };
-    }, [isActive, isMinimized]);
+    }, []);
 
     return (
-        <>
-            <AnimatePresence>
-                {isMinimized && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        className="fixed bottom-24 right-6 md:bottom-8 md:right-8 z-[99999] flex items-center gap-3"
-                    >
-                        <span className="font-mono text-[9px] uppercase tracking-widest bg-zinc-950/90 border border-white/5 text-[#FF6B2B] px-3 py-1.5 rounded-lg backdrop-blur-md shadow-xl">
-                            Need me to show you more? Tap to restore guide
-                        </span>
-                        <button
-                            onClick={() => setIsMinimized(false)}
-                            className="w-12 h-12 rounded-full bg-zinc-950 border border-[#FF6B2B] text-[#FF6B2B] flex items-center justify-center shadow-[0_0_20px_rgba(255,107,43,0.3)] hover:scale-110 transition-transform"
-                        >
-                            <Bot size={18} />
-                        </button>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            <AnimatePresence>
-                {isActive && !isMinimized && (
-                    <motion.div
-                        style={{
-                            position: 'fixed',
-                            left: mousePos.x,
-                            top: mousePos.y,
-                            transform: 'translate(-12px, -12px)',
-                            pointerEvents: 'auto',
-                            zIndex: 999999
-                        }}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{
-                            opacity: isHoveringElement ? 0.95 : 0.60,
-                            scale: isHoveringElement ? 1.03 : 1
-                        }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{ type: 'spring', stiffness: 550, damping: 34 }}
-                        className="w-[260px] md:w-[310px] rounded-xl border border-[#FF6B2B]/30 bg-zinc-950/90 backdrop-blur-md p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex flex-col gap-1.5 select-none"
-                    >
-                        <div className="flex items-center justify-between border-b border-white/5 pb-1">
-                            <div className="flex items-center gap-1">
-                                <Sparkles size={10} className="text-[#FF6B2B]" />
-                                <span className="text-[9px] font-mono uppercase text-zinc-400 tracking-wider">Space Core Pointer</span>
-                            </div>
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                    setIsMinimized(true);
-                                }}
-                                className="w-4 h-4 rounded bg-zinc-900 text-zinc-500 hover:text-white border border-white/5 flex items-center justify-center transition-colors"
-                            >
-                                <X size={10} />
-                            </button>
+        <AnimatePresence mode="wait">
+            {isVisible && (
+                <motion.div
+                    // Responsive layout switching mechanism
+                    style={
+                        isMobile
+                            ? {
+                                position: 'fixed',
+                                bottom: '110px', // Suspended cleanly right above your orange social action-bar
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                pointerEvents: 'none',
+                                zIndex: 999999,
+                            }
+                            : {
+                                position: 'fixed',
+                                left: mousePos.x,
+                                top: mousePos.y,
+                                transform: 'translate(-12px, -12px)',
+                                pointerEvents: 'none',
+                                zIndex: 999999,
+                            }
+                    }
+                    initial={
+                        isMobile
+                            ? { opacity: 0, y: 20, x: '-50%' }
+                            : { opacity: 0, scale: 0.92, y: 5 }
+                    }
+                    animate={{
+                        opacity: isHoveringElement ? 0.95 : 0.60,
+                        y: isMobile ? 0 : 0,
+                        scale: isMobile ? 1 : 1,
+                        x: isMobile ? '-50%' : '0%'
+                    }}
+                    exit={
+                        isMobile
+                            ? { opacity: 0, y: 15, x: '-50%' }
+                            : { opacity: 0, scale: 0.95 }
+                    }
+                    transition={{ type: 'spring', stiffness: 420, damping: 30 }}
+                    className="w-[calc(100%-2rem)] max-w-[340px] md:w-[320px] rounded-lg border border-white/10 bg-zinc-950 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex flex-col gap-2 select-none"
+                >
+                    {/* Header Track */}
+                    <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                        <div className="flex items-center gap-2">
+                            <Sparkles size={11} className="text-[#FF6B2B] animate-pulse" />
+                            <span className="text-[9px] font-mono uppercase text-zinc-400 tracking-widest font-medium">Space Core Guide</span>
                         </div>
-                        <p className="text-[10px] leading-relaxed text-zinc-200 font-sans font-light">
-                            {tipText}
-                        </p>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </>
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
+                    </div>
+
+                    {/* Typing Loading / Conversational Text Stream */}
+                    <div className="min-h-[44px] flex items-center">
+                        <AnimatePresence mode="wait">
+                            {isLoading ? (
+                                <motion.div
+                                    key="loader"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="flex items-center gap-1.5 py-1 pl-1"
+                                >
+                                    {[0, 0.15, 0.3].map((delay, i) => (
+                                        <motion.div
+                                            key={i}
+                                            className="w-1.5 h-1.5 rounded-full bg-[#FF6B2B]"
+                                            animate={{ y: [0, -5, 0] }}
+                                            transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut", delay }}
+                                        />
+                                    ))}
+                                </motion.div>
+                            ) : (
+                                <motion.p
+                                    key="text"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.25 }}
+                                    className="text-[11px] leading-relaxed text-zinc-300 font-sans font-light tracking-wide selection:bg-transparent"
+                                >
+                                    {tipText}
+                                </motion.p>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 }
