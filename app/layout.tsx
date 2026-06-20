@@ -4,6 +4,7 @@ import './globals.css';
 import { CustomCursor } from '@/components/ui/CustomCursor';
 import { SmoothScroll } from '@/components/ui/SmoothScroll';
 import { FloatingSocials } from "@/components/FloatingSocials"; // Imported our floating sidebar controller
+import { SiteConcierge } from "@/components/SiteConcierge"; // 1. Imported our site tour concierge guide
 import { cn } from "@/lib/utils";
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
@@ -44,6 +45,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Immersive, persistent right-docked social tooltip panel tracking conversions 24/7 */}
         <FloatingSocials />
+
+        {/* 2. Interactive Site Tour Guide Controller mapping operational workflows */}
+        <SiteConcierge />
       </body>
     </html>
   );
