@@ -6,7 +6,6 @@ import { SocialTooltip, SocialItem } from "@/components/ui/social-media";
 
 const sethSocialLinks: SocialItem[] = [
     {
-        // Optimized clean deep-link format for both mobile app redirection and desktop browsers
         href: "https://wa.me/message/RV5LUNZAXFW3M1",
         ariaLabel: "WhatsApp",
         tooltip: "Direct Chat",
@@ -46,7 +45,7 @@ export function FloatingSocials() {
                 </div>
             </div>
 
-            {/* ── MOBILE QUICK ACTION ACTION-BAR: Frosted Glass Bottom Deck ── */}
+            {/* ── MOBILE QUICK ACTION ACTION-BAR ── */}
             <div className="fixed bottom-0 left-0 right-0 z-[999] p-3 md:hidden bg-zinc-950/70 border-t border-white/5 backdrop-blur-xl shadow-[0_-10px_30px_rgba(0,0,0,0.8)] pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
                 <div className="flex items-center justify-around max-w-md mx-auto">
                     {sethSocialLinks.map((item) => (
@@ -58,8 +57,9 @@ export function FloatingSocials() {
                             className="flex flex-col items-center gap-1 group relative p-2 transition-transform active:scale-95"
                             aria-label={item.ariaLabel}
                         >
+                            {/* ── INDIVIDUAL CARD COMPONENT OUTLINE: Shifted from border-white/10 to clear brand orange ── */}
                             <div
-                                className="w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 bg-zinc-900/50 transition-colors shadow-md"
+                                className="w-9 h-9 rounded-xl flex items-center justify-center border border-[#FF6B2B]/40 bg-zinc-900/50 shadow-[0_0_10px_rgba(255,107,43,0.1)] transition-colors"
                                 style={{ transform: 'translateZ(0)' }}
                             >
                                 <div className="relative w-5 h-5">

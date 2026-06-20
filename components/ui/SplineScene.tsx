@@ -44,7 +44,7 @@ export function SplineScene({ scene, className }: Props) {
 
   if (isMobile === null) return null;
 
-  // Mobile: Absolute background layer takeover
+  // Mobile Blueprint: Fully lightened, natural, crisp original asset colors
   if (isMobile) {
     return (
       <div className="absolute inset-0 w-full h-full min-h-screen overflow-hidden">
@@ -54,10 +54,8 @@ export function SplineScene({ scene, className }: Props) {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center opacity-40"
+          className="object-cover object-center opacity-100" /* Boosted to 100% to display its natural native color */
         />
-        {/* Deep background contrast darkener layout to blend image into text space */}
-        <div className="absolute inset-0 bg-[#0a0a0b]/60 mix-blend-multiply pointer-events-none" />
       </div>
     );
   }
