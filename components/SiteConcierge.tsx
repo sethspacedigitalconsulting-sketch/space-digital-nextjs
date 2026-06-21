@@ -57,7 +57,7 @@ export function SiteConcierge() {
             case 'faq':
                 return "Frequently Asked Questions Node. Here we clear up onboarding timelines, technical specifications of our voice infrastructure, and management details.";
             default:
-                return "Navigating Space Digital infrastructure. Pause your movement or touch the screen to let Spacey unpack system performance data.";
+                return "";
         }
     };
 
@@ -106,12 +106,21 @@ export function SiteConcierge() {
         // Desktop movement halt engine
         const handleMouseMove = (e: MouseEvent) => {
             if (window.innerWidth >= 768) {
-                setMousePos({ x: e.clientX + 15, y: e.clientY + 15 });
-
                 const target = e.target as HTMLElement;
+
+                // Scan to see if cursor is sitting on an actionable data tag
                 const closestTip = target.closest('[data-concierge-tip]');
                 const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
-                const targetContext = tipType || activeSection;
+
+                // FIX: If not hovering over a data-concierge-tip element directly, fade away on desktop
+                if (!closestTip) {
+                    setIsVisible(false);
+                    currentTargetRef.current = null;
+                    return;
+                }
+
+                setMousePos({ x: e.clientX + 15, y: e.clientY + 15 });
+                const targetContext = tipType;
 
                 if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
 
@@ -119,13 +128,13 @@ export function SiteConcierge() {
                     if (currentTargetRef.current === targetContext && isVisible) return;
 
                     currentTargetRef.current = targetContext;
-                    setIsHoveringElement(!!closestTip);
+                    setIsHoveringElement(true);
                     setTipText(getContextInfo(targetContext));
                     setIsVisible(true);
                     setIsLoading(true);
 
                     setTimeout(() => setIsLoading(false), 120);
-                }, 40); // Dropped calculation lag window from 80ms to 40ms
+                }, 40);
             }
         };
 
@@ -137,6 +146,8 @@ export function SiteConcierge() {
                 const target = e.target as HTMLElement;
                 const closestTip = target.closest('[data-concierge-tip]');
                 const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
+
+                // Fallback to active viewing section on touch if no precise element is hit
                 const targetContext = tipType || activeSection;
 
                 currentTargetRef.current = targetContext;
@@ -151,20 +162,32 @@ export function SiteConcierge() {
 
         const handleTouchEnd = () => {
             if (window.innerWidth < 768) {
+                if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
+
+                // FIX: When user lifts their thumb, drop visibility after a brief 1.2s delay
                 mobileTimeoutRef.current = setTimeout(() => {
                     setIsVisible(false);
-                }, 1500);
+                    currentTargetRef.current = null;
+                }, 1200);
             }
+        };
+
+        // FIX: Ensure screen exit hides the card instantly
+        const handleMouseLeaveWindow = () => {
+            setIsVisible(false);
+            currentTargetRef.current = null;
         };
 
         window.addEventListener('mousemove', handleMouseMove);
         window.addEventListener('touchstart', handleTouchStart, { passive: true });
         window.addEventListener('touchend', handleTouchEnd);
+        document.body.addEventListener('mouseleave', handleMouseLeaveWindow);
 
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('touchstart', handleTouchStart);
             window.removeEventListener('touchend', handleTouchEnd);
+            document.body.removeEventListener('mouseleave', handleMouseLeaveWindow);
             if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
             if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
         };
@@ -172,7 +195,7 @@ export function SiteConcierge() {
 
     return (
         <AnimatePresence mode="wait">
-            {isVisible && (
+            {isVisible && tipText && (
                 <motion.div
                     style={
                         isMobile
@@ -205,7 +228,6 @@ export function SiteConcierge() {
                 >
                     <div className="flex items-center justify-between border-b border-white/5 pb-2">
                         <div className="flex items-center gap-2">
-                            {/* Hardcoded hex fallback logic to enforce brand orange colors */}
                             <Sparkles size={11} style={{ color: '#FF6B2B' }} className="animate-pulse" />
                             <span className="text-[9px] font-mono uppercase text-zinc-400 tracking-widest font-medium">Space Core Guide</span>
                         </div>
@@ -238,7 +260,6 @@ export function SiteConcierge() {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     transition={{ duration: 0.15 }}
-                                    /* Direct hex token implementation completely bypassing Tailwind parsing rules */
                                     style={{ color: '#FF6B2B' }}
                                     className="text-[11px] leading-relaxed font-sans font-medium tracking-wide selection:bg-transparent"
                                 >
