@@ -6,22 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 export function ContactGateway() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [callStatus, setCallStatus] = useState<'idle' | 'connecting' | 'active'>('idle');
-
-  const handleVoiceCall = () => {
-    setCallStatus('connecting');
-    try {
-      // Force direct window handshake to instantly clear popup blockers
-      const callWindow = window.open('https://call.verbeo.ai/space-digital', '_blank');
-      if (callWindow) {
-        callWindow.focus();
-      }
-      setTimeout(() => setCallStatus('idle'), 1000);
-    } catch (err) {
-      console.error('Failed to patch Verbeo stream node:', err);
-      setCallStatus('idle');
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,9 +54,9 @@ export function ContactGateway() {
           >
             {/* Status indicator row */}
             <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${callStatus === 'connecting' ? 'bg-yellow-400 animate-pulse' : 'bg-[#FF6B2B]'}`} />
+              <div className="w-2 h-2 rounded-full bg-[#FF6B2B]" />
               <span className="font-mono text-[10px] tracking-widest uppercase text-white/40">
-                {callStatus === 'connecting' ? 'Initializing Agent...' : 'Agent Online · Ready'}
+                Agent Online · Ready
               </span>
             </div>
 
@@ -95,13 +79,15 @@ export function ContactGateway() {
               ))}
             </div>
 
-            {/* High-Elevated Action Layer Core */}
-            <button
-              onClick={handleVoiceCall}
-              className="relative z-50 pointer-events-auto w-full py-3.5 rounded-xl font-mono text-xs tracking-widest uppercase font-semibold transition-all duration-200 bg-[#FF6B2B] text-black hover:bg-[#ff824d]"
+            {/* Absolute Click Bypass Engine Layer */}
+            <a
+              href="https://call.verbeo.ai/space-digital"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-50 pointer-events-auto block w-full py-3.5 rounded-xl font-mono text-xs tracking-widest uppercase font-semibold text-center transition-all duration-200 bg-[#FF6B2B] text-black hover:bg-[#ff824d]"
             >
-              {callStatus === 'connecting' ? '⏳ Connecting...' : 'Start Live Demo Call'}
-            </button>
+              Start Live Demo Call
+            </a>
             <p className="text-[10px] text-gray-600 font-mono text-center">
               Mic access required · Browser-based · No phone number needed
             </p>
