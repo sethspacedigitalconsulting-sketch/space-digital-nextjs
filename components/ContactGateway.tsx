@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function ContactGateway() {
@@ -11,8 +11,11 @@ export function ContactGateway() {
   const handleVoiceCall = () => {
     setCallStatus('connecting');
     try {
-      // Direct stream handshake bypassing Vapi SDK blocks entirely
-      window.open('https://call.verbeo.ai/space-digital', '_blank');
+      // Force direct window handshake to instantly clear popup blockers
+      const callWindow = window.open('https://call.verbeo.ai/space-digital', '_blank');
+      if (callWindow) {
+        callWindow.focus();
+      }
       setTimeout(() => setCallStatus('idle'), 1000);
     } catch (err) {
       console.error('Failed to patch Verbeo stream node:', err);
@@ -67,9 +70,9 @@ export function ContactGateway() {
           >
             {/* Status indicator row */}
             <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${callStatus === 'active' ? 'bg-green-400 animate-pulse' : callStatus === 'connecting' ? 'bg-yellow-400 animate-pulse' : 'bg-[#FF6B2B]'}`} />
+              <div className={`w-2 h-2 rounded-full ${callStatus === 'connecting' ? 'bg-yellow-400 animate-pulse' : 'bg-[#FF6B2B]'}`} />
               <span className="font-mono text-[10px] tracking-widest uppercase text-white/40">
-                {callStatus === 'active' ? 'Live · Connected to Spacey' : callStatus === 'connecting' ? 'Initializing Agent...' : 'Agent Online · Ready'}
+                {callStatus === 'connecting' ? 'Initializing Agent...' : 'Agent Online · Ready'}
               </span>
             </div>
 
@@ -92,14 +95,10 @@ export function ContactGateway() {
               ))}
             </div>
 
+            {/* High-Elevated Action Layer Core */}
             <button
               onClick={handleVoiceCall}
-              className={`w-full py-3.5 rounded-xl font-mono text-xs tracking-widest uppercase font-semibold transition-all duration-200
-                ${callStatus === 'active'
-                  ? 'bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20'
-                  : 'bg-[#FF6B2B] text-black hover:bg-[#ff824d]'
-                } disabled:opacity-40`}
-              disabled={callStatus === 'connecting'}
+              className="relative z-50 pointer-events-auto w-full py-3.5 rounded-xl font-mono text-xs tracking-widest uppercase font-semibold transition-all duration-200 bg-[#FF6B2B] text-black hover:bg-[#ff824d]"
             >
               {callStatus === 'connecting' ? '⏳ Connecting...' : 'Start Live Demo Call'}
             </button>
@@ -136,7 +135,7 @@ export function ContactGateway() {
 
                     <div className="w-full">
                       <input
-                        type="author"
+                        type="email"
                         name="email"
                         required
                         placeholder="Email Address"
