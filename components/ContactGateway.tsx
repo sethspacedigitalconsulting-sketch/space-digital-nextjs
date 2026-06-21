@@ -14,16 +14,22 @@ export function ContactGateway() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       import('@vapi-ai/web').then((VapiModule) => {
-        const Vapi = VapiModule.default;
-        const vapiInstance = new Vapi('614f3d87-72b9-4df1-b522-87614a774d92');
-        vapiRef.current = vapiInstance;
+        // FIX: Extract the core class constructor accurately whether default export or module body
+        const VapiConstructor = VapiModule.default || VapiModule;
 
-        vapiInstance.on('call-start', () => setCallStatus('active'));
-        vapiInstance.on('call-end', () => setCallStatus('idle'));
-        vapiInstance.on('error', (err) => {
-          console.error('Vapi Web Pipeline Error:', err);
-          setCallStatus('idle');
-        });
+        try {
+          const vapiInstance = new (VapiConstructor as any)('614f3d87-72b9-4df1-b522-87614a774d92');
+          vapiRef.current = vapiInstance;
+
+          vapiInstance.on('call-start', () => setCallStatus('active'));
+          vapiInstance.on('call-end', () => setCallStatus('idle'));
+          vapiInstance.on('error', (err: any) => {
+            console.error('Vapi Web Pipeline Error:', err);
+            setCallStatus('idle');
+          });
+        } catch (e) {
+          console.error('Vapi instance initialization crash:', e);
+        }
       });
     }
 
@@ -35,7 +41,10 @@ export function ContactGateway() {
   }, []);
 
   const handleVoiceCall = async () => {
-    if (!vapiRef.current) return;
+    if (!vapiRef.current) {
+      console.warn('Vapi engine node is not initialized yet.');
+      return;
+    }
 
     if (callStatus === 'active') {
       vapiRef.current.stop();
