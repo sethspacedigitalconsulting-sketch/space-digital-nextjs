@@ -71,7 +71,6 @@ export function SiteConcierge() {
     // ── HIGH-PRECISION SPATIAL VIEWPORT TRACKER ──
     useEffect(() => {
         const handleSpatialCheck = () => {
-            // Maps completely 1:1 with your clean page.tsx IDs
             const sections = ['home', 'work', 'ecosystem', 'system', 'systems', 'contact', 'about', 'faq'];
             let currentActive = 'home';
             let maxVisibleHeight = 0;
@@ -87,7 +86,10 @@ export function SiteConcierge() {
                     }
                 }
             });
-            setActiveSection(currentActive);
+
+            if (currentActive !== activeSection) {
+                setActiveSection(currentActive);
+            }
         };
 
         window.addEventListener('scroll', handleSpatialCheck, { passive: true });
@@ -98,22 +100,23 @@ export function SiteConcierge() {
             window.removeEventListener('scroll', handleSpatialCheck);
             window.removeEventListener('resize', handleSpatialCheck);
         };
-    }, []);
+    }, [activeSection]);
 
     useEffect(() => {
         // Desktop movement halt engine
         const handleMouseMove = (e: MouseEvent) => {
             if (window.innerWidth >= 768) {
                 setMousePos({ x: e.clientX + 15, y: e.clientY + 15 });
-                setIsVisible(false);
-                if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
 
                 const target = e.target as HTMLElement;
                 const closestTip = target.closest('[data-concierge-tip]');
                 const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
+                const targetContext = tipType || activeSection;
+
+                if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
 
                 desktopTimeoutRef.current = setTimeout(() => {
-                    const targetContext = tipType || activeSection;
+                    if (currentTargetRef.current === targetContext && isVisible) return;
 
                     currentTargetRef.current = targetContext;
                     setIsHoveringElement(!!closestTip);
@@ -121,8 +124,8 @@ export function SiteConcierge() {
                     setIsVisible(true);
                     setIsLoading(true);
 
-                    setTimeout(() => setIsLoading(false), 200);
-                }, 80);
+                    setTimeout(() => setIsLoading(false), 120);
+                }, 40); // Dropped calculation lag window from 80ms to 40ms
             }
         };
 
@@ -134,7 +137,6 @@ export function SiteConcierge() {
                 const target = e.target as HTMLElement;
                 const closestTip = target.closest('[data-concierge-tip]');
                 const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
-
                 const targetContext = tipType || activeSection;
 
                 currentTargetRef.current = targetContext;
@@ -143,7 +145,7 @@ export function SiteConcierge() {
                 setIsVisible(true);
                 setIsLoading(true);
 
-                setTimeout(() => setIsLoading(false), 180);
+                setTimeout(() => setIsLoading(false), 120);
             }
         };
 
@@ -151,7 +153,7 @@ export function SiteConcierge() {
             if (window.innerWidth < 768) {
                 mobileTimeoutRef.current = setTimeout(() => {
                     setIsVisible(false);
-                }, 1200);
+                }, 1500);
             }
         };
 
@@ -190,28 +192,21 @@ export function SiteConcierge() {
                                 zIndex: 999999,
                             }
                     }
-                    initial={
-                        isMobile
-                            ? { opacity: 0, y: 15, x: '-50%' }
-                            : { opacity: 0, scale: 0.96, y: 3 }
-                    }
+                    initial={isMobile ? { opacity: 0, y: 15, x: '-50%' } : { opacity: 0, scale: 0.96, y: 3 }}
                     animate={{
                         opacity: isHoveringElement ? 0.95 : 0.60,
                         y: 0,
                         scale: 1,
                         x: isMobile ? '-50%' : '0%'
                     }}
-                    exit={
-                        isMobile
-                            ? { opacity: 0, y: 10, x: '-50%' }
-                            : { opacity: 0, scale: 0.96 }
-                    }
+                    exit={isMobile ? { opacity: 0, y: 10, x: '-50%' } : { opacity: 0, scale: 0.96 }}
                     transition={{ type: 'spring', stiffness: 550, damping: 35 }}
                     className="w-[calc(100%-2rem)] max-w-[340px] md:w-[320px] rounded-lg border border-white/10 bg-zinc-950 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex flex-col gap-2 select-none"
                 >
                     <div className="flex items-center justify-between border-b border-white/5 pb-2">
                         <div className="flex items-center gap-2">
-                            <Sparkles size={11} style={{ color: 'var(--signal)' }} className="animate-pulse" />
+                            {/* Hardcoded hex fallback logic to enforce brand orange colors */}
+                            <Sparkles size={11} style={{ color: '#FF6B2B' }} className="animate-pulse" />
                             <span className="text-[9px] font-mono uppercase text-zinc-400 tracking-widest font-medium">Space Core Guide</span>
                         </div>
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
@@ -231,7 +226,7 @@ export function SiteConcierge() {
                                         <motion.div
                                             key={i}
                                             className="w-1.5 h-1.5 rounded-full"
-                                            style={{ backgroundColor: 'var(--signal)' }}
+                                            style={{ backgroundColor: '#FF6B2B' }}
                                             animate={{ y: [0, -5, 0] }}
                                             transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut", delay }}
                                         />
@@ -243,8 +238,8 @@ export function SiteConcierge() {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     transition={{ duration: 0.15 }}
-                                    /* Hardcoded brand variable forced orange bypass */
-                                    style={{ color: 'var(--signal)' }}
+                                    /* Direct hex token implementation completely bypassing Tailwind parsing rules */
+                                    style={{ color: '#FF6B2B' }}
                                     className="text-[11px] leading-relaxed font-sans font-medium tracking-wide selection:bg-transparent"
                                 >
                                     {tipText}
