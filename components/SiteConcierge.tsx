@@ -19,7 +19,6 @@ export function SiteConcierge() {
 
     const getContextInfo = (tag: string): string => {
         switch (tag) {
-            // Direct Component Hovers
             case 'hero-headline':
                 return "Core Manifesto: We engineer high-performance web systems and digital marketing campaigns for brands that refuse to look ordinary.";
             case 'hero-location':
@@ -39,7 +38,7 @@ export function SiteConcierge() {
             case 'vapi-demo':
                 return "Live Telemetry Node: Spacey Voice Agent. Powered by custom low-latency voice engines, this agent qualifies leads and triggers CRM bookings 24/7.";
 
-            // Flawless Viewport Occupancy Fallbacks
+            // Viewport Fallbacks
             case 'home':
                 return "Space Digital engineers high-performance digital marketing campaigns fused with intelligent AI automation, explicitly engineered for companies moving faster than their industry.";
             case 'work':
@@ -68,7 +67,7 @@ export function SiteConcierge() {
         return () => window.removeEventListener('resize', checkDevice);
     }, []);
 
-    // ── HIGH-PRECISION SPATIAL VIEWPORT TRACKER ──
+    // ── VIEWPORT HEIGHT TRACKER MATRIX ──
     useEffect(() => {
         const handleSpatialCheck = () => {
             const sections = ['home', 'work', 'ecosystem', 'system', 'systems', 'contact', 'about', 'faq'];
@@ -86,107 +85,74 @@ export function SiteConcierge() {
                     }
                 }
             });
-
-            if (currentActive !== activeSection) {
-                setActiveSection(currentActive);
-            }
+            if (currentActive !== activeSection) setActiveSection(currentActive);
         };
 
         window.addEventListener('scroll', handleSpatialCheck, { passive: true });
-        window.addEventListener('resize', handleSpatialCheck);
         handleSpatialCheck();
-
-        return () => {
-            window.removeEventListener('scroll', handleSpatialCheck);
-            window.removeEventListener('resize', handleSpatialCheck);
-        };
+        return () => window.removeEventListener('scroll', handleSpatialCheck);
     }, [activeSection]);
 
     useEffect(() => {
-        // Desktop movement halt engine
+        // ── DESKTOP POINTER VELOCITY BLOCK ──
         const handleMouseMove = (e: MouseEvent) => {
             if (window.innerWidth >= 768) {
-                const target = e.target as HTMLElement;
-
-                // Scan to see if cursor is sitting on an actionable data tag
-                const closestTip = target.closest('[data-concierge-tip]');
-                const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
-
-                // FIX: If not hovering over a data-concierge-tip element directly, fade away on desktop
-                if (!closestTip) {
-                    setIsVisible(false);
-                    currentTargetRef.current = null;
-                    return;
-                }
-
-                setMousePos({ x: e.clientX + 15, y: e.clientY + 15 });
-                const targetContext = tipType;
-
+                // Hide instantly while moving to maintain a clean viewport experience
+                setIsVisible(false);
                 if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
 
-                desktopTimeoutRef.current = setTimeout(() => {
-                    if (currentTargetRef.current === targetContext && isVisible) return;
+                const target = e.target as HTMLElement;
+                const closestTip = target.closest('[data-concierge-tip]');
+                const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
+                const targetContext = tipType || activeSection;
 
+                // Fire only when the cursor stops moving completely for 250ms
+                desktopTimeoutRef.current = setTimeout(() => {
+                    setMousePos({ x: e.clientX + 15, y: e.clientY + 15 });
                     currentTargetRef.current = targetContext;
-                    setIsHoveringElement(true);
+                    setIsHoveringElement(!!closestTip);
                     setTipText(getContextInfo(targetContext));
                     setIsVisible(true);
                     setIsLoading(true);
-
-                    setTimeout(() => setIsLoading(false), 120);
-                }, 40);
+                    setTimeout(() => setIsLoading(false), 100);
+                }, 250);
             }
         };
 
-        // Mobile touch tracking gestural engine
-        const handleTouchStart = (e: TouchEvent) => {
+        // ── MOBILE GESTURAL TOUCH AND SCROLL ACTION ENGINE ──
+        const handleMobileInteraction = (e: Event) => {
             if (window.innerWidth < 768) {
                 if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
 
-                const target = e.target as HTMLElement;
-                const closestTip = target.closest('[data-concierge-tip]');
-                const tipType = closestTip ? closestTip.getAttribute('data-concierge-tip') : null;
-
-                // Fallback to active viewing section on touch if no precise element is hit
-                const targetContext = tipType || activeSection;
+                let targetContext = activeSection;
+                if (e.type === 'touchstart') {
+                    const target = e.target as HTMLElement;
+                    const closestTip = target.closest('[data-concierge-tip]');
+                    if (closestTip) targetContext = closestTip.getAttribute('data-concierge-tip') || activeSection;
+                }
 
                 currentTargetRef.current = targetContext;
-                setIsHoveringElement(!!closestTip);
                 setTipText(getContextInfo(targetContext));
                 setIsVisible(true);
-                setIsLoading(true);
 
-                setTimeout(() => setIsLoading(false), 120);
-            }
-        };
-
-        const handleTouchEnd = () => {
-            if (window.innerWidth < 768) {
-                if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
-
-                // FIX: When user lifts their thumb, drop visibility after a brief 1.2s delay
+                // Auto-fade exactly 1.4 seconds after scrolling or touch inputs stop entirely
                 mobileTimeoutRef.current = setTimeout(() => {
                     setIsVisible(false);
-                    currentTargetRef.current = null;
-                }, 1200);
+                }, 1400);
             }
         };
 
-        // FIX: Ensure screen exit hides the card instantly
-        const handleMouseLeaveWindow = () => {
-            setIsVisible(false);
-            currentTargetRef.current = null;
-        };
+        const handleMouseLeaveWindow = () => setIsVisible(false);
 
         window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('touchstart', handleTouchStart, { passive: true });
-        window.addEventListener('touchend', handleTouchEnd);
+        window.addEventListener('touchstart', handleMobileInteraction, { passive: true });
+        window.addEventListener('scroll', handleMobileInteraction, { passive: true });
         document.body.addEventListener('mouseleave', handleMouseLeaveWindow);
 
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('touchstart', handleTouchStart);
-            window.removeEventListener('touchend', handleTouchEnd);
+            window.removeEventListener('touchstart', handleMobileInteraction);
+            window.removeEventListener('scroll', handleMobileInteraction);
             document.body.removeEventListener('mouseleave', handleMouseLeaveWindow);
             if (desktopTimeoutRef.current) clearTimeout(desktopTimeoutRef.current);
             if (mobileTimeoutRef.current) clearTimeout(mobileTimeoutRef.current);
@@ -199,29 +165,11 @@ export function SiteConcierge() {
                 <motion.div
                     style={
                         isMobile
-                            ? {
-                                position: 'fixed',
-                                bottom: '110px',
-                                left: '50%',
-                                transform: 'translateX(-50%)',
-                                pointerEvents: 'none',
-                                zIndex: 999999,
-                            }
-                            : {
-                                position: 'fixed',
-                                left: mousePos.x,
-                                top: mousePos.y,
-                                pointerEvents: 'none',
-                                zIndex: 999999,
-                            }
+                            ? { position: 'fixed', bottom: '110px', left: '50%', transform: 'translateX(-50%)', pointerEvents: 'none', zIndex: 999999 }
+                            : { position: 'fixed', left: mousePos.x, top: mousePos.y, pointerEvents: 'none', zIndex: 999999 }
                     }
                     initial={isMobile ? { opacity: 0, y: 15, x: '-50%' } : { opacity: 0, scale: 0.96, y: 3 }}
-                    animate={{
-                        opacity: isHoveringElement ? 0.95 : 0.60,
-                        y: 0,
-                        scale: 1,
-                        x: isMobile ? '-50%' : '0%'
-                    }}
+                    animate={{ opacity: isHoveringElement ? 0.95 : 0.60, y: 0, scale: 1, x: isMobile ? '-50%' : '0%' }}
                     exit={isMobile ? { opacity: 0, y: 10, x: '-50%' } : { opacity: 0, scale: 0.96 }}
                     transition={{ type: 'spring', stiffness: 550, damping: 35 }}
                     className="w-[calc(100%-2rem)] max-w-[340px] md:w-[320px] rounded-lg border border-white/10 bg-zinc-950 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex flex-col gap-2 select-none"
@@ -237,32 +185,13 @@ export function SiteConcierge() {
                     <div className="min-h-[44px] flex items-center">
                         <AnimatePresence mode="wait">
                             {isLoading ? (
-                                <motion.div
-                                    key="loader"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    className="flex items-center gap-1.5 py-1 pl-1"
-                                >
+                                <motion.div key="loader" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-1.5 py-1 pl-1">
                                     {[0, 0.15, 0.3].map((delay, i) => (
-                                        <motion.div
-                                            key={i}
-                                            className="w-1.5 h-1.5 rounded-full"
-                                            style={{ backgroundColor: '#FF6B2B' }}
-                                            animate={{ y: [0, -5, 0] }}
-                                            transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut", delay }}
-                                        />
+                                        <motion.div key={i} className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#FF6B2B' }} animate={{ y: [0, -5, 0] }} transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut", delay }} />
                                     ))}
                                 </motion.div>
                             ) : (
-                                <motion.p
-                                    key="text"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.15 }}
-                                    style={{ color: '#FF6B2B' }}
-                                    className="text-[11px] leading-relaxed font-sans font-medium tracking-wide selection:bg-transparent"
-                                >
+                                <motion.p key="text" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.15 }} style={{ color: '#FF6B2B' }} className="text-[11px] leading-relaxed font-sans font-medium tracking-wide selection:bg-transparent">
                                     {tipText}
                                 </motion.p>
                             )}
