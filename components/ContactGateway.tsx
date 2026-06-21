@@ -13,7 +13,7 @@ export function ContactGateway() {
 
     const formData = new FormData(e.currentTarget);
     formData.append("access_key", "efa8b7ed-c5a6-4272-8a5c-9da83d9b39c3");
-    formData.append("subject", "?? New Space Digital Intake Briefing Request");
+    formData.append("subject", "ðŸ”¥ New Space Digital Intake Briefing Request");
     formData.append("from_name", "Space Digital Conversion Hub");
 
     try {
@@ -46,20 +46,17 @@ export function ContactGateway() {
         </p>
 
         <div className="space-y-6">
-          <div
-            className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-5"
-            data-concierge-tip="vapi-demo"
-          >
+          <div className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-5">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[#FF6B2B]" />
               <span className="font-mono text-[10px] tracking-widest uppercase text-white/40">
-                Agent Online · Ready
+                Agent Online Â· Ready
               </span>
             </div>
 
             <h3 className="text-xl font-semibold text-white">Talk to Our AI Agent</h3>
             <p className="text-sm text-gray-400 leading-relaxed">
-              Speak directly with Spacey — our live voice AI. They'll qualify your needs and help you figure out if Space Digital is the right fit, in under 3 minutes.
+              Speak directly with Spacey â€” our live voice AI. They'll qualify your needs and help you figure out if Space Digital is the right fit, in under 3 minutes.
             </p>
 
             <div className="grid grid-cols-3 gap-3">
@@ -84,7 +81,7 @@ export function ContactGateway() {
               Start Live Demo Call
             </a>
             <p className="text-[10px] text-gray-600 font-mono text-center">
-              Mic access required · Browser-based · No phone number needed
+              Mic access required Â· Browser-based Â· No phone number needed
             </p>
           </div>
 
@@ -93,83 +90,37 @@ export function ContactGateway() {
 
             <AnimatePresence mode="wait">
               {!isSubmitted ? (
-                <motion.form
-                  key="intake-form"
-                  onSubmit={handleSubmit}
-                  className="space-y-4"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
+                <motion.form key="intake-form" onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="w-full">
-                      <input
-                        type="text"
-                        name="name"
-                        required
-                        placeholder="Your Name"
-                        className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans"
-                      />
+                      <input type="text" name="name" required placeholder="Your Name" className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans" />
                     </div>
-
                     <div className="w-full">
-                      <input
-                        type="email"
-                        name="email"
-                        required
-                        placeholder="Email Address"
-                        className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans"
-                      />
+                      <input type="email" name="email" required placeholder="Email Address" className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans" />
                     </div>
                   </div>
 
                   <div className="w-full">
-                    <input
-                      type="text"
-                      name="business"
-                      required
-                      placeholder="Business Type (e.g., HVAC, Clinic, Lawyer)"
-                      className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans"
-                    />
+                    <input type="text" name="business" required placeholder="Business Type (e.g., HVAC, Clinic, Lawyer)" className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans" />
                   </div>
 
                   <div className="w-full">
-                    <textarea
-                      name="bottlenecks"
-                      required
-                      rows={4}
-                      placeholder="Describe your current missed or repetitive call bottlenecks..."
-                      className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans resize-none leading-relaxed"
-                    />
+                    <textarea name="bottlenecks" required rows={4} placeholder="Describe your current missed or repetitive call bottlenecks..." className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans resize-none leading-relaxed" />
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full py-3 bg-zinc-900 border border-white/10 hover:border-[#FF6B2B] text-white font-medium rounded-xl transition-all duration-200 text-xs font-mono tracking-wider uppercase disabled:opacity-40"
-                  >
+                  <button type="submit" disabled={isSubmitting} className="w-full py-3 bg-zinc-900 border border-white/10 hover:border-[#FF6B2B] text-white font-medium rounded-xl transition-all duration-200 text-xs font-mono tracking-wider uppercase disabled:opacity-40">
                     {isSubmitting ? 'Transmitting Pipeline Data...' : 'Submit Briefing Data'}
                   </button>
                 </motion.form>
               ) : (
-                <motion.div
-                  key="success-prompt"
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="p-6 bg-[#FF6B2B]/5 border border-[#FF6B2B]/20 rounded-xl text-center space-y-2"
-                >
-                  <p className="text-[#FF6B2B] font-semibold text-sm">? Briefing Ingested Successfully</p>
+                <motion.div key="success-prompt" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="p-6 bg-[#FF6B2B]/5 border border-[#FF6B2B]/20 rounded-xl text-center space-y-2">
+                  <p className="text-[#FF6B2B] font-semibold text-sm">âœ“ Briefing Ingested Successfully</p>
                   <p className="text-gray-400 text-xs leading-relaxed max-w-md mx-auto">
-                    Your operational metrics have been delivered straight to our team dashboard. Use the floating utility anchor on the right of your screen to select an open calendar node.
+                    Your operational metrics have been delivered straight to our team dashboard.
                   </p>
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
-
-          <div className="p-4 border border-white/5 bg-black/40 rounded-xl flex flex-col sm:flex-row sm:justify-between gap-2 font-mono text-[11px] text-gray-500 justify-center text-center">
-            <div><span className="text-[#FF6B2B]">Direct Consulting:</span> seth.spacedigitalconsulting@gmail.com</div>
           </div>
         </div>
       </div>
