@@ -1,11 +1,57 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function ContactGateway() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [callStatus, setCallStatus] = useState<'idle' | 'connecting' | 'active'>('idle');
+
+  const vapiRef = useRef<any>(null);
+
+  // Safely initialize Vapi only on the client browser runtime layer
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      import('@vapi-ai/web').then((VapiModule) => {
+        const Vapi = VapiModule.default;
+        const vapiInstance = new Vapi('614f3d87-72b9-4df1-b522-87614a774d92');
+        vapiRef.current = vapiInstance;
+
+        vapiInstance.on('call-start', () => setCallStatus('active'));
+        vapiInstance.on('call-end', () => setCallStatus('idle'));
+        vapiInstance.on('error', (err) => {
+          console.error('Vapi Web Pipeline Error:', err);
+          setCallStatus('idle');
+        });
+      });
+    }
+
+    return () => {
+      if (vapiRef.current) {
+        vapiRef.current.stop();
+      }
+    };
+  }, []);
+
+  const handleVoiceCall = async () => {
+    if (!vapiRef.current) return;
+
+    if (callStatus === 'active') {
+      vapiRef.current.stop();
+      setCallStatus('idle');
+      return;
+    }
+
+    try {
+      setCallStatus('connecting');
+      // Running your explicit, authenticated voice agent ID channel
+      await vapiRef.current.start('019713f2-b8b1-4a2c-a26a-d20876962264');
+    } catch (err) {
+      console.error('Failed to patch voice stream node:', err);
+      setCallStatus('idle');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,11 +92,17 @@ export function ContactGateway() {
         </p>
 
         <div className="space-y-6">
-          <div className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-5">
+
+          {/* Live Voice Demo Block with Concierge Telemetry Hook */}
+          <div
+            className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-5"
+            data-concierge-tip="vapi-demo"
+          >
+            {/* Status indicator row */}
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#FF6B2B]" />
+              <div className={`w-2 h-2 rounded-full ${callStatus === 'active' ? 'bg-green-400 animate-pulse' : callStatus === 'connecting' ? 'bg-yellow-400 animate-pulse' : 'bg-[#FF6B2B]'}`} />
               <span className="font-mono text-[10px] tracking-widest uppercase text-white/40">
-                Agent Online · Ready
+                {callStatus === 'active' ? 'Live · Connected to Spacey' : callStatus === 'connecting' ? 'Initializing Agent...' : 'Agent Online · Ready'}
               </span>
             </div>
 
@@ -59,6 +111,7 @@ export function ContactGateway() {
               Speak directly with Spacey — our live voice AI. They'll qualify your needs and help you figure out if Space Digital is the right fit, in under 3 minutes.
             </p>
 
+            {/* Telemetry Stats Row */}
             <div className="grid grid-cols-3 gap-3">
               {[
                 { value: '~1s', label: 'Response latency' },
@@ -72,19 +125,23 @@ export function ContactGateway() {
               ))}
             </div>
 
-            <a
-              href="https://call.verbeo.ai/space-digital"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative z-50 pointer-events-auto block w-full py-3.5 rounded-xl font-mono text-xs tracking-widest uppercase font-semibold text-center transition-all duration-200 bg-[#FF6B2B] text-black hover:bg-[#ff824d]"
+            <button
+              onClick={handleVoiceCall}
+              className={`relative z-50 pointer-events-auto w-full py-3.5 rounded-xl font-mono text-xs tracking-widest uppercase font-semibold transition-all duration-200
+                ${callStatus === 'active'
+                  ? 'bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20'
+                  : 'bg-[#FF6B2B] text-black hover:bg-[#ff824d]'
+                } disabled:opacity-40`}
+              disabled={callStatus === 'connecting'}
             >
-              Start Live Demo Call
-            </a>
+              {callStatus === 'active' ? '⏹ End Call' : callStatus === 'connecting' ? '⏳ Connecting...' : 'Start Live Demo Call'}
+            </button>
             <p className="text-[10px] text-gray-600 font-mono text-center">
               Mic access required · Browser-based · No phone number needed
             </p>
           </div>
 
+          {/* Ingestion Form Wrapper */}
           <div className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-4">
             <h3 className="text-xl font-semibold text-white">Digital Intake Briefing</h3>
 
