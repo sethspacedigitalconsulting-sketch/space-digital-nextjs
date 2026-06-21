@@ -1,15 +1,183 @@
-甧敳挠楬湥❴਻椊灭牯⁴敒捡ⱴ笠甠敳瑓瑡ⱥ甠敳晅敦瑣‬獵剥晥素映潲⁭爧慥瑣㬧椊灭牯⁴⁻潭楴湯‬湁浩瑡健敲敳据⁥⁽牦浯✠牦浡牥洭瑯潩❮਻攊灸牯⁴畦据楴湯䌠湯慴瑣慇整慷⡹
-੻†潣獮⁴楛即扵業瑴湩Ⱨ猠瑥獉畓浢瑩楴杮⁝‽獵卥慴整昨污敳㬩 挠湯瑳嬠獩畓浢瑩整Ɽ猠瑥獉畓浢瑩整嵤㴠甠敳瑓瑡⡥慦獬⥥਻†潣獮⁴捛污卬慴畴ⱳ猠瑥慃汬瑓瑡獵⁝‽獵卥慴整✼摩敬‧⁼挧湯敮瑣湩❧簠✠捡楴敶㸧✨摩敬⤧਻ 挠湯瑳瘠灡剩晥㴠甠敳敒㱦湡㹹渨汵⥬਻ 甠敳晅敦瑣⠨
-㸽笠 †椠⁦琨灹潥⁦楷摮睯℠㴽✠湵敤楦敮❤
-੻†††浩潰瑲✨癀灡⵩楡眯扥⤧琮敨⡮嘨灡䵩摯汵⥥㴠‾੻††††潣獮⁴慖楰潃獮牴捵潴⁲‽慖楰潍畤敬搮晥畡瑬簠⁼慖楰潍畤敬਻††††牴⁹੻†††††潣獮⁴慶楰湉瑳湡散㴠渠睥⠠慖楰潃獮牴捵潴⁲獡愠祮⠩㘧㐱㍦㡤ⴷ㈷㥢㐭晤ⴱ㕢㈲㠭㘷㐱㝡㐷㥤✲㬩 ††††瘠灡剩晥挮牵敲瑮㴠瘠灡䥩獮慴据㭥ਊ†††††慶楰湉瑳湡散漮⡮挧污⵬瑳牡❴‬⤨㴠‾敳䍴污卬慴畴⡳愧瑣癩❥⤩਻†††††慶楰湉瑳湡散漮⡮挧污⵬湥❤‬⤨㴠‾敳䍴污卬慴畴⡳椧汤❥⤩਻†††††慶楰湉瑳湡散漮⡮攧牲牯Ⱗ⠠牥㩲愠祮
-㸽笠 †††††挠湯潳敬攮牲牯✨慖楰圠扥倠灩汥湩⁥牅潲㩲Ⱗ攠牲㬩 †††††猠瑥慃汬瑓瑡獵✨摩敬⤧਻†††††⥽਻††††⁽慣捴⁨攨
-੻†††††潣獮汯⹥牥潲⡲嘧灡⁩湩瑳湡散椠楮楴污穩瑡潩⁮牣獡㩨Ⱗ攠㬩 †††素 ††素㬩 †素ਊ††敲畴湲⠠
-㸽笠 ††椠⁦瘨灡剩晥挮牵敲瑮
-੻††††慶楰敒⹦畣牲湥⹴瑳灯⤨਻†††੽††㭽 素‬嵛㬩ਊ†潣獮⁴慨摮敬潖捩䍥污⁬‽獡湹⁣⤨㴠‾੻††晩⠠瘡灡剩晥挮牵敲瑮
-੻†††潣獮汯⹥慷湲✨慖楰攠杮湩⁥潮敤椠⁳潮⁴湩瑩慩楬敺⁤敹⹴⤧਻†††敲畴湲਻††੽ †椠⁦挨污卬慴畴⁳㴽‽愧瑣癩❥
-੻†††慶楰敒⹦畣牲湥⹴瑳灯⤨਻†††敳䍴污卬慴畴⡳椧汤❥㬩 ††爠瑥牵㭮 †素ਊ††牴⁹੻†††敳䍴污卬慴畴⡳挧湯敮瑣湩❧㬩 ††愠慷瑩瘠灡剩晥挮牵敲瑮献慴瑲✨㄰㜹㌱㉦戭戸ⴱ愴挲愭㘲ⵡ㉤㠰㘷㘹㈲㐶⤧਻††⁽慣捴⁨攨牲
-੻†††潣獮汯⹥牥潲⡲䘧楡敬⁤潴瀠瑡档瘠楯散猠牴慥⁭潮敤✺‬牥⥲਻†††敳䍴污卬慴畴⡳椧汤❥㬩 †素 素਻ 挠湯瑳栠湡汤卥扵業⁴‽獡湹⁣攨›敒捡⹴潆浲癅湥㱴呈䱍潆浲汅浥湥㹴
-㸽笠 †攠瀮敲敶瑮敄慦汵⡴㬩 †猠瑥獉畓浢瑩楴杮琨畲⥥਻ †挠湯瑳映牯䑭瑡⁡‽敮⁷潆浲慄慴攨挮牵敲瑮慔杲瑥㬩 †映牯䑭瑡⹡灡数摮∨捡散獳歟祥Ⱒ∠晥㡡㝢摥挭愵ⴶ㈴㈷㠭㕡ⵣ搹㡡搳戹㤳㍣⤢਻††潦浲慄慴愮灰湥⡤猢扵敪瑣Ⱒ∠鿰ꖔ丠睥匠慰散䐠杩瑩污䤠瑮歡⁥牂敩楦杮删煥敵瑳⤢਻††潦浲慄慴愮灰湥⡤昢潲彭慮敭Ⱒ∠灓捡⁥楄楧慴⁬潃癮牥楳湯䠠扵⤢਻ †琠祲笠 ††挠湯瑳爠獥潰獮⁥‽睡楡⁴敦捴⡨栢瑴獰⼺愯楰眮扥昳牯獭挮浯猯扵業≴‬੻††††敭桴摯›倢协≔ਬ††††潢祤›潦浲慄慴 ††素㬩ਊ†††潣獮⁴慤慴㴠愠慷瑩爠獥潰獮⹥獪湯⤨਻†††晩⠠慤慴献捵散獳
-੻††††敳䥴即扵業瑴摥琨畲⥥਻†††⁽汥敳笠 †††愠敬瑲搨瑡⹡敭獳条⁥籼∠牔湡浳獩楳湯瀠灩汥湩⁥牥潲⹲倠敬獡⁥牴⁹条楡⹮⤢਻†††੽††⁽慣捴⁨攨牲
-੻†††潣獮汯⹥牥潲⡲匢扵業獳潩⁮楰数楬敮氠祡畯⁴牣獡㩨Ⱒ攠牲㬩 ††愠敬瑲∨敎睴牯⁫楴敭畯⹴圠楲整搠物捥汴⁹潴猠瑥⹨灳捡摥杩瑩污潣獮汵楴杮杀慭汩挮浯⤢਻††⁽楦慮汬⁹੻†††敳䥴即扵業瑴湩⡧慦獬⥥਻††੽†㭽ਊ†敲畴湲⠠ †㰠敳瑣潩⁮摩∽潣瑮捡≴挠慬獳慎敭∽祰㈭‴杢嬭〣ぁぁ嵂戠牯敤⵲⁴潢摲牥眭楨整ㄯ∰ਾ†††搼癩挠慬獳慎敭∽慭⵸⵷破⁬硭愭瑵⁯硰㘭㸢 †††㰠灳湡挠慬獳慎敭∽整瑸嬭䘣㙆㉂嵂琠硥⵴獸映湯⵴潭潮琠慲正湩ⵧ楷敤瑳甠灰牥慣敳㸢㔰⼠ 祓瑳浥䜠瑡睥祡⼼灳湡ਾ††††格′汣獡乳浡㵥琢硥⵴破⁬潦瑮戭汯⁤牴捡楫杮琭杩瑨琠硥⵴桷瑩⁥瑭㐭洠ⵢ∶䤾楮楴瑡⁥瑓慲整楧⁣牂敩楦杮⼼㉨ਾ††††瀼挠慬獳慎敭∽整瑸札慲⵹〴‰整瑸戭獡⁥慭⵸⵷砲⁬扭ㄭ∲ਾ†††††硅数楲湥散琠敨愠瑵浯瑡潩⁮楦獲桴湡⹤䤠瑮牥捡⁴楷桴漠牵愠瑣癩⁥潬⵷慬整据⁹敲灳湯敳挠慨湮汥漠⁲畳浢瑩礠畯⁲灯牥瑡潩慮⁬慶楲扡敬⁳楤敲瑣祬戠汥睯ਮ††††⼼㹰ਊ††††搼癩挠慬獳慎敭∽灳捡ⵥ⵹∶ਾ†††††搼癩 †††††挠慬獳慎敭∽⵰‸潢摲牥戠牯敤⵲桷瑩⽥〱戠ⵧ桷瑩⽥せ〮崱爠畯摮摥㈭汸猠慰散礭㔭ਢ††††††慤慴挭湯楣牥敧琭灩∽慶楰搭浥≯ ††††㸠 †††††㰠楤⁶汣獡乳浡㵥昢敬⁸瑩浥⵳散瑮牥朠灡㈭㸢 ††††††㰠楤⁶汣獡乳浡㵥恻⵷′⵨′潲湵敤ⵤ畦汬␠捻污卬慴畴⁳㴽‽愧瑣癩❥㼠✠杢札敲湥㐭〰愠楮慭整瀭汵敳‧›慣汬瑓瑡獵㴠㴽✠潣湮捥楴杮‧‿戧ⵧ敹汬睯㐭〰愠楮慭整瀭汵敳‧›戧ⵧ⍛䙆䈶䈲❝恽⁽㸯 ††††††㰠灳湡挠慬獳慎敭∽潦瑮洭湯⁯整瑸嬭〱硰⁝牴捡楫杮眭摩獥⁴灵数捲獡⁥整瑸眭楨整㐯∰ਾ††††††††捻污卬慴畴⁳㴽‽愧瑣癩❥㼠✠楌敶술₷潃湮捥整⁤潴匠慰散❹㨠挠污卬慴畴⁳㴽‽挧湯敮瑣湩❧㼠✠湉瑩慩楬楺杮䄠敧瑮⸮✮㨠✠杁湥⁴湏楬敮술₷敒摡❹੽†††††††⼼灳湡ਾ††††††⼼楤㹶ਊ††††††格″汣獡乳浡㵥琢硥⵴汸映湯⵴敳業潢摬琠硥⵴桷瑩≥吾污⁫潴传牵䄠⁉杁湥㱴栯㸳 †††††㰠⁰汣獡乳浡㵥琢硥⵴浳琠硥⵴牧祡㐭〰氠慥楤杮爭汥硡摥㸢 ††††††匠数歡搠物捥汴⁹楷桴匠慰散⁹胢ₔ畯⁲楬敶瘠楯散䄠⹉吠敨⁹楷汬焠慵楬祦礠畯⁲敮摥⁳湡⁤敨灬礠畯映杩牵⁥畯⁴晩匠慰散䐠杩瑩污椠⁳桴⁥楲桧⁴楦ⱴ椠⁮湵敤⁲″業畮整⹳ †††††㰠瀯ਾ †††††㰠楤⁶汣獡乳浡㵥朢楲⁤牧摩挭汯⵳″慧⵰∳ਾ†††††††孻 †††††††笠瘠污敵›縧猱Ⱗ氠扡汥›刧獥潰獮⁥慬整据❹素ਬ††††††††⁻慶畬㩥✠假ⵔ漴Ⱗ氠扡汥›䴧摯汥‧ⱽ †††††††笠瘠污敵›䘧敲❥‬慬敢㩬✠潎挠獯❴素ਬ†††††††⹝慭⡰猨慴⥴㴠‾ਨ††††††††搼癩欠祥笽瑳瑡氮扡汥⁽汣獡乳浡㵥戢ⵧ汢捡⽫〳戠牯敤⁲潢摲牥眭楨整㔯爠畯摮摥砭⁬⵰″整瑸挭湥整≲ਾ†††††††††搼癩挠慬獳慎敭∽整瑸眭楨整映湯⵴潢摬琠硥⵴浳映湯⵴潭潮㸢獻慴⹴慶畬絥⼼楤㹶 ††††††††㰠楤⁶汣獡乳浡㵥琢硥⵴牧祡㔭〰琠硥⵴ㅛ瀰嵸洠⵴⸰‵潦瑮洭湯≯笾瑳瑡氮扡汥㱽搯癩ਾ††††††††⼼楤㹶 ††††††⤠紩 †††††㰠搯癩ਾ †††††㰠畢瑴湯 ††††††漠䍮楬正笽慨摮敬潖捩䍥污絬 ††††††挠慬獳慎敭笽牠汥瑡癩⁥⵺〵瀠楯瑮牥攭敶瑮⵳畡潴眠昭汵⁬祰㌭㔮爠畯摮摥砭⁬潦瑮洭湯⁯整瑸砭⁳牴捡楫杮眭摩獥⁴灵数捲獡⁥潦瑮猭浥扩汯⁤牴湡楳楴湯愭汬搠牵瑡潩⵮〲ਰ††††††††笤慣汬瑓瑡獵㴠㴽✠捡楴敶ਧ†††††††††‿戧ⵧ敲ⵤ〵⼰〱戠牯敤⁲潢摲牥爭摥㔭〰㌯‰整瑸爭摥㐭〰栠癯牥戺ⵧ敲ⵤ〵⼰〲ਧ†††††††††›戧ⵧ⍛䙆䈶䈲⁝整瑸戭慬正栠癯牥戺ⵧ⍛晦㈸搴❝ †††††††素搠獩扡敬㩤灯捡瑩⵹〴絠 ††††††搠獩扡敬㵤捻污卬慴畴⁳㴽‽挧湯敮瑣湩❧੽††††††ਾ†††††††捻污卬慴畴⁳㴽‽愧瑣癩❥㼠✠迢₹湅⁤慃汬‧›慣汬瑓瑡獵㴠㴽✠潣湮捥楴杮‧‿뎏䌠湯敮瑣湩⹧⸮‧›匧慴瑲䰠癩⁥敄潭䌠污❬੽††††††⼼畢瑴湯ਾ††††††瀼挠慬獳慎敭∽整瑸嬭〱硰⁝整瑸札慲⵹〶‰潦瑮洭湯⁯整瑸挭湥整≲ਾ†††††††楍⁣捡散獳爠煥極敲⁤럂䈠潲獷牥戭獡摥술₷潎瀠潨敮渠浵敢⁲敮摥摥 †††††㰠瀯ਾ†††††⼼楤㹶ਊ†††††搼癩挠慬獳慎敭∽⵰‸潢摲牥戠牯敤⵲桷瑩⽥〱戠ⵧ桷瑩⽥せ〮崱爠畯摮摥㈭汸猠慰散礭㐭㸢 †††††㰠㍨挠慬獳慎敭∽整瑸砭⁬潦瑮猭浥扩汯⁤整瑸眭楨整㸢楄楧慴⁬湉慴敫䈠楲晥湩㱧栯㸳ਊ††††††䄼楮慭整牐獥湥散洠摯㵥眢楡≴ਾ†††††††ⅻ獩畓浢瑩整⁤‿ਨ††††††††洼瑯潩⹮潦浲欠祥∽湩慴敫昭牯≭漠卮扵業㵴桻湡汤卥扵業絴挠慬獳慎敭∽灳捡ⵥ⵹∴ਾ†††††††††搼癩挠慬獳慎敭∽牧摩朠楲ⵤ潣獬ㄭ洠㩤牧摩挭汯⵳′慧⵰∴ਾ††††††††††搼癩挠慬獳慎敭∽⵷畦汬㸢 ††††††††††㰠湩異⁴祴数∽整瑸•慮敭∽慮敭•敲畱物摥瀠慬散潨摬牥∽潙牵丠浡≥挠慬獳慎敭∽⵷畦汬瀠㌭戠ⵧ汢捡⽫〴戠牯敤⁲潢摲牥眭楨整ㄯ‰潲湵敤ⵤ汸琠硥⵴桷瑩⁥畯汴湩ⵥ潮敮映捯獵戺牯敤⵲⍛䙆䈶䈲⁝牴湡楳楴湯挭汯牯⁳整瑸猭⁭潦瑮猭湡≳⼠ਾ††††††††††⼼楤㹶 †††††††††㰠楤⁶汣獡乳浡㵥眢昭汵≬ਾ†††††††††††椼灮瑵琠灹㵥攢慭汩•慮敭∽浥楡≬爠煥極敲⁤汰捡桥汯敤㵲䔢慭汩䄠摤敲獳•汣獡乳浡㵥眢昭汵⁬⵰″杢戭慬正㐯‰潢摲牥戠牯敤⵲桷瑩⽥〱爠畯摮摥砭⁬整瑸眭楨整漠瑵楬敮渭湯⁥潦畣㩳潢摲牥嬭䘣㙆㉂嵂琠慲獮瑩潩⵮潣潬獲琠硥⵴浳映湯⵴慳獮•㸯 †††††††††㰠搯癩ਾ†††††††††⼼楤㹶ਊ†††††††††搼癩挠慬獳慎敭∽⵷畦汬㸢 †††††††††㰠湩異⁴祴数∽整瑸•慮敭∽畢楳敮獳•敲畱物摥瀠慬散潨摬牥∽畂楳敮獳吠灹⁥攨朮Ⱞ䠠䅖ⱃ䌠楬楮Ᵽ䰠睡敹⥲•汣獡乳浡㵥眢昭汵⁬⵰″杢戭慬正㐯‰潢摲牥戠牯敤⵲桷瑩⽥〱爠畯摮摥砭⁬整瑸眭楨整漠瑵楬敮渭湯⁥潦畣㩳潢摲牥嬭䘣㙆㉂嵂琠慲獮瑩潩⵮潣潬獲琠硥⵴浳映湯⵴慳獮•㸯 ††††††††㰠搯癩ਾ ††††††††㰠楤⁶汣獡乳浡㵥眢昭汵≬ਾ††††††††††琼硥慴敲⁡慮敭∽潢瑴敬敮正≳爠煥極敲⁤潲獷笽紴瀠慬散潨摬牥∽敄捳楲敢礠畯⁲畣牲湥⁴業獳摥漠⁲敲数楴楴敶挠污⁬潢瑴敬敮正⹳⸮•汣獡乳浡㵥眢昭汵⁬⵰″杢戭慬正㐯‰潢摲牥戠牯敤⵲桷瑩⽥〱爠畯摮摥砭⁬整瑸眭楨整漠瑵楬敮渭湯⁥潦畣㩳潢摲牥嬭䘣㙆㉂嵂琠慲獮瑩潩⵮潣潬獲琠硥⵴浳映湯⵴慳獮爠獥穩ⵥ潮敮氠慥楤杮爭汥硡摥•㸯 ††††††††㰠搯癩ਾ ††††††††㰠畢瑴湯琠灹㵥猢扵業≴搠獩扡敬㵤楻即扵業瑴湩絧挠慬獳慎敭∽⵷畦汬瀠⵹″杢稭湩ⵣ〹‰潢摲牥戠牯敤⵲桷瑩⽥〱栠癯牥戺牯敤⵲⍛䙆䈶䈲⁝整瑸眭楨整映湯⵴敭楤浵爠畯摮摥砭⁬牴湡楳楴湯愭汬搠牵瑡潩⵮〲‰整瑸砭⁳潦瑮洭湯⁯牴捡楫杮眭摩牥甠灰牥慣敳搠獩扡敬㩤灯捡瑩⵹〴㸢 †††††††††笠獩畓浢瑩楴杮㼠✠牔湡浳瑩楴杮倠灩汥湩⁥慄慴⸮✮㨠✠畓浢瑩䈠楲晥湩⁧慄慴紧 ††††††††㰠戯瑵潴㹮 †††††††㰠洯瑯潩⹮潦浲ਾ†††††††
-›ਨ††††††††洼瑯潩⹮楤⁶敫㵹猢捵散獳瀭潲灭≴椠楮楴污笽⁻灯捡瑩㩹〠‬捳污㩥〠㤮‸絽愠楮慭整笽⁻灯捡瑩㩹ㄠ‬捳污㩥ㄠ素⁽汣獡乳浡㵥瀢㘭戠ⵧ⍛䙆䈶䈲⽝‵潢摲牥戠牯敤⵲⍛䙆䈶䈲⽝〲爠畯摮摥砭⁬整瑸挭湥整⁲灳捡ⵥ⵹∲ਾ†††††††††瀼挠慬獳慎敭∽整瑸嬭䘣㙆㉂嵂映湯⵴敳業潢摬琠硥⵴浳㸢鳢ₓ牂敩楦杮䤠杮獥整⁤畓捣獥晳汵祬⼼㹰 ††††††††㰠⁰汣獡乳浡㵥琢硥⵴牧祡㐭〰琠硥⵴獸氠慥楤杮爭汥硡摥洠硡眭洭⁤硭愭瑵≯ਾ††††††††††潙牵漠数慲楴湯污洠瑥楲獣栠癡⁥敢湥搠汥癩牥摥猠牴楡桧⁴潴漠牵琠慥⁭慤桳潢牡⹤ ††††††††㰠瀯ਾ††††††††⼼潭楴湯搮癩ਾ†††††††紩 †††††㰠䄯楮慭整牐獥湥散ਾ†††††⼼楤㹶 †††㰠搯癩ਾ†††⼼楤㹶 †㰠猯捥楴湯ਾ†㬩紊
+﻿'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+export function ContactGateway() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [callStatus, setCallStatus] = useState<'idle' | 'connecting' | 'active'>('idle');
+
+  const vapiRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      import('@vapi-ai/web').then((VapiModule) => {
+        const VapiConstructor = VapiModule.default || VapiModule;
+        try {
+          const vapiInstance = new (VapiConstructor as any)('614f3d87-72b9-4df1-b522-87614a774d92');
+          vapiRef.current = vapiInstance;
+
+          vapiInstance.on('call-start', () => setCallStatus('active'));
+          vapiInstance.on('call-end', () => setCallStatus('idle'));
+          vapiInstance.on('error', (err: any) => {
+            console.error('Vapi Web Pipeline Error:', err);
+            setCallStatus('idle');
+          });
+        } catch (e) {
+          console.error('Vapi instance initialization crash:', e);
+        }
+      });
+    }
+
+    return () => {
+      if (vapiRef.current) {
+        vapiRef.current.stop();
+      }
+    };
+  }, []);
+
+  const handleVoiceCall = async () => {
+    if (!vapiRef.current) {
+      console.warn('Vapi engine node is not initialized yet.');
+      return;
+    }
+
+    if (callStatus === 'active') {
+      vapiRef.current.stop();
+      setCallStatus('idle');
+      return;
+    }
+
+    try {
+      setCallStatus('connecting');
+      await vapiRef.current.start('019713f2-b8b1-4a2c-a26a-d20876962264');
+    } catch (err) {
+      console.error('Failed to patch voice stream node:', err);
+      setCallStatus('idle');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    formData.append("access_key", "efa8b7ed-c5a6-4272-8a5c-9da83d9b39c3");
+    formData.append("subject", "🔥 New Space Digital Intake Briefing Request");
+    formData.append("from_name", "Space Digital Conversion Hub");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setIsSubmitted(true);
+      } else {
+        alert(data.message || "Transmission pipeline error. Please try again.");
+      }
+    } catch (err) {
+      console.error("Submission pipeline layout crash:", err);
+      alert("Network timeout. Write directly to seth.spacedigitalconsulting@gmail.com");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <section id="contact" className="py-24 bg-[#0A0A0B] border-t border-white/10">
+      <div className="max-w-4xl mx-auto px-6">
+        <span className="text-[#FF6B2B] text-xs font-mono tracking-widest uppercase">05 // System Gateway</span>
+        <h2 className="text-4xl font-bold tracking-tight text-white mt-4 mb-6">Initiate Strategic Briefing</h2>
+        <p className="text-gray-400 text-base max-w-2xl mb-12">
+          Experience the automation firsthand. Interact with our active low-latency response channel or submit your operational variables directly below.
+        </p>
+
+        <div className="space-y-6">
+          <div className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-5">
+            <div className="flex items-center gap-2">
+              <div className={`w-2 h-2 rounded-full ${callStatus === 'active' ? 'bg-green-400 animate-pulse' : callStatus === 'connecting' ? 'bg-yellow-400 animate-pulse' : 'bg-[#FF6B2B]'}`} />
+              <span className="font-mono text-[10px] tracking-widest uppercase text-white/40">
+                {callStatus === 'active' ? 'Live · Connected to Spacey' : callStatus === 'connecting' ? 'Initializing Agent...' : 'Agent Online · Ready'}
+              </span>
+            </div>
+
+            <h3 className="text-xl font-semibold text-white">Talk to Our AI Agent</h3>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              Speak directly with Spacey — our live voice AI. They will qualify your needs and help you figure out if Space Digital is the right fit, in under 3 minutes.
+            </p>
+
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { value: '~1s', label: 'Response latency' },
+                { value: 'GPT-4o', label: 'Model' },
+                { value: 'Free', label: 'No cost' },
+              ].map((stat) => (
+                <div key={stat.label} className="bg-black/30 border border-white/5 rounded-xl p-3 text-center">
+                  <div className="text-white font-bold text-sm font-mono">{stat.value}</div>
+                  <div className="text-gray-500 text-[10px] mt-0.5 font-mono">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={handleVoiceCall}
+              className={`relative z-50 pointer-events-auto w-full py-3.5 rounded-xl font-mono text-xs tracking-widest uppercase font-semibold transition-all duration-200
+                ${callStatus === 'active'
+                  ? 'bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20'
+                  : 'bg-[#FF6B2B] text-black hover:bg-[#ff824d]'
+                } disabled:opacity-40`}
+              disabled={callStatus === 'connecting'}
+            >
+              {callStatus === 'active' ? '⏹ End Call' : callStatus === 'connecting' ? '⏳ Connecting...' : 'Start Live Demo Call'}
+            </button>
+            <p className="text-[10px] text-gray-600 font-mono text-center">
+              Mic access required · Browser-based · No phone number needed
+            </p>
+          </div>
+
+          <div className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-4">
+            <h3 className="text-xl font-semibold text-white">Digital Intake Briefing</h3>
+
+            <AnimatePresence mode="white">
+              {!isSubmitted ? (
+                <motion.form key="intake-form" onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="w-full">
+                      <input type="text" name="name" required placeholder="Your Name" className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans" />
+                    </div>
+                    <div className="w-full">
+                      <input type="email" name="email" required placeholder="Email Address" className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans" />
+                    </div>
+                  </div>
+
+                  <div className="w-full">
+                    <input type="text" name="business" required placeholder="Business Type (e.g., HVAC, Clinic, Lawyer)" className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans" />
+                  </div>
+
+                  <div className="w-full">
+                    <textarea name="bottlenecks" required rows={4} placeholder="Describe your current missed or repetitive call bottlenecks..." className="w-full p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-[#FF6B2B] transition-colors text-sm font-sans resize-none leading-relaxed" />
+                  </div>
+
+                  <button type="submit" disabled={isSubmitting} className="w-full py-3 bg-zinc-900 border border-white/10 hover:border-[#FF6B2B] text-white font-medium rounded-xl transition-all duration-200 text-xs font-mono tracking-wider uppercase disabled:opacity-40">
+                    {isSubmitting ? 'Transmitting Pipeline Data...' : 'Submit Briefing Data'}
+                  </button>
+                </motion.form>
+              ) : (
+                <motion.div key="success-prompt" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="p-6 bg-[#FF6B2B]/5 border border-[#FF6B2B]/20 rounded-xl text-center space-y-2">
+                  <p className="text-[#FF6B2B] font-semibold text-sm">✓ Briefing Ingested Successfully</p>
+                  <p className="text-gray-400 text-xs leading-relaxed max-w-md mx-auto">
+                    Your operational metrics have been delivered straight to our team dashboard.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
