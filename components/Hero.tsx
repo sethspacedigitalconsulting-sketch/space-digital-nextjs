@@ -67,7 +67,6 @@ export function Hero() {
         ].join(', '),
       }} />
 
-      {/* ── FULL SCREEN BACKDROP CONTAINER OVERHAUL ── */}
       <div className="absolute inset-0 z-0 md:z-2 md:flex pointer-events-none md:pointer-events-auto">
         <div className="hidden md:flex md:flex-1 pointer-events-none" />
         <div className="absolute inset-0 md:relative md:flex-1 w-full h-full hue-rotate-180 saturate-200">
@@ -113,7 +112,7 @@ export function Hero() {
           initial={{ opacity: 0, filter: 'blur(8px)', y: '2.5rem' }}
           animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.70 }}
-          data-concierge-tip="hero-location" /* ── Added location tag ── */
+          data-concierge-tip="hero-location"
         >
           Space Digital &amp; AI Consulting — Nairobi, Kenya
         </motion.p>
@@ -125,7 +124,7 @@ export function Hero() {
             lineHeight: '1.12',
             letterSpacing: '-0.02em'
           }}
-          data-concierge-tip="hero-headline" /* ── Added core headline manifesto tag ── */
+          data-concierge-tip="hero-headline"
         >
           {WORDS.map((word, i) => {
             const hasUnderline = i === 2 || i === 6;
@@ -171,7 +170,7 @@ export function Hero() {
           initial={{ opacity: 0, filter: 'blur(8px)', y: '2.5rem' }}
           animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 1.00 }}
-          data-concierge-tip="hero-headline" /* ── Fallback alignment if hovering sub-text description ── */
+          data-concierge-tip="hero-headline"
         >
           <div className="text-base md:text-lg font-light leading-relaxed text-zinc-400">
             <MagneticText text="High-performance digital marketing" hoverText="DATA-DRIVEN SYSTEMS" className="text-base md:text-lg text-zinc-400 inline-block font-normal" /> fused with intelligent AI automation. Engineered for companies moving faster than their industry.
@@ -197,16 +196,16 @@ export function Hero() {
           initial={{ opacity: 0, filter: 'blur(8px)', y: '2.5rem' }}
           animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 1.30 }}
-          data-concierge-tip="hero-stats" /* ── Added stats context hook to capture data pack hovs ── */
+          data-concierge-tip="hero-stats"
         >
           {STATS.map(({ value, label }) => (
             <div key={label} className="flex flex-col gap-1">
               <span className="text-2xl md:text-3xl font-bold tracking-tight text-white tabular-nums">
                 {value}
-              }
-                <span className="text-[10px] tracking-wider uppercase font-mono text-zinc-500">
-                  {label}
-                </span>
+              </span>
+              <span className="text-[10px] tracking-wider uppercase font-mono text-zinc-500">
+                {label}
+              </span>
             </div>
           ))}
         </motion.div>
@@ -229,7 +228,6 @@ export function Hero() {
   );
 }
 
-// Internal wrapper to preserve your library imports perfectly
 function MakeMagneticText({ text, hoverText }: { text: string; hoverText: string }) {
   return <MagneticText text={text} hoverText={hoverText} />;
 }
