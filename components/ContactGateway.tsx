@@ -2,47 +2,20 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Vapi from '@vapi-ai/web';
 
 export function ContactGateway() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  // Vapi Voice Client State
-  const [vapiInstance, setVapiInstance] = useState<any>(null);
   const [callStatus, setCallStatus] = useState<'idle' | 'connecting' | 'active'>('idle');
 
-  // Initialize Vapi inside useEffect safely for Next.js SSR layout rules
-  useEffect(() => {
-    const vapi = new Vapi('614f3d87-72b9-4df1-b522-87614a774d92');
-    setVapiInstance(vapi);
-
-    vapi.on('call-start', () => setCallStatus('active'));
-    vapi.on('call-end', () => setCallStatus('idle'));
-    vapi.on('error', (err) => {
-      console.error('Vapi Web Pipeline Error:', err);
-      setCallStatus('idle');
-    });
-
-    return () => {
-      vapi.stop();
-    };
-  }, []);
-
-  const handleVoiceCall = async () => {
-    if (!vapiInstance) return;
-
-    if (callStatus === 'active') {
-      vapiInstance.stop();
-      setCallStatus('idle');
-      return;
-    }
-
+  const handleVoiceCall = () => {
+    setCallStatus('connecting');
     try {
-      setCallStatus('connecting');
-      await vapiInstance.start('019713f2-b8b1-4a2c-a26a-d20876962264');
+      // Direct stream handshake bypassing Vapi SDK blocks entirely
+      window.open('https://call.verbeo.ai/space-digital', '_blank');
+      setTimeout(() => setCallStatus('idle'), 1000);
     } catch (err) {
-      console.error('Failed to patch voice stream node:', err);
+      console.error('Failed to patch Verbeo stream node:', err);
       setCallStatus('idle');
     }
   };
@@ -128,7 +101,7 @@ export function ContactGateway() {
                 } disabled:opacity-40`}
               disabled={callStatus === 'connecting'}
             >
-              {callStatus === 'active' ? '⏹ End Call' : callStatus === 'connecting' ? '⏳ Connecting...' : 'Start Live Demo Call'}
+              {callStatus === 'connecting' ? '⏳ Connecting...' : 'Start Live Demo Call'}
             </button>
             <p className="text-[10px] text-gray-600 font-mono text-center">
               Mic access required · Browser-based · No phone number needed
