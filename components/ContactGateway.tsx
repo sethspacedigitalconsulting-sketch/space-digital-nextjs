@@ -97,7 +97,10 @@ export function ContactGateway() {
         </p>
 
         <div className="space-y-6">
-          <div className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-5">
+          <div
+            className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-5"
+            data-concierge-tip="vapi-demo"
+          >
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${callStatus === 'active' ? 'bg-green-400 animate-pulse' : callStatus === 'connecting' ? 'bg-yellow-400 animate-pulse' : 'bg-[#FF6B2B]'}`} />
               <span className="font-mono text-[10px] tracking-widest uppercase text-white/40">
@@ -142,7 +145,7 @@ export function ContactGateway() {
           <div className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-4">
             <h3 className="text-xl font-semibold text-white">Digital Intake Briefing</h3>
 
-            <AnimatePresence mode="white">
+            <AnimatePresence mode="wait">
               {!isSubmitted ? (
                 <motion.form key="intake-form" onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

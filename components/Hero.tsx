@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
@@ -67,7 +67,6 @@ export function Hero() {
         ].join(', '),
       }} />
 
-      {/* ── FULL SCREEN BACKDROP CONTAINER OVERHAUL ── */}
       <div className="absolute inset-0 z-0 md:z-2 md:flex pointer-events-none md:pointer-events-auto">
         <div className="hidden md:flex md:flex-1 pointer-events-none" />
         <div className="absolute inset-0 md:relative md:flex-1 w-full h-full hue-rotate-180 saturate-200">
@@ -113,7 +112,6 @@ export function Hero() {
           initial={{ opacity: 0, filter: 'blur(8px)', y: '2.5rem' }}
           animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.70 }}
-          data-concierge-tip="hero-location"
         >
           Space Digital &amp; AI Consulting — Nairobi, Kenya
         </motion.p>
@@ -125,7 +123,6 @@ export function Hero() {
             lineHeight: '1.12',
             letterSpacing: '-0.02em'
           }}
-          data-concierge-tip="hero-headline"
         >
           {WORDS.map((word, i) => {
             const hasUnderline = i === 2 || i === 6;
@@ -171,7 +168,6 @@ export function Hero() {
           initial={{ opacity: 0, filter: 'blur(8px)', y: '2.5rem' }}
           animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 1.00 }}
-          data-concierge-tip="hero-headline"
         >
           <div className="text-base md:text-lg font-light leading-relaxed text-zinc-400">
             <MagneticText text="High-performance digital marketing" hoverText="DATA-DRIVEN SYSTEMS" className="text-base md:text-lg text-zinc-400 inline-block font-normal" /> fused with intelligent AI automation. Engineered for companies moving faster than their industry.
@@ -197,7 +193,6 @@ export function Hero() {
           initial={{ opacity: 0, filter: 'blur(8px)', y: '2.5rem' }}
           animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 1.30 }}
-          data-concierge-tip="hero-stats"
         >
           {STATS.map(({ value, label }) => (
             <div key={label} className="flex flex-col gap-1">
