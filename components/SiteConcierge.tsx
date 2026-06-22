@@ -22,13 +22,12 @@ const CONTEXT_MATRIX: Record<string, string> = {
 export function SiteConcierge() {
   const [bubbleText, setBubbleText] = useState(CONTEXT_MATRIX.welcome);
   const [showBubble, setShowBubble] = useState(false);
-  const [activeSectionTip, setActiveSectionTip] = useState<string | null>(null);
   
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const lastActiveTipRef = useRef<string | null>(null);
+  const lastActiveTipRef = useRef<string>("welcome");
 
   useEffect(() => {
-    // 1. Initial Welcome Trigger Phase
+    // 1. First-time Welcome Trigger Logic
     setShowBubble(true);
     timeoutRef.current = setTimeout(() => {
       setShowBubble(false);
@@ -45,23 +44,22 @@ export function SiteConcierge() {
       }, 2000);
     };
 
-    // 2. Intersection Observer tracking loop for Mobile viewports
+    // 2. Intersection Observer tracking loop for Mobile Viewports
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const tip = entry.target.getAttribute('data-concierge-tip');
             if (tip && CONTEXT_MATRIX[tip]) {
-              setActiveSectionTip(tip);
               lastActiveTipRef.current = tip;
-              if (isMobile() && showBubble) {
+              if (isMobile()) {
                 setBubbleText(CONTEXT_MATRIX[tip]);
               }
             }
           }
         });
       },
-      { threshold: 0.2, rootMargin: '-10% 0px -40% 0px' }
+      { threshold: 0.15, rootMargin: '-20% 0px -30% 0px' }
     );
 
     const scanAndObserveElements = () => {
@@ -70,33 +68,30 @@ export function SiteConcierge() {
       });
     };
 
-    // Delayed scan to allow full DOM mount execution paths
-    const scanTimeout = setTimeout(scanAndObserveElements, 1000);
+    const scanTimeout = setTimeout(scanAndObserveElements, 800);
 
-    // 3. Global Interaction Event Listeners
+    // 3. Global Interaction Management Trackers
     const handleGlobalScroll = () => {
       if (isMobile()) {
-        if (lastActiveTipRef.current && CONTEXT_MATRIX[lastActiveTipRef.current]) {
-          setBubbleText(CONTEXT_MATRIX[lastActiveTipRef.current]);
-        }
+        const currentTip = lastActiveTipRef.current;
+        if (CONTEXT_MATRIX[currentTip]) setBubbleText(CONTEXT_MATRIX[currentTip]);
         resetMobileTimeout();
       } else {
-        // Desktop behavior: vanishes instantly when scrolling begins
+        // Desktop behavior: vanishes instantly when scrolling occurs
         setShowBubble(false);
       }
     };
 
     const handleGlobalTouch = () => {
       if (isMobile()) {
-        if (lastActiveTipRef.current && CONTEXT_MATRIX[lastActiveTipRef.current]) {
-          setBubbleText(CONTEXT_MATRIX[lastActiveTipRef.current]);
-        }
+        const currentTip = lastActiveTipRef.current;
+        if (CONTEXT_MATRIX[currentTip]) setBubbleText(CONTEXT_MATRIX[currentTip]);
         resetMobileTimeout();
       }
     };
 
-    // 4. Desktop Global Hover Tracker targeting every element detail
-    const handleDesktopHover = (e: MouseEvent) => {
+    // 4. Premium Desktop Move/Hover Scanner targeting every detailed asset element
+    const handleDesktopHoverScan = (e: MouseEvent) => {
       if (isMobile()) return;
       const target = e.target as HTMLElement;
       const closestElement = target.closest('[data-concierge-tip]');
@@ -104,6 +99,7 @@ export function SiteConcierge() {
       if (closestElement) {
         const tip = closestElement.getAttribute('data-concierge-tip');
         if (tip && CONTEXT_MATRIX[tip]) {
+          lastActiveTipRef.current = tip;
           setBubbleText(CONTEXT_MATRIX[tip]);
           setShowBubble(true);
         }
@@ -112,26 +108,22 @@ export function SiteConcierge() {
 
     window.addEventListener('scroll', handleGlobalScroll, { passive: true });
     window.addEventListener('touchstart', handleGlobalTouch, { passive: true });
-    window.addEventListener('mouseover', handleDesktopHover, { passive: true });
+    window.addEventListener('mouseover', handleDesktopHoverScan, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleGlobalScroll);
       window.removeEventListener('touchstart', handleGlobalTouch);
-      window.removeEventListener('mouseover', handleDesktopHover);
+      window.removeEventListener('mouseover', handleDesktopHoverScan);
       observer.disconnect();
       clearTimeout(scanTimeout);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [showBubble]);
+  }, []);
 
-  const handleBotAvatarTrigger = () => {
-    // If hovering or clicking direct bot button, load context of currently viewed section
-    if (lastActiveTipRef.current && CONTEXT_MATRIX[lastActiveTipRef.current]) {
-      setBubbleText(CONTEXT_MATRIX[lastActiveTipRef.current]);
-    } else {
-      setBubbleText(CONTEXT_MATRIX.fallback);
-    }
-    setShowBubble(!showBubble);
+  const handleAvatarManualTrigger = () => {
+    const currentTip = lastActiveTipRef.current;
+    setBubbleText(CONTEXT_MATRIX[currentTip] || CONTEXT_MATRIX.fallback);
+    setShowBubble(prev => !prev);
   };
 
   return (
@@ -139,9 +131,8 @@ export function SiteConcierge() {
       className="fixed bottom-[92px] right-6 md:bottom-6 md:right-6 z-[9999] flex flex-col items-end gap-2.5 font-sans pointer-events-auto"
       onMouseEnter={() => {
         if (window.innerWidth >= 768) {
-          if (lastActiveTipRef.current && CONTEXT_MATRIX[lastActiveTipRef.current]) {
-            setBubbleText(CONTEXT_MATRIX[lastActiveTipRef.current]);
-          }
+          const currentTip = lastActiveTipRef.current;
+          setBubbleText(CONTEXT_MATRIX[currentTip] || CONTEXT_MATRIX.fallback);
           setShowBubble(true);
         }
       }}
@@ -152,15 +143,15 @@ export function SiteConcierge() {
       <AnimatePresence>
         {showBubble && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 8 }}
+            initial={{ opacity: 0, scale: 0.94, y: 6 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: 8 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="relative mr-1 max-w-[240px] p-4 bg-zinc-950 border border-white/10 rounded-2xl text-[11px] text-zinc-300 shadow-[0_12px_40px_rgba(0,0,0,0.95)] backdrop-blur-md select-none leading-relaxed text-left"
+            exit={{ opacity: 0, scale: 0.94, y: 6 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            className="relative mr-1 max-w-[245px] p-4 bg-zinc-950 border border-white/10 rounded-2xl text-[11px] text-zinc-300 shadow-[0_12px_45px_rgba(0,0,0,0.98)] backdrop-blur-md select-none leading-relaxed text-left"
           >
-            {/* Direct Mouth-Trail Speech Pointers aligned to the borderless image node */}
-            <div className="absolute bottom-[-5px] right-4 w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[5px] border-t-zinc-950" />
-            <div className="absolute bottom-[-6px] right-4 w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[5px] border-t-white/10 -z-10" />
+            {/* Direct Mouth-Trail Speech Pointers pointing flawlessly right onto the borderless logo face */}
+            <div className="absolute bottom-[-5px] right-4.5 w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[5px] border-t-zinc-950" />
+            <div className="absolute bottom-[-6px] right-4.5 w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[5px] border-t-white/10 -z-10" />
 
             <div className="flex justify-between items-center gap-4 mb-1.5">
               <span className="font-mono text-[9px] uppercase tracking-wider text-[#FF6B2B] font-semibold">
@@ -173,12 +164,12 @@ export function SiteConcierge() {
         )}
       </AnimatePresence>
 
-      {/* Transparent Frame Image Node */}
+      {/* ── Completely Borderless, Raw Transparent Image Node Component ── */}
       <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={handleBotAvatarTrigger}
-        className="w-12 h-12 flex items-center justify-center cursor-pointer select-none"
+        whileHover={{ scale: 1.06 }}
+        whileTap={{ scale: 0.94 }}
+        onClick={handleAvatarManualTrigger}
+        className="w-12 h-12 flex items-center justify-center cursor-pointer select-none p-0 bg-transparent border-0 outline-none"
       >
         <img 
           src="/workflows/botemoji.png" 
