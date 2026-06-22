@@ -28,17 +28,22 @@ export function SiteConcierge() {
   const isFirstLoadRef = useRef<boolean>(true);
 
   useEffect(() => {
-    // 1. Initial Welcome Trigger Phase
+    // 1. Strict First-Time Load/Refresh Phase
+    setBubbleText(CONTEXT_MATRIX.welcome);
     setShowBubble(true);
+
     timeoutRef.current = setTimeout(() => {
       setShowBubble(false);
-      isFirstLoadRef.current = false;
+      // Let onboarding conclude fully before enabling hover context swaps
+      setTimeout(() => {
+        isFirstLoadRef.current = false;
+      }, 200);
     }, 3000);
 
     const isMobile = () => window.innerWidth < 768;
 
     const resetMobileTimeout = () => {
-      if (!isMobile()) return;
+      if (!isMobile() || isFirstLoadRef.current) return;
       setShowBubble(true);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
@@ -46,15 +51,16 @@ export function SiteConcierge() {
       }, 2000);
     };
 
-    // 2. Intersection Observer tracking loop for Mobile Viewports
+    // 2. Telemetry Scanner for Mobile Positions
     const observer = new IntersectionObserver(
       (entries) => {
+        if (isFirstLoadRef.current) return;
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const tip = entry.target.getAttribute('data-concierge-tip');
             if (tip && CONTEXT_MATRIX[tip]) {
               lastActiveTipRef.current = tip;
-              if (isMobile() && !isFirstLoadRef.current) {
+              if (isMobile()) {
                 setBubbleText(CONTEXT_MATRIX[tip]);
               }
             }
@@ -72,40 +78,37 @@ export function SiteConcierge() {
 
     const scanTimeout = setTimeout(scanAndObserveElements, 800);
 
-    // 3. Global Interaction Management Trackers
+    // 3. Dynamic Gesture Lifecycles
     const handleGlobalScroll = () => {
+      if (isFirstLoadRef.current) return;
       if (isMobile()) {
         const currentTip = lastActiveTipRef.current;
-        if (CONTEXT_MATRIX[currentTip] && !isFirstLoadRef.current) {
-          setBubbleText(CONTEXT_MATRIX[currentTip]);
-        }
+        if (CONTEXT_MATRIX[currentTip]) setBubbleText(CONTEXT_MATRIX[currentTip]);
         resetMobileTimeout();
       } else {
-        // Desktop behavior: vanishes instantly when scrolling occurs
+        // Desktop vanishes immediately on wheel tracking vectors
         setShowBubble(false);
       }
     };
 
     const handleGlobalTouch = () => {
+      if (isFirstLoadRef.current) return;
       if (isMobile()) {
         const currentTip = lastActiveTipRef.current;
-        if (CONTEXT_MATRIX[currentTip] && !isFirstLoadRef.current) {
-          setBubbleText(CONTEXT_MATRIX[currentTip]);
-        }
+        if (CONTEXT_MATRIX[currentTip]) setBubbleText(CONTEXT_MATRIX[currentTip]);
         resetMobileTimeout();
       }
     };
 
-    // 4. Premium Desktop Move/Hover Scanner targeting every detailed asset element
+    // 4. Meticulous Desktop Hover Tracker
     const handleDesktopHoverScan = (e: MouseEvent) => {
-      if (isMobile()) return;
+      if (isMobile() || isFirstLoadRef.current) return;
       const target = e.target as HTMLElement;
       const closestElement = target.closest('[data-concierge-tip]');
 
       if (closestElement) {
         const tip = closestElement.getAttribute('data-concierge-tip');
         if (tip && CONTEXT_MATRIX[tip]) {
-          isFirstLoadRef.current = false;
           lastActiveTipRef.current = tip;
           setBubbleText(CONTEXT_MATRIX[tip]);
           setShowBubble(true);
@@ -128,7 +131,7 @@ export function SiteConcierge() {
   }, []);
 
   const handleAvatarManualTrigger = () => {
-    isFirstLoadRef.current = false;
+    if (isFirstLoadRef.current) return;
     const currentTip = lastActiveTipRef.current;
     setBubbleText(CONTEXT_MATRIX[currentTip] || CONTEXT_MATRIX.fallback);
     setShowBubble(prev => !prev);
@@ -138,15 +141,14 @@ export function SiteConcierge() {
     <div
       className="fixed bottom-[92px] right-6 md:bottom-6 md:right-6 z-[9999] flex flex-col items-end gap-2.5 font-sans pointer-events-auto"
       onMouseEnter={() => {
-        if (window.innerWidth >= 768) {
-          isFirstLoadRef.current = false;
+        if (window.innerWidth >= 768 && !isFirstLoadRef.current) {
           const currentTip = lastActiveTipRef.current;
           setBubbleText(CONTEXT_MATRIX[currentTip] || CONTEXT_MATRIX.fallback);
           setShowBubble(true);
         }
       }}
       onMouseLeave={() => {
-        if (window.innerWidth >= 768) setShowBubble(false);
+        if (window.innerWidth >= 768 && !isFirstLoadRef.current) setShowBubble(false);
       }}
     >
       <AnimatePresence>
@@ -158,7 +160,6 @@ export function SiteConcierge() {
             transition={{ duration: 0.18, ease: 'easeOut' }}
             className="relative mr-1 max-w-[245px] p-4 bg-zinc-950 border border-white/10 rounded-2xl text-[11px] text-zinc-300 shadow-[0_12px_45px_rgba(0,0,0,0.98)] backdrop-blur-md select-none leading-relaxed text-left"
           >
-            {/* Direct Mouth-Trail Speech Pointers pointing flawlessly right onto the borderless logo face */}
             <div className="absolute bottom-[-5px] right-4.5 w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[5px] border-t-zinc-950" />
             <div className="absolute bottom-[-6px] right-4.5 w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[5px] border-t-white/10 -z-10" />
 
@@ -173,7 +174,6 @@ export function SiteConcierge() {
         )}
       </AnimatePresence>
 
-      {/* ── Modern Tech AI Node Vector Avatar Asset ── */}
       <motion.div
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
