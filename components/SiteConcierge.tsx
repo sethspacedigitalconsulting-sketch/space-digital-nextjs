@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const CONTEXT_MATRIX: Record<string, string> = {
   "welcome": "Hey! I'm Spacey, your automated guide.",
-  "fallback": "I'm keeping tracking of your position. Scroll down to the System Gateway to launch a live voice demo with me instantly!",
   "hero": "This is our core geographic command track and high-performance digital systems manifesto, engineered directly out of Nairobi.",
   "stats": "Look at these proof points: an average 3.8× ROAS, 67% cut in cost-per-lead, and up to 82% autonomous call resolution.",
   "marketing": "Tier 1 Framework: Deploys high-intent SEO, optimized Google Ads, and custom social media marketing pipelines to capture lead traffic.",
@@ -39,30 +38,48 @@ export function SiteConcierge() {
 
     const isMobile = () => window.innerWidth < 768;
 
-    // Helper to extract keywords from whatever element the user is interacting with
+    // Helper to evaluate text context based on the current element or section container
     const parseElementContext = (element: HTMLElement | null): string => {
-      if (!element) return CONTEXT_MATRIX.fallback;
+      if (!element) return CONTEXT_MATRIX.hero; // Default to main pitch context if null
 
-      // Check for explicit tip first
+      // 1. Check for explicit tip tags first
       const explicitTip = element.closest('[data-concierge-tip]')?.getAttribute('data-concierge-tip');
       if (explicitTip && CONTEXT_MATRIX[explicitTip]) return CONTEXT_MATRIX[explicitTip];
 
-      // fallback intelligent string check based on site context
+      // 2. Intelligent section-container fallback lookup to keep context 100% accurate
+      const closestSection = element.closest('section, div[id]');
+      const sectionId = closestSection ? closestSection.id.toLowerCase() : '';
+
+      // 3. Scan inner content text or parent text structures
       const fullText = (element.innerText || element.textContent || "").toLowerCase();
       const htmlId = (element.id || "").toLowerCase();
       const parentHtmlId = (element.parentElement?.id || "").toLowerCase();
 
-      if (htmlId.includes('hero') || parentHtmlId.includes('hero') || fullText.includes('manifesto') || fullText.includes('growth')) return CONTEXT_MATRIX.hero;
+      // Metrics and numbers tracking vectors
       if (fullText.includes('roas') || fullText.includes('%') || fullText.includes('metrics') || fullText.includes('proof')) return CONTEXT_MATRIX.stats;
+
+      // Tier 1 vs Tier 2 explicit boundaries
       if (fullText.includes('tier 1') || fullText.includes('seo') || fullText.includes('ads') || fullText.includes('marketing')) return CONTEXT_MATRIX.marketing;
       if (fullText.includes('tier 2') || fullText.includes('agent') || fullText.includes('automation') || fullText.includes('autonomous')) return CONTEXT_MATRIX.automation;
+
+      // Platform integration tracks
       if (fullText.includes('voice') || fullText.includes('swahili') || fullText.includes('english') || fullText.includes('verbeo')) return CONTEXT_MATRIX.voice;
       if (fullText.includes('n8n') || fullText.includes('gohighlevel') || fullText.includes('crm') || fullText.includes('calendly') || fullText.includes('integrate')) return CONTEXT_MATRIX.integrations;
+
+      // Commercial pricing frames
       if (fullText.includes('1,500') || fullText.includes('450') || fullText.includes('pricing') || fullText.includes('setup') || fullText.includes('retainer')) return CONTEXT_MATRIX.pricing;
+
+      // Conversion gate structures
       if (fullText.includes('demo') || fullText.includes('call') || fullText.includes('vapi') || fullText.includes('launch')) return CONTEXT_MATRIX.demo;
       if (fullText.includes('form') || fullText.includes('briefing') || fullText.includes('submit') || fullText.includes('input')) return CONTEXT_MATRIX.form;
 
-      return CONTEXT_MATRIX.fallback;
+      // 4. Section ID fallback matching logic so it NEVER speaks generic filler
+      if (sectionId.includes('services') || htmlId.includes('services') || parentHtmlId.includes('services')) return CONTEXT_MATRIX.marketing;
+      if (sectionId.includes('system') || sectionId.includes('features') || htmlId.includes('system')) return CONTEXT_MATRIX.voice;
+      if (sectionId.includes('pricing') || sectionId.includes('roi') || htmlId.includes('pricing')) return CONTEXT_MATRIX.pricing;
+      if (sectionId.includes('contact') || sectionId.includes('gateway') || htmlId.includes('contact')) return CONTEXT_MATRIX.demo;
+
+      return CONTEXT_MATRIX.hero; // Master section context fallback
     };
 
     // 2. Mobile Touch & Scroll Vector Parser
@@ -81,29 +98,28 @@ export function SiteConcierge() {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
         setShowBubble(false);
-      }, 2000); // Disappears neatly 2s after touch/scrolling stops
+      }, 2000);
     };
 
     // 3. Desktop Exact Cursor-Stop System Tracker
     const handleDesktopMove = (e: MouseEvent) => {
       if (isFirstLoadRef.current || isMobile()) return;
 
-      // Clear timer while cursor is moving actively
       if (mouseStopTimerRef.current) clearTimeout(mouseStopTimerRef.current);
 
       const targetElement = e.target as HTMLElement;
 
-      // The moment the cursor STOPS moving for 150ms over an item, reveal its exact full context
+      // When cursor stops moving for 120ms over an item, calculate the context instantly
       mouseStopTimerRef.current = setTimeout(() => {
         const matchedContext = parseElementContext(targetElement);
         setBubbleText(matchedContext);
         setShowBubble(true);
-      }, 150);
+      }, 120);
     };
 
     const handleDesktopScrollHide = () => {
       if (!isMobile()) {
-        setShowBubble(false); // Disappears instantly on desktop scroll wheel movement
+        setShowBubble(false); // Vanishes cleanly on desktop scroll to preserve visibility
         if (mouseStopTimerRef.current) clearTimeout(mouseStopTimerRef.current);
       } else {
         handleMobileInteraction(new Event('scroll'));
@@ -124,6 +140,13 @@ export function SiteConcierge() {
       if (mouseStopTimerRef.current) clearTimeout(mouseStopTimerRef.current);
     };
   }, []);
+
+  const handleAvatarManualTrigger = () => {
+    if (isFirstLoadRef.current) return;
+    const currentTip = lastActiveTipRef.current;
+    setBubbleText(CONTEXT_MATRIX[currentTip] || CONTEXT_MATRIX.hero);
+    setShowBubble(prev => !prev);
+  };
 
   return (
     <div className="fixed bottom-[92px] right-6 md:bottom-6 md:right-6 z-[9999] flex flex-col items-end gap-2.5 font-sans pointer-events-auto">
@@ -150,10 +173,10 @@ export function SiteConcierge() {
         )}
       </AnimatePresence>
 
-      {/* Modern Tech Core Vector Avatar Asset */}
       <motion.div
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
+        onClick={handleAvatarManualTrigger}
         className="w-12 h-12 flex items-center justify-center cursor-pointer select-none p-0 bg-transparent border-0 outline-none shadow-none"
       >
         <svg
