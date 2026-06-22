@@ -5,18 +5,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const CONTEXT_MATRIX: Record<string, string> = {
   "welcome": "Hey! I'm Spacey, your automated guide.",
-  "fallback": "Hi! I am Spacey. Drop down to the System Gateway section below to launch your live dynamic voice demo instantly!",
-  "hero-location": "You are looking at our core geographic command track. We handle digital growth campaigns and rapid automated voice deployments directly out of Nairobi, Kenya for the local East African market.",
-  "hero-headline": "This is the Space Digital core manifesto. We build bespoke digital growth mechanics paired with intelligent automation loops for companies that move faster than their industry.",
-  "hero-stats": "Look at these operational proof points: our systems hit an average 3.8× ROAS, cut client cost-per-lead by 67%, and process automated voice call resolution up to 82%.",
-  "tier-marketing": "Our Tier 1 system handles top-of-funnel capture: advanced local SEO mapping, hyper-targeted Google Ads, and custom social media marketing pipelines designed to flood your business with high-intent incoming leads.",
-  "tier-automation": "Our high-value Tier 2 infrastructure: 24/7 autonomous voice and text agents built to instantly qualify, track, and book incoming traffic. This completely eliminates missed-call bottlenecks and staff turnover.",
-  "platform-voice": "Our voice deployment framework is powered by advanced, low-latency multilingual voice platforms, giving your company seamless English and Swahili customer coverage.",
-  "platform-integrations": "We map our automated systems directly into your existing stack—connecting seamlessly with GoHighLevel CRMs, n8n workflow pipelines, custom internal databases, and automated Calendly schedulers.",
-  "pricing-setup": "Our high-value onboarding model runs a flat $1,500 One-Time Setup Fee. This covers building your bespoke database matrix, scripting voice conversational tracks, and managing platform handshakes.",
-  "pricing-management": "Ongoing operations run a flat $450/month management retainer. This covers continuous prompt engineering optimization, database maintenance, tracking analytical logs, and updating flow parameters.",
-  "vapi-demo": "You've reached our active real-time call center demonstration node. Hit the action button below to launch an immediate browser-based live call directly with me with under ~1s latency!",
-  "briefing-form": "This is our strategic data intake channel. Drop your company variables and call bottlenecks directly into this form layout to feed our team's operational briefing dashboard instantly."
+  "fallback": "I'm keeping tracking of your position. Scroll down to the System Gateway to launch a live voice demo with me instantly!",
+  "hero": "This is our core geographic command track and high-performance digital systems manifesto, engineered directly out of Nairobi.",
+  "stats": "Look at these proof points: an average 3.8× ROAS, 67% cut in cost-per-lead, and up to 82% autonomous call resolution.",
+  "marketing": "Tier 1 Framework: Deploys high-intent SEO, optimized Google Ads, and custom social media marketing pipelines to capture lead traffic.",
+  "automation": "Tier 2 Infrastructure: Advanced 24/7 autonomous voice and text agents built to instantly qualify and book traffic, eliminating bottlenecks.",
+  "voice": "Our multi-lingual voice agent framework supports seamless English and Swahili customer coverage with sub-1s latency.",
+  "integrations": "Deep architectural handshakes mapping directly into GoHighLevel CRMs, n8n workflow pipelines, and automated Calendly schedulers.",
+  "pricing": "High-Value Retainer Structure: Flat $1,500 One-Time Setup Fee + $450/Month management, eliminating missed-call overhead and staff turnover.",
+  "demo": "Launch Center Node: Hit the button to initiate a live browser voice call directly with me right now!",
+  "form": "Strategic Intake Pipeline: Drop your operational variables here to feed our briefing dashboard instantly."
 };
 
 export function SiteConcierge() {
@@ -24,17 +22,16 @@ export function SiteConcierge() {
   const [showBubble, setShowBubble] = useState(false);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const lastActiveTipRef = useRef<string>("welcome");
+  const mouseStopTimerRef = useRef<NodeJS.Timeout | null>(null);
   const isFirstLoadRef = useRef<boolean>(true);
 
   useEffect(() => {
-    // 1. Strict First-Time Load/Refresh Phase
+    // 1. Strict First-Load Launch Greeting (Runs Exactly Once)
     setBubbleText(CONTEXT_MATRIX.welcome);
     setShowBubble(true);
 
     timeoutRef.current = setTimeout(() => {
       setShowBubble(false);
-      // Let onboarding conclude fully before enabling hover context swaps
       setTimeout(() => {
         isFirstLoadRef.current = false;
       }, 200);
@@ -42,115 +39,94 @@ export function SiteConcierge() {
 
     const isMobile = () => window.innerWidth < 768;
 
-    const resetMobileTimeout = () => {
-      if (!isMobile() || isFirstLoadRef.current) return;
+    // Helper to extract keywords from whatever element the user is interacting with
+    const parseElementContext = (element: HTMLElement | null): string => {
+      if (!element) return CONTEXT_MATRIX.fallback;
+
+      // Check for explicit tip first
+      const explicitTip = element.closest('[data-concierge-tip]')?.getAttribute('data-concierge-tip');
+      if (explicitTip && CONTEXT_MATRIX[explicitTip]) return CONTEXT_MATRIX[explicitTip];
+
+      // fallback intelligent string check based on site context
+      const fullText = (element.innerText || element.textContent || "").toLowerCase();
+      const htmlId = (element.id || "").toLowerCase();
+      const parentHtmlId = (element.parentElement?.id || "").toLowerCase();
+
+      if (htmlId.includes('hero') || parentHtmlId.includes('hero') || fullText.includes('manifesto') || fullText.includes('growth')) return CONTEXT_MATRIX.hero;
+      if (fullText.includes('roas') || fullText.includes('%') || fullText.includes('metrics') || fullText.includes('proof')) return CONTEXT_MATRIX.stats;
+      if (fullText.includes('tier 1') || fullText.includes('seo') || fullText.includes('ads') || fullText.includes('marketing')) return CONTEXT_MATRIX.marketing;
+      if (fullText.includes('tier 2') || fullText.includes('agent') || fullText.includes('automation') || fullText.includes('autonomous')) return CONTEXT_MATRIX.automation;
+      if (fullText.includes('voice') || fullText.includes('swahili') || fullText.includes('english') || fullText.includes('verbeo')) return CONTEXT_MATRIX.voice;
+      if (fullText.includes('n8n') || fullText.includes('gohighlevel') || fullText.includes('crm') || fullText.includes('calendly') || fullText.includes('integrate')) return CONTEXT_MATRIX.integrations;
+      if (fullText.includes('1,500') || fullText.includes('450') || fullText.includes('pricing') || fullText.includes('setup') || fullText.includes('retainer')) return CONTEXT_MATRIX.pricing;
+      if (fullText.includes('demo') || fullText.includes('call') || fullText.includes('vapi') || fullText.includes('launch')) return CONTEXT_MATRIX.demo;
+      if (fullText.includes('form') || fullText.includes('briefing') || fullText.includes('submit') || fullText.includes('input')) return CONTEXT_MATRIX.form;
+
+      return CONTEXT_MATRIX.fallback;
+    };
+
+    // 2. Mobile Touch & Scroll Vector Parser
+    const handleMobileInteraction = (e: TouchEvent | Event) => {
+      if (isFirstLoadRef.current || !isMobile()) return;
+
+      let targetElement: HTMLElement | null = null;
+      if ('touches' in e && e.touches.length > 0) {
+        targetElement = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY) as HTMLElement;
+      }
+
+      const matchedContext = parseElementContext(targetElement);
+      setBubbleText(matchedContext);
       setShowBubble(true);
+
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
         setShowBubble(false);
-      }, 2000);
+      }, 2000); // Disappears neatly 2s after touch/scrolling stops
     };
 
-    // 2. Telemetry Scanner for Mobile Positions
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (isFirstLoadRef.current) return;
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const tip = entry.target.getAttribute('data-concierge-tip');
-            if (tip && CONTEXT_MATRIX[tip]) {
-              lastActiveTipRef.current = tip;
-              if (isMobile()) {
-                setBubbleText(CONTEXT_MATRIX[tip]);
-              }
-            }
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: '-20% 0px -30% 0px' }
-    );
+    // 3. Desktop Exact Cursor-Stop System Tracker
+    const handleDesktopMove = (e: MouseEvent) => {
+      if (isFirstLoadRef.current || isMobile()) return;
 
-    const scanAndObserveElements = () => {
-      document.querySelectorAll('[data-concierge-tip]').forEach((el) => {
-        observer.observe(el);
-      });
+      // Clear timer while cursor is moving actively
+      if (mouseStopTimerRef.current) clearTimeout(mouseStopTimerRef.current);
+
+      const targetElement = e.target as HTMLElement;
+
+      // The moment the cursor STOPS moving for 150ms over an item, reveal its exact full context
+      mouseStopTimerRef.current = setTimeout(() => {
+        const matchedContext = parseElementContext(targetElement);
+        setBubbleText(matchedContext);
+        setShowBubble(true);
+      }, 150);
     };
 
-    const scanTimeout = setTimeout(scanAndObserveElements, 800);
-
-    // 3. Dynamic Gesture Lifecycles
-    const handleGlobalScroll = () => {
-      if (isFirstLoadRef.current) return;
-      if (isMobile()) {
-        const currentTip = lastActiveTipRef.current;
-        if (CONTEXT_MATRIX[currentTip]) setBubbleText(CONTEXT_MATRIX[currentTip]);
-        resetMobileTimeout();
+    const handleDesktopScrollHide = () => {
+      if (!isMobile()) {
+        setShowBubble(false); // Disappears instantly on desktop scroll wheel movement
+        if (mouseStopTimerRef.current) clearTimeout(mouseStopTimerRef.current);
       } else {
-        // Desktop vanishes immediately on wheel tracking vectors
-        setShowBubble(false);
+        handleMobileInteraction(new Event('scroll'));
       }
     };
 
-    const handleGlobalTouch = () => {
-      if (isFirstLoadRef.current) return;
-      if (isMobile()) {
-        const currentTip = lastActiveTipRef.current;
-        if (CONTEXT_MATRIX[currentTip]) setBubbleText(CONTEXT_MATRIX[currentTip]);
-        resetMobileTimeout();
-      }
-    };
-
-    // 4. Meticulous Desktop Hover Tracker
-    const handleDesktopHoverScan = (e: MouseEvent) => {
-      if (isMobile() || isFirstLoadRef.current) return;
-      const target = e.target as HTMLElement;
-      const closestElement = target.closest('[data-concierge-tip]');
-
-      if (closestElement) {
-        const tip = closestElement.getAttribute('data-concierge-tip');
-        if (tip && CONTEXT_MATRIX[tip]) {
-          lastActiveTipRef.current = tip;
-          setBubbleText(CONTEXT_MATRIX[tip]);
-          setShowBubble(true);
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleGlobalScroll, { passive: true });
-    window.addEventListener('touchstart', handleGlobalTouch, { passive: true });
-    window.addEventListener('mouseover', handleDesktopHoverScan, { passive: true });
+    window.addEventListener('scroll', handleDesktopScrollHide, { passive: true });
+    window.addEventListener('touchstart', handleMobileInteraction, { passive: true });
+    window.addEventListener('touchmove', handleMobileInteraction, { passive: true });
+    window.addEventListener('mousemove', handleDesktopMove, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleGlobalScroll);
-      window.removeEventListener('touchstart', handleGlobalTouch);
-      window.removeEventListener('mouseover', handleDesktopHoverScan);
-      observer.disconnect();
-      clearTimeout(scanTimeout);
+      window.removeEventListener('scroll', handleDesktopScrollHide);
+      window.removeEventListener('touchstart', handleMobileInteraction);
+      window.removeEventListener('touchmove', handleMobileInteraction);
+      window.removeEventListener('mousemove', handleDesktopMove);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (mouseStopTimerRef.current) clearTimeout(mouseStopTimerRef.current);
     };
   }, []);
 
-  const handleAvatarManualTrigger = () => {
-    if (isFirstLoadRef.current) return;
-    const currentTip = lastActiveTipRef.current;
-    setBubbleText(CONTEXT_MATRIX[currentTip] || CONTEXT_MATRIX.fallback);
-    setShowBubble(prev => !prev);
-  };
-
   return (
-    <div
-      className="fixed bottom-[92px] right-6 md:bottom-6 md:right-6 z-[9999] flex flex-col items-end gap-2.5 font-sans pointer-events-auto"
-      onMouseEnter={() => {
-        if (window.innerWidth >= 768 && !isFirstLoadRef.current) {
-          const currentTip = lastActiveTipRef.current;
-          setBubbleText(CONTEXT_MATRIX[currentTip] || CONTEXT_MATRIX.fallback);
-          setShowBubble(true);
-        }
-      }}
-      onMouseLeave={() => {
-        if (window.innerWidth >= 768 && !isFirstLoadRef.current) setShowBubble(false);
-      }}
-    >
+    <div className="fixed bottom-[92px] right-6 md:bottom-6 md:right-6 z-[9999] flex flex-col items-end gap-2.5 font-sans pointer-events-auto">
       <AnimatePresence>
         {showBubble && (
           <motion.div
@@ -174,10 +150,10 @@ export function SiteConcierge() {
         )}
       </AnimatePresence>
 
+      {/* Modern Tech Core Vector Avatar Asset */}
       <motion.div
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
-        onClick={handleAvatarManualTrigger}
         className="w-12 h-12 flex items-center justify-center cursor-pointer select-none p-0 bg-transparent border-0 outline-none shadow-none"
       >
         <svg
