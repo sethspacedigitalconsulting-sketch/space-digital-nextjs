@@ -97,10 +97,8 @@ export function ContactGateway() {
         </p>
 
         <div className="space-y-6">
-          <div
-            className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-5"
-            data-concierge-tip="vapi-demo"
-          >
+          {/* REMOVED data-concierge-tip attribute to eliminate click event intercept clashes */}
+          <div className="p-8 border border-white/10 bg-white/[0.01] rounded-2xl space-y-5">
             <div className="flex items-center gap-2">
               <div className={`w-2 h-2 rounded-full ${callStatus === 'active' ? 'bg-green-400 animate-pulse' : callStatus === 'connecting' ? 'bg-yellow-400 animate-pulse' : 'bg-[#FF6B2B]'}`} />
               <span className="font-mono text-[10px] tracking-widest uppercase text-white/40">
@@ -128,11 +126,7 @@ export function ContactGateway() {
 
             <button
               onClick={handleVoiceCall}
-              className={`relative z-50 pointer-events-auto w-full py-3.5 rounded-xl font-mono text-xs tracking-widest uppercase font-semibold transition-all duration-200
-                ${callStatus === 'active'
-                  ? 'bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20'
-                  : 'bg-[#FF6B2B] text-black hover:bg-[#ff824d]'
-                } disabled:opacity-40`}
+              className="relative z-50 pointer-events-auto block w-full py-3.5 rounded-xl font-mono text-xs tracking-widest uppercase font-semibold text-center transition-all duration-200 bg-[#FF6B2B] text-black hover:bg-[#ff824d] disabled:opacity-40"
               disabled={callStatus === 'connecting'}
             >
               {callStatus === 'active' ? '⏹ End Call' : callStatus === 'connecting' ? '⏳ Connecting...' : 'Start Live Demo Call'}
