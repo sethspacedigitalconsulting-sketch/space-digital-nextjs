@@ -173,18 +173,32 @@ export function SiteConcierge() {
         )}
       </AnimatePresence>
 
-      {/* ── Completely Borderless, Raw Transparent Image Node Component ── */}
+      {/* ── Modern Tech AI Node Vector Avatar Asset ── */}
       <motion.div
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
         onClick={handleAvatarManualTrigger}
         className="w-12 h-12 flex items-center justify-center cursor-pointer select-none p-0 bg-transparent border-0 outline-none shadow-none"
       >
-        <img
-          src="/workflows/botemoji.png"
-          alt="Space Digital Concierge"
-          className="w-full h-full object-contain pointer-events-none"
-        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#FF6B2B"
+          strokeWidth="1.75"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="w-8 h-8 drop-shadow-[0_0_8px_rgba(255,107,43,0.3)]"
+        >
+          <circle cx="12" cy="12" r="9" className="opacity-20" stroke="currentColor" />
+          <path d="M12 8v8" />
+          <path d="M8 12h8" />
+          <circle cx="12" cy="12" r="1.5" fill="#FF6B2B" />
+          <circle cx="12" cy="5" r="1" fill="#FF6B2B" />
+          <circle cx="12" cy="19" r="1" fill="#FF6B2B" />
+          <circle cx="5" cy="12" r="1" fill="#FF6B2B" />
+          <circle cx="19" cy="12" r="1" fill="#FF6B2B" />
+        </svg>
       </motion.div>
     </div>
   );
