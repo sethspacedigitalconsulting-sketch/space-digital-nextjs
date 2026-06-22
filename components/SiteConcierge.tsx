@@ -22,15 +22,17 @@ const CONTEXT_MATRIX: Record<string, string> = {
 export function SiteConcierge() {
   const [bubbleText, setBubbleText] = useState(CONTEXT_MATRIX.welcome);
   const [showBubble, setShowBubble] = useState(false);
-  
+
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastActiveTipRef = useRef<string>("welcome");
+  const isFirstLoadRef = useRef<boolean>(true);
 
   useEffect(() => {
-    // 1. First-time Welcome Trigger Logic
+    // 1. Initial Welcome Trigger Phase
     setShowBubble(true);
     timeoutRef.current = setTimeout(() => {
       setShowBubble(false);
+      isFirstLoadRef.current = false;
     }, 3000);
 
     const isMobile = () => window.innerWidth < 768;
@@ -52,7 +54,7 @@ export function SiteConcierge() {
             const tip = entry.target.getAttribute('data-concierge-tip');
             if (tip && CONTEXT_MATRIX[tip]) {
               lastActiveTipRef.current = tip;
-              if (isMobile()) {
+              if (isMobile() && !isFirstLoadRef.current) {
                 setBubbleText(CONTEXT_MATRIX[tip]);
               }
             }
@@ -74,7 +76,9 @@ export function SiteConcierge() {
     const handleGlobalScroll = () => {
       if (isMobile()) {
         const currentTip = lastActiveTipRef.current;
-        if (CONTEXT_MATRIX[currentTip]) setBubbleText(CONTEXT_MATRIX[currentTip]);
+        if (CONTEXT_MATRIX[currentTip] && !isFirstLoadRef.current) {
+          setBubbleText(CONTEXT_MATRIX[currentTip]);
+        }
         resetMobileTimeout();
       } else {
         // Desktop behavior: vanishes instantly when scrolling occurs
@@ -85,7 +89,9 @@ export function SiteConcierge() {
     const handleGlobalTouch = () => {
       if (isMobile()) {
         const currentTip = lastActiveTipRef.current;
-        if (CONTEXT_MATRIX[currentTip]) setBubbleText(CONTEXT_MATRIX[currentTip]);
+        if (CONTEXT_MATRIX[currentTip] && !isFirstLoadRef.current) {
+          setBubbleText(CONTEXT_MATRIX[currentTip]);
+        }
         resetMobileTimeout();
       }
     };
@@ -95,10 +101,11 @@ export function SiteConcierge() {
       if (isMobile()) return;
       const target = e.target as HTMLElement;
       const closestElement = target.closest('[data-concierge-tip]');
-      
+
       if (closestElement) {
         const tip = closestElement.getAttribute('data-concierge-tip');
         if (tip && CONTEXT_MATRIX[tip]) {
+          isFirstLoadRef.current = false;
           lastActiveTipRef.current = tip;
           setBubbleText(CONTEXT_MATRIX[tip]);
           setShowBubble(true);
@@ -121,16 +128,18 @@ export function SiteConcierge() {
   }, []);
 
   const handleAvatarManualTrigger = () => {
+    isFirstLoadRef.current = false;
     const currentTip = lastActiveTipRef.current;
     setBubbleText(CONTEXT_MATRIX[currentTip] || CONTEXT_MATRIX.fallback);
     setShowBubble(prev => !prev);
   };
 
   return (
-    <div 
+    <div
       className="fixed bottom-[92px] right-6 md:bottom-6 md:right-6 z-[9999] flex flex-col items-end gap-2.5 font-sans pointer-events-auto"
       onMouseEnter={() => {
         if (window.innerWidth >= 768) {
+          isFirstLoadRef.current = false;
           const currentTip = lastActiveTipRef.current;
           setBubbleText(CONTEXT_MATRIX[currentTip] || CONTEXT_MATRIX.fallback);
           setShowBubble(true);
@@ -158,7 +167,7 @@ export function SiteConcierge() {
                 System Assistant
               </span>
             </div>
-            
+
             {bubbleText}
           </motion.div>
         )}
@@ -169,11 +178,11 @@ export function SiteConcierge() {
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
         onClick={handleAvatarManualTrigger}
-        className="w-12 h-12 flex items-center justify-center cursor-pointer select-none p-0 bg-transparent border-0 outline-none"
+        className="w-12 h-12 flex items-center justify-center cursor-pointer select-none p-0 bg-transparent border-0 outline-none shadow-none"
       >
-        <img 
-          src="/workflows/botemoji.png" 
-          alt="Space Digital Concierge" 
+        <img
+          src="/workflows/botemoji.png"
+          alt="Space Digital Concierge"
           className="w-full h-full object-contain pointer-events-none"
         />
       </motion.div>
