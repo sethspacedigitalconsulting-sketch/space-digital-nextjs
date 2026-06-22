@@ -67,6 +67,7 @@ export function Hero() {
         ].join(', '),
       }} />
 
+      {/* ── FULL SCREEN BACKDROP CONTAINER OVERHAUL ── */}
       <div className="absolute inset-0 z-0 md:z-2 md:flex pointer-events-none md:pointer-events-auto">
         <div className="hidden md:flex md:flex-1 pointer-events-none" />
         <div className="absolute inset-0 md:relative md:flex-1 w-full h-full hue-rotate-180 saturate-200">
