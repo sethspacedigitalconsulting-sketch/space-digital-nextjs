@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
 const STEPS = [
   {
@@ -9,7 +9,12 @@ const STEPS = [
     title: 'Discovery & Diagnosis',
     em: 'Diagnosis',
     desc: 'We start with a deep audit of your current digital footprint — paid media performance, organic visibility, CRM data, and conversion flow. No assumptions, no templates.',
-    deliverables: ['Brand Audit', 'Competitor Mapping', 'Traffic Analysis', 'Conversion Audit'],
+    deliverables: [
+      { name: 'Brand Audit', content: 'Comprehensive extraction of channel properties and baseline conversion rates.' },
+      { name: 'Competitor Mapping', content: 'Scrutinizing localized search metrics and keyword parameters of high-volume direct competitors.' },
+      { name: 'Traffic Analysis', content: 'Auditing broad-match budget leaks and optimizing user-acquisition traffic signals.' },
+      { name: 'Conversion Audit', content: 'Pinpointing inbound communication gaps and checking call abandonment volumes.' }
+    ],
     color: '#FF6B2B',
     videoUrl: '/workflows/DDad.mp4',
   },
@@ -18,7 +23,12 @@ const STEPS = [
     title: 'Strategy & Architecture',
     em: 'Architecture',
     desc: 'Every channel, system, and workflow is mapped against your growth target. We design the infrastructure before writing a single ad or building a single automation.',
-    deliverables: ['Channel Strategy', 'System Blueprint', 'Automation Map', 'KPI Framework'],
+    deliverables: [
+      { name: 'Channel Strategy', content: 'Formulating high-intent paid search parameters across Google and Meta pipelines.' },
+      { name: 'System Blueprint', content: 'Mapping direct multi-app integrations and scheduling paths for automatic call handshakes.' },
+      { name: 'Automation Map', content: 'Drafting conversational voice response flows for English and Swahili local markets.' },
+      { name: 'KPI Framework', content: 'Structuring clear metrics to track acquisition costs and appointment completion numbers.' }
+    ],
     color: '#FF6B2B',
     videoUrl: '/workflows/SA.mp4',
   },
@@ -27,7 +37,12 @@ const STEPS = [
     title: 'Deploy & Integrate',
     em: 'Integrate',
     desc: 'Campaigns launch, AI workflows go live, and systems integrate. Everything is calibrated for the first 30 days — iteration velocity is built into the deployment.',
-    deliverables: ['Campaign Launch', 'Workflow Deployment', 'CRM Integration', '30-Day Calibration'],
+    deliverables: [
+      { name: 'Campaign Launch', content: 'Pushing live conversion landers and geo-targeted paid advertising tracks.' },
+      { name: 'Workflow Deployment', content: 'Deploying custom backend webhooks through n8n logic servers.' },
+      { name: 'CRM Integration', content: 'Synchronizing real-time telemetry inputs straight into GoHighLevel CRM workflows.' },
+      { name: '30-Day Calibration', content: 'Running aggressive phrase tweaks and script prompts optimization loops.' }
+    ],
     color: '#FF6B2B',
     videoUrl: '/workflows/DA.mp4',
   },
@@ -36,7 +51,12 @@ const STEPS = [
     title: 'Compound & Scale',
     em: 'Scale',
     desc: 'Monthly performance reviews, continuous optimisation loops, and expansion into new channels or automation layers as results compound.',
-    deliverables: ['Monthly Reporting', 'Ongoing Optimisation', 'Channel Expansion', 'System Evolution'],
+    deliverables: [
+      { name: 'Monthly Reporting', content: 'Aggregating clear data parameters mapping true return on investment and cost analytics.' },
+      { name: 'Ongoing Optimisation', content: 'Iterating database logic parameters to ensure absolute low-latency response tracking.' },
+      { name: 'Channel Expansion', content: 'Scaling pipeline architectures into broader geographic territories or custom media placements.' },
+      { name: 'System Evolution', content: 'Upgrading conversational features as company service frameworks expand.' }
+    ],
     color: '#FF6B2B',
     videoUrl: '/workflows/CS.mp4',
   },
@@ -56,6 +76,8 @@ function useIsMobile() {
 function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
+  const [activeDeliv, setActiveDeliv] = useState<string | null>(null);
+
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.3, 1, 1, 0.3]);
   const scale = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.94, 1, 1, 0.94]);
@@ -90,26 +112,18 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
           scale,
         }}
       >
-        {/* VIDEO STRIP — top on mobile, right panel on desktop */}
         {isMobile ? (
-          <div style={{
-            position: 'relative',
-            height: 180,
-            overflow: 'hidden',
-            flexShrink: 0,
-          }}>
+          <div style={{ position: 'relative', height: 180, overflow: 'hidden', flexShrink: 0 }}>
             <video
               key={step.videoUrl}
               src={step.videoUrl}
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
               autoPlay muted loop playsInline preload="auto"
             />
-            {/* Bottom fade into card body */}
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgb(20,20,22) 100%)', pointerEvents: 'none' }} />
           </div>
         ) : null}
 
-        {/* TEXT CONTENT */}
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: isMobile ? '2rem 1.5rem 2.5rem' : '2.75rem 3rem' }}>
           <span style={{ fontFamily: 'var(--mono)', fontSize: '0.74rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--signal)', display: 'inline-block', marginBottom: '1.25rem' }}>
             {step.num}
@@ -126,31 +140,63 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
             {step.desc}
           </p>
 
-          <ul style={{ display: 'flex', flexWrap: 'wrap', gap: '0.55rem 1.25rem', margin: 0, padding: 0, listStyle: 'none' }}>
-            {step.deliverables.map(d => (
-              <li key={d} style={{ fontFamily: 'var(--mono)', fontSize: '0.7rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.55rem' }}>
-                <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--text-faint)', flexShrink: 0, display: 'inline-block' }} />
-                {d}
-              </li>
-            ))}
-          </ul>
+          {/* Interactive Deliverables Dropdown List Block */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+            <ul style={{ display: 'flex', flexWrap: 'wrap', gap: '0.55rem 1.25rem', margin: 0, padding: 0, listStyle: 'none' }}>
+              {step.deliverables.map(d => {
+                const isItemOpen = activeDeliv === d.name;
+                return (
+                  <li
+                    key={d.name}
+                    onClick={() => setActiveDeliv(isItemOpen ? null : d.name)}
+                    style={{
+                      fontFamily: 'var(--mono)', fontSize: '0.7rem', letterSpacing: '0.04em',
+                      textTransform: 'uppercase', color: isItemOpen ? 'var(--signal)' : 'var(--text-muted)',
+                      display: 'inline-flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer',
+                      transition: 'color 0.2s ease'
+                    }}
+                  >
+                    <span style={{ width: 4, height: 4, borderRadius: '50%', background: isItemOpen ? 'var(--signal)' : 'var(--text-faint)', flexShrink: 0, display: 'inline-block' }} />
+                    {d.name}
+                  </li>
+                );
+              })}
+            </ul>
+
+            <AnimatePresence mode="wait">
+              {activeDeliv && (
+                <motion.div
+                  key={activeDeliv}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <p style={{ margin: '0.5rem 0 0', padding: '0.75rem 1rem', background: 'rgba(255,255,255,0.02)', borderLeft: '2px solid var(--signal)', color: 'var(--text-soft)', fontSize: '0.8rem', lineHeight: '1.5' }}>
+                    {step.deliverables.find(d => d.name === activeDeliv)?.content}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
-        {/* RIGHT VIDEO PANEL — desktop only */}
         {!isMobile && (
-          <div style={{ background: 'var(--bg-elev)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <video
-              key={step.videoUrl}
-              src={step.videoUrl}
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
-              autoPlay muted loop playsInline preload="auto"
-            />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgb(20,20,22) 0%, transparent 25%)', pointerEvents: 'none' }} />
-            <div style={{ position: 'absolute', bottom: '2rem', right: '2rem', width: 8, height: 8, borderRadius: '50%', background: 'var(--signal)', boxShadow: '0 0 16px rgba(255,107,43,0.5)' }} />
-          </div>
-        )}
-      </motion.div>
+          <div style={{ background: 'var(--bg-elev)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justify- center: 'center' }}>
+        <video
+          key={step.videoUrl}
+          src={step.videoUrl}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+          autoPlay muted loop playsInline preload="auto"
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgb(20,20,22) 0%, transparent 25%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: '2rem', right: '2rem', width: 8, height: 8, borderRadius: '50%', background: 'var(--signal)', boxShadow: '0 0 16px rgba(255,107,43,0.5)' }} />
     </div>
+  )
+}
+      </motion.div >
+    </div >
   );
 }
 

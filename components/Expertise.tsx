@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const SERVICES = [
   {
@@ -10,6 +10,8 @@ const SERVICES = [
     watermark: 'MR',
     desc: 'Paid media, search authority, and local SEO deployed as a unified acquisition infrastructure — not isolated campaigns.',
     features: ['Meta & Google Ads', 'SEO Architecture', 'Map Pack Optimisation', 'Omnichannel Acquisition'],
+    // Extended context injection
+    deepDesc: 'Bespoke top-of-funnel capture architectures. We build highly structural local maps optimization engines and semantic medical/legal schemas designed to eliminate marketing leakages and force prominent directory nodes into top search visibility.',
   },
   {
     num: '02',
@@ -18,6 +20,7 @@ const SERVICES = [
     watermark: 'OV',
     desc: 'Custom AI workflows, voice agents, and CRM automation that eliminate bottlenecks and scale operations without scaling headcount.',
     features: ['n8n Workflows', 'AI Voice Systems', 'CRM Automation', 'Lead Gen Engines'],
+    deepDesc: 'Our voice deployments run low-latency conversational engines supporting English and Swahili with sub-1s latency. Synchronized directly with advanced workflows and CRMs to qualify inbound pipeline targets automatically.',
   },
   {
     num: '03',
@@ -26,6 +29,7 @@ const SERVICES = [
     watermark: 'CP',
     desc: 'Short-form video and ad creative engineered around hook rates and platform algorithms — built for conversion, not aesthetics.',
     features: ['Video Ad Production', 'TikTok Strategy', 'Pinterest Campaigns', 'Hook Optimisation'],
+    deepDesc: 'High-converting asset generation calibrated directly against algorithmic velocity benchmarks. Every clip is systematically engineered to transition raw audience attention directly into structural pipeline entries.',
   },
   {
     num: '04',
@@ -34,6 +38,7 @@ const SERVICES = [
     watermark: 'BA',
     desc: 'Web presence and brand systems built to project authority and convert visitors — from first impression through to inquiry.',
     features: ['Web Development', 'Brand Identity', 'UX Strategy', 'Conversion Design'],
+    deepDesc: 'Premium digital front-ends optimized for high-converting user interfaces. Complete optimization across viewport breakpoints ensures your agency authority projects flawlessly across all devices.',
   },
 ];
 
@@ -50,10 +55,13 @@ function useIsMobile() {
 
 function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number }) {
   const [hovered, setHovered] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <motion.div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={() => setIsExpanded(!isExpanded)}
       initial={{ opacity: 0, scale: 0.88, filter: 'blur(4px)' }}
       whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: '-8% 0px' }}
@@ -61,14 +69,14 @@ function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number })
       style={{
         display: 'flex', flexDirection: 'column',
         padding: '2.75rem 2.5rem 2.25rem',
-        background: hovered ? 'rgba(20,20,22,0.82)' : 'rgba(14,14,16,0.62)',
-        border: hovered ? '1px solid rgba(255,107,43,0.32)' : '1px solid rgba(255,255,255,0.08)',
-        boxShadow: hovered
+        background: hovered || isExpanded ? 'rgba(20,20,22,0.82)' : 'rgba(14,14,16,0.62)',
+        border: hovered || isExpanded ? '1px solid rgba(255,107,43,0.32)' : '1px solid rgba(255,255,255,0.08)',
+        boxShadow: hovered || isExpanded
           ? '0 1px 0 0 rgba(255,255,255,0.06) inset, 0 44px 90px -32px rgba(0,0,0,0.95), 0 0 0 1px rgba(255,107,43,0.14)'
           : '0 1px 0 0 rgba(255,255,255,0.04) inset, 0 24px 48px -32px rgba(0,0,0,0.8)',
         position: 'relative', overflow: 'hidden', isolation: 'isolate',
         transition: 'background 0.45s cubic-bezier(0.16,1,0.3,1), border-color 0.45s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s cubic-bezier(0.16,1,0.3,1)',
-        cursor: 'none',
+        cursor: 'pointer',
       }}
     >
       <motion.div
@@ -77,17 +85,17 @@ function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number })
           background: 'linear-gradient(90deg, rgba(255,107,43,0) 0%, rgba(255,107,43,0.9) 30%, rgba(255,107,43,0.9) 70%, rgba(255,107,43,0) 100%)',
           originX: 0,
         }}
-        animate={{ scaleX: hovered ? 1 : 0 }}
+        animate={{ scaleX: hovered || isExpanded ? 1 : 0 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       />
       <div style={{
         fontFamily: 'var(--sans)', fontSize: 'clamp(5rem, 9vw, 8rem)', fontWeight: 800,
         lineHeight: 0.85, letterSpacing: '-0.04em',
         color: 'transparent',
-        WebkitTextStroke: hovered ? '1.5px rgba(255,107,43,0.18)' : '1.5px rgba(255,255,255,0.06)',
+        WebkitTextStroke: hovered || isExpanded ? '1.5px rgba(255,107,43,0.18)' : '1.5px rgba(255,255,255,0.06)',
         position: 'absolute', top: '1.5rem', right: '1.5rem',
         pointerEvents: 'none', zIndex: 0,
-        transform: hovered ? 'translate(-4px, 0)' : 'translate(0, 0)',
+        transform: hovered || isExpanded ? 'translate(-4px, 0)' : 'translate(0, 0)',
         transition: '-webkit-text-stroke-color 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)',
       }}>{service.watermark}</div>
       <span style={{ fontFamily: 'var(--mono)', fontSize: '0.74rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--signal)', marginBottom: '1.5rem', position: 'relative', zIndex: 1 }}>
@@ -102,6 +110,24 @@ function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number })
       <p style={{ color: 'var(--text-soft)', fontSize: '0.95rem', lineHeight: 1.55, maxWidth: '38ch', margin: '0 0 1.5rem', position: 'relative', zIndex: 1 }}>
         {service.desc}
       </p>
+
+      {/* Collapsible Sub-Panel Description Component */}
+      <AnimatePresence initial={false}>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0, marginBottom: 0 }}
+            animate={{ height: 'auto', opacity: 1, marginBottom: 24 }}
+            exit={{ height: 0, opacity: 0, marginBottom: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: 'hidden', position: 'relative', zIndex: 1 }}
+          >
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.6, borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '1rem', margin: 0 }}>
+              {service.deepDesc}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: 'auto', position: 'relative', zIndex: 1 }}>
         {service.features.map(f => (
           <li key={f} style={{ fontFamily: 'var(--mono)', fontSize: '0.72rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
@@ -110,14 +136,18 @@ function ServiceCard({ service, i }: { service: typeof SERVICES[0]; i: number })
           </li>
         ))}
       </ul>
-      <div style={{
-        fontFamily: 'var(--mono)', fontSize: '1.25rem', lineHeight: 1,
-        color: hovered ? 'var(--signal)' : 'var(--text-faint)',
-        position: 'absolute', bottom: '1.5rem', right: '1.75rem',
-        transform: hovered ? 'translate(5px, 0)' : 'translate(0, 0)',
-        transition: 'color 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1)',
-        pointerEvents: 'none',
-      }}>↗</div>
+      <motion.div
+        animate={{ rotate: isExpanded ? 90 : 0 }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        style={{
+          fontFamily: 'var(--mono)', fontSize: '1.25rem', lineHeight: 1,
+          color: hovered || isExpanded ? 'var(--signal)' : 'var(--text-faint)',
+          position: 'absolute', bottom: '1.5rem', right: '1.75rem',
+          pointerEvents: 'none',
+        }}
+      >
+        {isExpanded ? '→' : '↗'}
+      </motion.div>
     </motion.div>
   );
 }
