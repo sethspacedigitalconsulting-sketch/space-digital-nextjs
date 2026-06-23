@@ -140,7 +140,6 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
             {step.desc}
           </p>
 
-          {/* Interactive Deliverables Dropdown List Block */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
             <ul style={{ display: 'flex', flexWrap: 'wrap', gap: '0.55rem 1.25rem', margin: 0, padding: 0, listStyle: 'none' }}>
               {step.deliverables.map(d => {
@@ -183,20 +182,19 @@ function ProcessCard({ step, i }: { step: typeof STEPS[0]; i: number }) {
         </div>
 
         {!isMobile && (
-          <div style={{ background: 'var(--bg-elev)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justify- center: 'center' }}>
-        <video
-          key={step.videoUrl}
-          src={step.videoUrl}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
-          autoPlay muted loop playsInline preload="auto"
-        />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgb(20,20,22) 0%, transparent 25%)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '2rem', right: '2rem', width: 8, height: 8, borderRadius: '50%', background: 'var(--signal)', boxShadow: '0 0 16px rgba(255,107,43,0.5)' }} />
+          <div style={{ background: 'var(--bg-elev)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <video
+              key={step.videoUrl}
+              src={step.videoUrl}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+              autoPlay muted loop playsInline preload="auto"
+            />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgb(20,20,22) 0%, transparent 25%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', bottom: '2rem', right: '2rem', width: 8, height: 8, borderRadius: '50%', background: 'var(--signal)', boxShadow: '0 0 16px rgba(255,107,43,0.5)' }} />
+          </div>
+        )}
+      </motion.div>
     </div>
-  )
-}
-      </motion.div >
-    </div >
   );
 }
 
