@@ -4,14 +4,30 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const CONTEXT_MATRIX: Record<string, string> = {
+  // Onboarding Greeting Node (Fires once on mount/refresh)
   "welcome": "Hey! I'm Spacey, your automated guide.",
+
+  // 1. Hero Strategy Contexts (MAPPED TO #home Elements)
   "hero": "This is our core geographic command track and high-performance digital systems manifesto, engineered directly out of Nairobi.",
   "stats": "Look at these proof points: an average 3.8× ROAS, 67% cut in cost-per-lead, and up to 82% autonomous call resolution.",
+
+  // 2. Production Case Studies Contexts (MAPPED TO YOUR EXACT PROOF_ITEMS IN #work)
+  "case-ulnar": "Ulnar Medical Clinic Case: We deployed advanced Clinical SEO strategy and clean bespoke layouts to position them in local top search brackets.",
+  "case-wibify": "Wibify Agency Case: A high-performance conversion engine designed to turn high-intent incoming traffic into active consulting pipelines.",
+  "case-meta": "Conversion Campaign Study: Meta Ads optimized for automated lead loops, delivering a verified 3.8× Return on Ad Spend.",
+  "case-tiktok": "Velocity Growth Matrix Case: Rapid TikTok traffic funnels expanding organic brand reach up to 214% for client acquisition.",
+  "case-google": "Geo Intent Optimization Case: Strategic Google Local optimization pulling client listings into 94% of top-3 Map Pack placements.",
+
+  // 3. System Architecture & Tech Stack (MAPPED TO #ecosystem / #system)
   "marketing": "Tier 1 Framework: Deploys high-intent SEO, optimized Google Ads, and custom social media marketing pipelines to capture lead traffic.",
   "automation": "Tier 2 Infrastructure: Advanced 24/7 autonomous voice and text agents built to instantly qualify and book traffic, eliminating bottlenecks.",
-  "voice": "Our multi-lingual voice agent framework supports seamless English and Swahili customer coverage with sub-1s latency.",
+  "voice": "Our multi-lingual voice agent framework supports seamless English and Swahili customer coverage with sub-1s latency via Verbeo.ai platforms.",
   "integrations": "Deep architectural handshakes mapping directly into GoHighLevel CRMs, n8n workflow pipelines, and automated Calendly schedulers.",
-  "pricing": "High-Value Retainer Structure: Flat $1,500 One-Time Setup Fee + $450/Month management, eliminating missed-call overhead and staff turnover.",
+
+  // 4. Commercial Frameworks (MAPPED TO #systems / PERKS)
+  "pricing": "High-Value Retainer Structure: Flat $1,500 One-Time Setup Fee + $450/Month management, eliminating missed-call overhead and receptionist staff turnover.",
+
+  // 5. Conversion Interface Blocks (MAPPED TO #contact / #about / #faq)
   "demo": "Launch Center Node: Hit the button to initiate a live browser voice call directly with me right now!",
   "form": "Strategic Intake Pipeline: Drop your operational variables here to feed our briefing dashboard instantly."
 };
@@ -25,7 +41,7 @@ export function SiteConcierge() {
   const isFirstLoadRef = useRef<boolean>(true);
 
   useEffect(() => {
-    // 1. Strict First-Load Launch Greeting (Runs Exactly Once)
+    // 1. Strict First-Load Launch Greeting (Runs Exactly Once per refresh)
     setBubbleText(CONTEXT_MATRIX.welcome);
     setShowBubble(true);
 
@@ -40,46 +56,54 @@ export function SiteConcierge() {
 
     // Helper to evaluate text context based on the current element or section container
     const parseElementContext = (element: HTMLElement | null): string => {
-      if (!element) return CONTEXT_MATRIX.hero; // Default to main pitch context if null
+      if (!element) return CONTEXT_MATRIX.hero;
 
-      // 1. Check for explicit tip tags first
+      // A. Check for explicit tip tags first (captures your active case study links instantly)
       const explicitTip = element.closest('[data-concierge-tip]')?.getAttribute('data-concierge-tip');
       if (explicitTip && CONTEXT_MATRIX[explicitTip]) return CONTEXT_MATRIX[explicitTip];
 
-      // 2. Intelligent section-container fallback lookup to keep context 100% accurate
-      const closestSection = element.closest('section, div[id]');
+      // B. Intelligent section container lookup mapped exactly to your layout ids
+      const closestSection = element.closest('section, div[id], li');
       const sectionId = closestSection ? closestSection.id.toLowerCase() : '';
 
-      // 3. Scan inner content text or parent text structures
+      // C. Scan inner text strings or parent structural markup parameters
       const fullText = (element.innerText || element.textContent || "").toLowerCase();
       const htmlId = (element.id || "").toLowerCase();
       const parentHtmlId = (element.parentElement?.id || "").toLowerCase();
 
-      // Metrics and numbers tracking vectors
-      if (fullText.includes('roas') || fullText.includes('%') || fullText.includes('metrics') || fullText.includes('proof')) return CONTEXT_MATRIX.stats;
+      // Core Performance Metrics & Numbers
+      if (fullText.includes('roas') || fullText.includes('%') || fullText.includes('reduction') || fullText.includes('resolution') || fullText.includes('stats')) return CONTEXT_MATRIX.stats;
 
-      // Tier 1 vs Tier 2 explicit boundaries
-      if (fullText.includes('tier 1') || fullText.includes('seo') || fullText.includes('ads') || fullText.includes('marketing')) return CONTEXT_MATRIX.marketing;
+      // Production Project Cards
+      if (fullText.includes('ulnar')) return CONTEXT_MATRIX["case-ulnar"];
+      if (fullText.includes('wibify')) return CONTEXT_MATRIX["case-wibify"];
+      if (fullText.includes('meta')) return CONTEXT_MATRIX["case-meta"];
+      if (fullText.includes('tiktok')) return CONTEXT_MATRIX["case-tiktok"];
+      if (fullText.includes('map pack') || fullText.includes('google local')) return CONTEXT_MATRIX["case-google"];
+
+      // Service Tier and Core Delivery Mechanics
+      if (fullText.includes('tier 1') || fullText.includes('seo') || fullText.includes('marketing')) return CONTEXT_MATRIX.marketing;
       if (fullText.includes('tier 2') || fullText.includes('agent') || fullText.includes('automation') || fullText.includes('autonomous')) return CONTEXT_MATRIX.automation;
 
-      // Platform integration tracks
+      // Platform Technical Infrastructure
       if (fullText.includes('voice') || fullText.includes('swahili') || fullText.includes('english') || fullText.includes('verbeo')) return CONTEXT_MATRIX.voice;
       if (fullText.includes('n8n') || fullText.includes('gohighlevel') || fullText.includes('crm') || fullText.includes('calendly') || fullText.includes('integrate')) return CONTEXT_MATRIX.integrations;
 
-      // Commercial pricing frames
-      if (fullText.includes('1,500') || fullText.includes('450') || fullText.includes('pricing') || fullText.includes('setup') || fullText.includes('retainer')) return CONTEXT_MATRIX.pricing;
+      // Commercial Retainers & Calculator Features
+      if (fullText.includes('1,500') || fullText.includes('450') || fullText.includes('pricing') || fullText.includes('setup') || fullText.includes('retainer') || fullText.includes('calculator')) return CONTEXT_MATRIX.pricing;
 
-      // Conversion gate structures
+      // Action Pipeline Blocks
       if (fullText.includes('demo') || fullText.includes('call') || fullText.includes('vapi') || fullText.includes('launch')) return CONTEXT_MATRIX.demo;
       if (fullText.includes('form') || fullText.includes('briefing') || fullText.includes('submit') || fullText.includes('input')) return CONTEXT_MATRIX.form;
 
-      // 4. Section ID fallback matching logic so it NEVER speaks generic filler
-      if (sectionId.includes('services') || htmlId.includes('services') || parentHtmlId.includes('services')) return CONTEXT_MATRIX.marketing;
-      if (sectionId.includes('system') || sectionId.includes('features') || htmlId.includes('system')) return CONTEXT_MATRIX.voice;
-      if (sectionId.includes('pricing') || sectionId.includes('roi') || htmlId.includes('pricing')) return CONTEXT_MATRIX.pricing;
-      if (sectionId.includes('contact') || sectionId.includes('gateway') || htmlId.includes('contact')) return CONTEXT_MATRIX.demo;
+      // D. Clean Section Parent ID structural fallbacks (No generic strings allowed)
+      if (sectionId === 'work' || htmlId.includes('work') || parentHtmlId.includes('work')) return CONTEXT_MATRIX["case-ulnar"];
+      if (sectionId === 'ecosystem' || htmlId.includes('ecosystem')) return CONTEXT_MATRIX.marketing;
+      if (sectionId === 'system' || htmlId.includes('system')) return CONTEXT_MATRIX.automation;
+      if (sectionId === 'systems' || htmlId.includes('systems') || sectionId.includes('perks')) return CONTEXT_MATRIX.pricing;
+      if (sectionId === 'contact' || htmlId.includes('contact')) return CONTEXT_MATRIX.demo;
 
-      return CONTEXT_MATRIX.hero; // Master section context fallback
+      return CONTEXT_MATRIX.hero;
     };
 
     // 2. Mobile Touch & Scroll Vector Parser
@@ -101,7 +125,7 @@ export function SiteConcierge() {
       }, 2000);
     };
 
-    // 3. Desktop Exact Cursor-Stop System Tracker
+    // 3. Desktop Cursor Position-Stop Scanner
     const handleDesktopMove = (e: MouseEvent) => {
       if (isFirstLoadRef.current || isMobile()) return;
 
@@ -109,7 +133,7 @@ export function SiteConcierge() {
 
       const targetElement = e.target as HTMLElement;
 
-      // When cursor stops moving for 120ms over an item, calculate the context instantly
+      // Triggers context updating exactly 120ms after cursor motion halts over a node
       mouseStopTimerRef.current = setTimeout(() => {
         const matchedContext = parseElementContext(targetElement);
         setBubbleText(matchedContext);
@@ -119,7 +143,7 @@ export function SiteConcierge() {
 
     const handleDesktopScrollHide = () => {
       if (!isMobile()) {
-        setShowBubble(false); // Vanishes cleanly on desktop scroll to preserve visibility
+        setShowBubble(false); // Disappears instantly on desktop scroll wheel vectors
         if (mouseStopTimerRef.current) clearTimeout(mouseStopTimerRef.current);
       } else {
         handleMobileInteraction(new Event('scroll'));
@@ -143,8 +167,6 @@ export function SiteConcierge() {
 
   const handleAvatarManualTrigger = () => {
     if (isFirstLoadRef.current) return;
-    const currentTip = lastActiveTipRef.current;
-    setBubbleText(CONTEXT_MATRIX[currentTip] || CONTEXT_MATRIX.hero);
     setShowBubble(prev => !prev);
   };
 
@@ -173,6 +195,7 @@ export function SiteConcierge() {
         )}
       </AnimatePresence>
 
+      {/* ── Completely Borderless Vector Node Avatar Asset ── */}
       <motion.div
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
