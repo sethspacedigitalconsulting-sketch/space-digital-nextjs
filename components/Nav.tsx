@@ -2,8 +2,31 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { NavTabsAnimation, NavTabItem } from '@/components/ui/nav-tabs-animation';
+
+// Detailed sub-panel dropdown data mapped directly to your anchor locations
+const DROPDOWN_DATA: Record<string, { title: string; desc: string }[]> = {
+  '#ecosystem': [
+    { title: 'Market Resonance', desc: 'Paid Media & SEO Frameworks' },
+    { title: 'Content Production', desc: 'Conversion Video Ad Pipelines' },
+    { title: 'Brand Architecture', desc: 'Authority Design Nodes' }
+  ],
+  '#work': [
+    { title: 'Ulnar Medical Clinic', desc: 'Clinical SEO Case Study' },
+    { title: 'Wibify Agency', desc: 'Inbound Web Engine Case Study' },
+    { title: 'Meta Ads 3.8x ROAS', desc: 'Conversion Deployment Case Study' }
+  ],
+  '#systems': [
+    { title: 'Verbeo.ai Voice Core', desc: 'Low-Latency Multilingual Agents' },
+    { title: 'GoHighLevel CRM Sync', desc: 'Native Operational Pipelines' },
+    { title: 'n8n Logic Engines', desc: 'Custom Backend Workflow Loops' }
+  ],
+  '#about': [
+    { title: 'Space Digital Command', desc: 'Our Core Operational Manifesto' },
+    { title: 'Seth / Founder', desc: 'Strategic Growth Operations Advice' }
+  ]
+};
 
 const SYSTEM_NAV_ITEMS: NavTabItem[] = [
   {
@@ -55,13 +78,14 @@ const SYSTEM_NAV_ITEMS: NavTabItem[] = [
 
 export function Nav() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [hoveredHref, setHoveredHref] = useState<string | null>(null);
 
   return (
     <motion.nav
       initial={{ opacity: 0, y: '-130%' }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-      className="fixed top-6 left-0 right-0 z-[1000] flex justify-center pointer-events-none px-3 md:px-0"
+      className="fixed top-6 left-0 right-0 z-[1000] flex flex-col items-center justify-center pointer-events-none px-3 md:px-0"
     >
       {/* ── PILL CONTAINER ── */}
       <div className="
@@ -73,6 +97,7 @@ export function Nav() {
         pointer-events-auto select-none
         shadow-[0_20px_50px_rgba(0,0,0,0.5)]
         w-full max-w-[calc(100%-1.5rem)] md:w-auto
+        relative
       ">
 
         {/* ── LOGO ── */}
@@ -88,16 +113,29 @@ export function Nav() {
           </a>
         </div>
 
-        {/* ── NAV ICONS — flex-1 so they fill remaining space left of button ── */}
-        <div className="flex items-center justify-start flex-1 md:flex-initial overflow-hidden">
+        {/* ── NAV ICONS (Intercepts hover events for custom menus) ── */}
+        <div
+          className="flex items-center justify-start flex-1 md:flex-initial overflow-visible"
+          onMouseLeave={() => setHoveredHref(null)}
+        >
           <NavTabsAnimation
-            items={SYSTEM_NAV_ITEMS}
+            items={SYSTEM_NAV_ITEMS.map(item => ({
+              ...item,
+              icon: (
+                <div
+                  className="w-full h-full flex items-center justify-center"
+                  onMouseEnter={() => setHoveredHref(item.href)}
+                >
+                  {item.icon}
+                </div>
+              )
+            }))}
             activeMenu={activeMenu}
             setActiveMenu={setActiveMenu}
           />
         </div>
 
-        {/* ── CTA BUTTON — shrink-0 so it never gets squeezed off screen ── */}
+        {/* ── CTA BUTTON ── */}
         <a
           href="#contact"
           className="
@@ -116,6 +154,43 @@ export function Nav() {
         >
           Get in Touch
         </a>
+
+        {/* ── HOVER OVERLAY SUB-PANELS (Desktop Only) ── */}
+        <div className="hidden md:block absolute left-0 right-0 top-[115%] z-[1010] pointer-events-none">
+          <AnimatePresence mode="wait">
+            {hoveredHref && DROPDOWN_DATA[hoveredHref] && (
+              <motion.div
+                key={hoveredHref}
+                initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 6, scale: 0.96 }}
+                transition={{ duration: 0.15, ease: 'easeOut' }}
+                className="mx-auto w-72 bg-zinc-950/95 border border-white/10 backdrop-blur-md rounded-2xl p-3.5 shadow-[0_25px_60px_rgba(0,0,0,0.85)] flex flex-col gap-1 pointer-events-auto text-left"
+                onMouseEnter={() => setHoveredHref(hoveredHref)}
+                onMouseLeave={() => setHoveredHref(null)}
+              >
+                <span className="font-mono text-[9px] text-[#FF6B2B] uppercase tracking-widest block mb-2 px-1 pb-1 border-b border-white/5 font-semibold">
+                  System Navigation // {hoveredHref.replace('#', '')}
+                </span>
+
+                {DROPDOWN_DATA[hoveredHref].map((subItem, idx) => (
+                  <div
+                    key={idx}
+                    className="p-2 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group/navitem"
+                  >
+                    <h4 className="text-xs font-semibold text-zinc-200 group-hover/navitem:text-[#FF6B2B] transition-colors">
+                      {subItem.title}
+                    </h4>
+                    <p className="text-[10px] text-zinc-500 font-light mt-0.5 leading-normal">
+                      {subItem.desc}
+                    </p>
+                  </div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
       </div>
 
       {/* ── SVG DRAW ANIMATION ── */}
